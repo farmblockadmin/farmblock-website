@@ -103,7 +103,7 @@ p{max-width:60ch;text-wrap:pretty}
 .nav{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);left:0;right:0;z-index:100;pointer-events:none;transition:transform .5s var(--ease)}
 .nav.hide{transform:translateY(-140%)}
 .bar{pointer-events:auto;max-width:var(--max);margin:0 auto;width:calc(100% - 28px);display:flex;align-items:center;gap:10px;min-height:66px;padding:8px 8px 8px 18px;border-radius:999px;background:rgba(17,38,21,.42);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);color:#fff;transition:background-color .4s;position:relative}
-.nav.solid .bar{background:rgba(17,38,21,.86)}
+.nav.solid .bar{background:rgba(17,38,21,.93);-webkit-backdrop-filter:none;backdrop-filter:none}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
 .brand svg.mk{width:38px;height:38px}
 .brand .wm{height:17px;width:auto;fill:currentColor}
@@ -346,6 +346,7 @@ p{max-width:60ch;text-wrap:pretty}
 /* ---- Kết thúc ---- */
 .final{position:relative;height:100vh;height:100svh;min-height:560px;display:flex;align-items:center;overflow:hidden;color:#fff}
 .final .bg{position:absolute;inset:0;width:100%;height:120%;object-fit:cover;will-change:transform}
+@media (max-width:860px){.final .bg{height:100%;will-change:auto}}
 .final::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,22,40,.15) 0%,rgba(6,24,14,.35) 45%,rgba(6,24,14,.86) 100%)}
 .final .wrap{position:relative;z-index:2;padding-block:96px 64px;width:100%}
 .final-card{max-width:760px;margin:0 auto;text-align:center}
@@ -420,7 +421,7 @@ p{max-width:60ch;text-wrap:pretty}
   <canvas id="heroGL" aria-label="Ảnh flycam 360° vườn FarmBlock IaKo. Kéo để xoay." role="img"></canvas>
   <div class="hero-veil"></div>
   <div class="hero-tools"><div class="wrap">
-    <div class="seg" role="group" aria-label="Chọn thời điểm chụp"><button type="button" data-season="rain" aria-pressed="true">Tháng 6</button><button type="button" data-season="dry" aria-pressed="false">Tháng 9</button></div>
+    <div class="seg" role="group" aria-label="Chọn thời điểm chụp"><button type="button" data-season="rain" aria-pressed="true">Tháng 10</button><button type="button" data-season="dry" aria-pressed="false">Tháng 6</button></div>
     <span class="hint"><svg aria-hidden="true"><use href="#drag"/></svg>Kéo để xoay 360°</span>
   </div></div>
   <div class="hero-copy">
@@ -733,7 +734,7 @@ var H={};
   ['pointerup','pointercancel','pointerleave'].forEach(function(t){heroCanvas.addEventListener(t,function(){drag=false})});
   H.prog=0;var home={x:0,y:0,s:1};
   var sizeT;function size(){var w=heroCanvas.clientWidth,h=heroCanvas.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();var narrow=w<860;home={x:narrow?.95:1.75,y:narrow?1.75:.78,s:narrow?.42:.66}}
-  size();addEventListener('resize',function(){clearTimeout(sizeT);sizeT=setTimeout(size,120)});
+  size();var lw=innerWidth;addEventListener('resize',function(){if(isMobile&&innerWidth===lw)return;lw=innerWidth;clearTimeout(sizeT);sizeT=setTimeout(size,120)});
   var visible=true,raf=0,t=0,last=0,smx=0,smy=0;
   function start(){if(!raf&&visible&&!document.hidden){last=performance.now();raf=requestAnimationFrame(loop)}}
   function stop(){if(raf){cancelAnimationFrame(raf);raf=0}}
@@ -867,7 +868,7 @@ var F={};
   ['pointerup','pointercancel','pointerleave'].forEach(function(t){canvas.addEventListener(t,function(){drag=false})});
   var wide=true;
   function size(){var w=canvas.clientWidth,h=canvas.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;wide=w>900;cam.fov=w<h?50:36;if(wide)cam.setViewOffset(w,h,-w*.17,0,w,h);else cam.clearViewOffset();cam.updateProjectionMatrix()}
-  var sizeT;size();addEventListener('resize',function(){clearTimeout(sizeT);sizeT=setTimeout(size,120)});
+  var sizeT;size();var lw=innerWidth;addEventListener('resize',function(){if(isMobile&&innerWidth===lw)return;lw=innerWidth;clearTimeout(sizeT);sizeT=setTimeout(size,120)});
   var vis=false,raf=0,last=0,tt=0;
   function start(){if(!raf&&vis&&!document.hidden){last=performance.now();raf=requestAnimationFrame(loop)}}
   function stop(){if(raf){cancelAnimationFrame(raf);raf=0}}
@@ -926,7 +927,7 @@ if('IntersectionObserver' in window){var gio=new IntersectionObserver(function(e
   document.addEventListener('visibilitychange',function(){if(document.hidden)v.pause();else if(loaded&&!reduce){var b=v.getBoundingClientRect();if(b.bottom>0&&b.top<innerHeight){var p=v.play();if(p&&p.catch)p.catch(function(){})}}})})();
 /* ---------- CHUYỂN ĐỘNG ---------- */
 if(!window.gsap){root.classList.remove('js');return}
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);ScrollTrigger.config({ignoreMobileResize:true});
 if(window.SplitText)gsap.registerPlugin(SplitText);
 var lenis=null;
 if(!reduce&&window.Lenis){lenis=new Lenis({lerp:.1,wheelMultiplier:.9,smoothWheel:true,syncTouch:false});window.lenis=lenis;lenis.on('scroll',function(e){ScrollTrigger.update();onScrollNav(e.scroll)});gsap.ticker.add(function(t){lenis.raf(t*1000)});gsap.ticker.lagSmoothing(500,33);
@@ -939,9 +940,9 @@ mm.add('(prefers-reduced-motion: no-preference)',function(){
   gsap.to('.hero-copy',{yPercent:-25,opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'70% top',scrub:true}});
   if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){var st=SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',once:true}})}})});ScrollTrigger.refresh()})}
   gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}})});
-  gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img');gsap.fromTo(f,{clipPath:'inset(14% 8% 14% 8% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',ease:'power2.out',scrollTrigger:{trigger:f,start:'top 94%',end:'top 40%',scrub:.6}});gsap.fromTo(img,{scale:1.22},{scale:1,ease:'none',scrollTrigger:{trigger:f,start:'top bottom',end:'bottom top',scrub:true}})});
-  gsap.fromTo('.rv-stage',{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',ease:'power2.out',scrollTrigger:{trigger:'.rv-stage',start:'top 92%',end:'top 35%',scrub:.6}});
-  gsap.fromTo('.final .bg',{yPercent:-14},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'bottom bottom',scrub:true}});
+  gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img');gsap.timeline({scrollTrigger:{trigger:f,start:'top 88%',once:true}}).fromTo(f,{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath'}).fromTo(img,{scale:1.15},{scale:1,duration:1.6,ease:'power3.out',clearProps:'transform'},0)});
+  gsap.fromTo('.rv-stage',{clipPath:'inset(8% 5% 8% 5% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath',scrollTrigger:{trigger:'.rv-stage',start:'top 85%',once:true}});
+  if(!isMobile)gsap.fromTo('.final .bg',{yPercent:-14},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'bottom bottom',scrub:true}});
   gsap.from('.final h2',{y:50,opacity:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'.final',start:'top 70%',once:true}});
   gsap.from('.st',{y:40,opacity:0,duration:.9,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.stat-band',start:'top 85%',once:true}});
   gsap.utils.toArray('.st b[data-to]').forEach(function(b){var end=+b.dataset.to,sm=b.querySelector('small'),tail=sm?sm.outerHTML:'',o={v:0};gsap.to(o,{v:end,duration:1.8,ease:'power3.out',scrollTrigger:{trigger:b,start:'top 92%',once:true},onUpdate:function(){b.innerHTML=Math.round(o.v).toLocaleString('vi-VN')+tail}})});
@@ -958,10 +959,8 @@ mm.add('(min-width: 861px) and (hover: hover) and (prefers-reduced-motion: no-pr
   function go(y){if(busy)return;busy=true;lenis.scrollTo(Math.max(0,Math.min(y,document.documentElement.scrollHeight-innerHeight)),{duration:1.05,lock:true,force:true,easing:function(x){return 1-Math.pow(1-x,3)},onComplete:function(){setTimeout(function(){busy=false},120)}})}
   function top(){return fin.getBoundingClientRect().top+lenis.scroll}
   var a=ScrollTrigger.create({trigger:fin,start:'top 82%',end:'bottom 18%',
-    onEnter:function(){go(top())},
-    onEnterBack:function(){go(top())}});
+    onEnter:function(){go(top())}});
   var b=ScrollTrigger.create({trigger:fin,start:'top 18%',end:'bottom 82%',
-    onLeaveBack:function(){go(top()-innerHeight)},
     onLeave:function(){go(top()+fin.offsetHeight)}});
   return function(){a.kill();b.kill()};
 });

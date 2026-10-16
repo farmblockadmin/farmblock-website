@@ -240,9 +240,9 @@ p{max-width:60ch;text-wrap:pretty}
 .stage-note{position:absolute;z-index:3;right:20px;bottom:16px;font-size:.9375rem;color:var(--on-dark-2);text-align:right;max-width:36ch;pointer-events:none}
 .drag-hint{position:absolute;z-index:3;right:18px;top:18px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;background:rgba(12,31,16,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:.9375rem;font-weight:500;pointer-events:none}
 .drag-hint svg{width:18px;height:18px}
-.zoom-ctl{display:none}.dh-m{display:none}
+.dh-m{display:none}
 @media (max-width:900px){.dh-d{display:none}.dh-m{display:inline}}
-@media (max-width:900px){.zoom-ctl{position:absolute;z-index:3;right:14px;top:72px;display:flex;flex-direction:column;gap:8px}.zoom-ctl button{width:48px;height:48px;border-radius:50%;background:rgba(12,31,16,.62);color:#fff;font-size:1.6rem;font-weight:500;line-height:1;display:grid;place-items:center}.zoom-ctl button:active{background:var(--g600)}.drag-hint{right:14px;top:14px}}
+@media (max-width:900px){.drag-hint{right:14px;top:14px}}
 @media (max-width:900px){
   .stage{aspect-ratio:auto;min-height:0;height:auto;background:var(--g800)}
   .stage canvas{position:relative;height:min(62svh,520px)}
@@ -502,8 +502,7 @@ p{max-width:60ch;text-wrap:pretty}
     </div>
     <div class="stage rv-stage">
       <canvas id="farmGL" role="img" aria-label="Mô hình 3D vườn FarmBlock IaKo #01 với 8 khu canh tác và vị trí thiết bị"></canvas>
-      <span class="drag-hint"><svg aria-hidden="true"><use href="#drag"/></svg><span class="dh-d">Kéo để xoay</span><span class="dh-m">Kéo xoay · chụm 2 ngón để zoom</span></span>
-      <div class="zoom-ctl" role="group" aria-label="Phóng to, thu nhỏ bản đồ"><button type="button" id="zIn" aria-label="Phóng to">+</button><button type="button" id="zOut" aria-label="Thu nhỏ">−</button></div>
+      <span class="drag-hint"><svg aria-hidden="true"><use href="#drag"/></svg><span class="dh-d">Kéo để xoay · cuộn chuột để zoom · bấm vào khu</span><span class="dh-m">Kéo xoay · chụm 2 ngón để zoom</span></span>
       <div class="glass" id="glass">
         <h3>Thiết bị tại vườn</h3>
         <ul class="lays" id="lays"></ul>
@@ -853,12 +852,17 @@ var F={};
   canvas.addEventListener('touchstart',function(e){if(e.touches.length===2){e.preventDefault();drag=false;tap=null;var a=e.touches[0],b=e.touches[1];pd0=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);pdist0=o.dist}},{passive:false});
   canvas.addEventListener('touchmove',function(e){if(e.touches.length===2&&pd0){e.preventDefault();var a=e.touches[0],b=e.touches[1];var d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);setDist(pdist0*pd0/Math.max(20,d))}},{passive:false});
   canvas.addEventListener('touchend',function(e){if(e.touches.length<2)pd0=0},{passive:true});
-  var zi=document.getElementById('zIn'),zo=document.getElementById('zOut');
-  zi&&zi.addEventListener('click',function(){setDist(o.dist*.75,true)});
-  zo&&zo.addEventListener('click',function(){setDist(o.dist/.75,true)});
+  /* máy tính: cuộn chuột trên sa bàn để zoom; hết giới hạn thì trang cuộn tiếp */
+  var zt={d:null};
+  canvas.addEventListener('wheel',function(e){var dy=e.deltaMode===1?e.deltaY*16:e.deltaY;var cur=zt.d==null?o.dist:zt.d;
+    if((dy>0&&cur>=19.9)||(dy<0&&cur<=4.25))return;
+    e.preventDefault();e.stopPropagation();zt.d=Math.max(4.2,Math.min(20,cur*Math.exp(dy*.0009)));
+    gsap.killTweensOf(o,'dist');gsap.to(o,{dist:zt.d,duration:.5,ease:'power2.out',onComplete:function(){zt.d=null}})},{passive:false});
   /* chạm vào một khu (điện thoại) để phóng to khu đó */
   var ray=new THREE.Raycaster(),gp=new THREE.Plane(new THREE.Vector3(0,1,0),0),hit=new THREE.Vector3();
-  canvas.addEventListener('pointerup',function(e){if(!tap||!tap.touch)return;var mv=Math.abs(e.clientX-tap.x)+Math.abs(e.clientY-tap.y);if(mv>10||performance.now()-tap.t>450)return;var b=canvas.getBoundingClientRect();ray.setFromCamera({x:(e.clientX-b.left)/b.width*2-1,y:-(e.clientY-b.top)/b.height*2+1},cam);if(!ray.ray.intersectPlane(gp,hit))return;var mx2=hit.x/K+CX,my2=hit.z/K+CY,id=null;Object.keys(Z).some(function(k){return Z[k].polys.some(function(p){if(inPoly(mx2,my2,p)){id=k;return true}})});F.onTap&&F.onTap(id)});
+  canvas.addEventListener('pointerup',function(e){if(!tap)return;var mv=Math.abs(e.clientX-tap.x)+Math.abs(e.clientY-tap.y);if(mv>10||performance.now()-tap.t>450)return;var b=canvas.getBoundingClientRect();ray.setFromCamera({x:(e.clientX-b.left)/b.width*2-1,y:-(e.clientY-b.top)/b.height*2+1},cam);if(!ray.ray.intersectPlane(gp,hit))return;var mx2=hit.x/K+CX,my2=hit.z/K+CY,id=null;Object.keys(Z).some(function(k){return Z[k].polys.some(function(p){if(inPoly(mx2,my2,p)){id=k;return true}})});F.onTap&&F.onTap(id)});
+  function zoneAt(cx,cy){var b=canvas.getBoundingClientRect();ray.setFromCamera({x:(cx-b.left)/b.width*2-1,y:-(cy-b.top)/b.height*2+1},cam);if(!ray.ray.intersectPlane(gp,hit))return null;var X=hit.x/K+CX,Y=hit.z/K+CY,id=null;Object.keys(Z).some(function(k){return Z[k].polys.some(function(p){if(inPoly(X,Y,p)){id=k;return true}})});return id}
+  var hovT=0;canvas.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse'||drag)return;var n=performance.now();if(n-hovT<60)return;hovT=n;canvas.style.cursor=zoneAt(e.clientX,e.clientY)?'pointer':''});
   canvas.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-lx;lx=e.clientX;vel=-dx*.005;o.az+=vel});
   ['pointerup','pointercancel','pointerleave'].forEach(function(t){canvas.addEventListener(t,function(){drag=false})});
   var wide=true;
@@ -878,7 +882,7 @@ var F={};
     var mob=!wide&&k==='all';gsap.to(o,{tx:mob?.05:tgt[0],tz:mob?.35:tgt[1],dist:tgt[2]*(wide?1:(k==='all'?.86:.9)),el:tgt[3]+(wide?0:.08),duration:reduce?0:1.4,ease:'power3.inOut',overwrite:'auto'});
   };
   F.zone=function(id){Object.keys(zoneMeshes).forEach(function(k){var on=k===id;zoneMeshes[k].children.forEach(function(m){gsap.to(m.material,{opacity:on?.7:0,emissiveIntensity:on?.4:0,duration:.5,overwrite:true})});gsap.to(zoneMeshes[k].position,{y:on?.16:0,duration:.6,ease:'power3.out',overwrite:true})});
-    if(id){var b=new THREE.Box3().setFromObject(zoneMeshes[id]),c=b.getCenter(new THREE.Vector3());gsap.to(o,{tx:c.x,tz:c.z,dist:wide?10:7.2,duration:reduce?0:1.2,ease:'power3.inOut',overwrite:'auto'})}else F.focus(F.active)};
+    if(id){var b=new THREE.Box3().setFromObject(zoneMeshes[id]),c=b.getCenter(new THREE.Vector3());gsap.to(o,{tx:c.x,tz:c.z,dist:wide?8.2:7.2,el:.82,duration:reduce?0:1.1,ease:'expo.inOut',overwrite:'auto'})}else F.focus(F.active)};
   var mx=0,my=0;
   canvas.addEventListener('pointermove',function(e){var b=canvas.getBoundingClientRect();mx=(e.clientX-b.left)/b.width-.5;my=(e.clientY-b.top)/b.height-.5});
   function loop(now){raf=requestAnimationFrame(loop);tt+=Math.min(.05,(now-last)/1000);last=now;var t=tt;

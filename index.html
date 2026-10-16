@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FarmBlock IaKo</title>
+<meta name="description" content="FarmBlock – Tiên phong số hóa tài sản nông nghiệp. Hành trình cùng Tây Nguyên, chạm đến tương lai.">
+<meta name="theme-color" content="#112615">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&display=swap" rel="stylesheet">
+<style>
+/* Bố cục: lưới 12 cột trong khung 1200px căn giữa; câu chuyện đi từ ảnh 360° → con người → con số → mô hình 3D → ứng dụng */
+:root{
+  --paper:#F2F8EA; --paper-2:#E4EFD6; --paper-3:#D5E6C2; --white:#FFFFFF;
+  --ink:#0F2A17; --muted:#3D5845;
+  --g900:#0C1F10; --g800:#112615; --g700:#17331C; --g600:#234D2B; --g500:#3A8047; --g400:#61996C;
+  --lime:#B5E383; --lime-2:#D3F0AE; --cream:#F5E4A1; --sky:#51ADCA;
+  --on-dark:#EEF6E6; --on-dark-2:#C9DDBF;
+  --font:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --max:1200px;
+  --fs-display:clamp(2.5rem,5.2vw,4.9rem);
+  --fs-h2:clamp(2rem,3.6vw,3.3rem);
+  --fs-h3:clamp(1.3rem,1.7vw,1.6rem);
+  --fs-lead:clamp(1.15rem,1.4vw,1.35rem);
+  --fs-body:1.1875rem;
+  --gut:max(20px,env(safe-area-inset-left,0px));
+  --gutr:max(20px,env(safe-area-inset-right,0px));
+  --sec:clamp(88px,10vw,150px);
+  --r:22px; --r-lg:32px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html[data-size="lg"]{font-size:118.75%}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:100px}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:var(--fs-body);line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:rgba(58,128,71,.15);overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
+:focus-visible{outline:3px solid var(--g500);outline-offset:3px;border-radius:8px}
+.dark :focus-visible,.hero :focus-visible,.nav :focus-visible{outline-color:var(--lime)}
+::selection{background:var(--lime);color:var(--g800)}
+.skip{position:fixed;left:16px;top:-80px;z-index:200;background:var(--g800);color:#fff;padding:14px 22px;border-radius:999px;text-decoration:none;font-weight:600}
+.skip:focus{top:12px}
+h1,h2,h3{font-weight:600;letter-spacing:-0.02em;line-height:1.1;text-wrap:balance;font-stretch:110%}
+h1{font-size:var(--fs-display);line-height:1.04;letter-spacing:-0.03em}
+h2{font-size:var(--fs-h2)}
+h3{font-size:var(--fs-h3);line-height:1.22;font-stretch:104%}
+p{max-width:60ch;text-wrap:pretty}
+.nw{white-space:nowrap}
+.wrap{width:100%;max-width:calc(var(--max) + 40px);margin-inline:auto;padding-left:var(--gut);padding-right:var(--gutr)}
+.lead{font-size:var(--fs-lead);line-height:1.55}
+.num{font-variant-numeric:tabular-nums}
+.tag{display:inline-flex;align-items:center;gap:10px;font-weight:600;color:var(--g500);font-size:1.0625rem;margin-bottom:16px}
+.tag::before{content:"";width:11px;height:11px;background:currentColor;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.dark .tag{color:var(--lime)}
+.center{text-align:center;margin-inline:auto}
+.sec-head{max-width:760px;margin:0 auto 56px;text-align:center}
+.sec-head p{margin:18px auto 0}
+/* chữ gradient chạy chậm theo màu thương hiệu */
+.grad{background:linear-gradient(100deg,#7ED839 0%,#F5E4A1 22%,#B5E383 40%,#51ADCA 60%,#7ED839 80%,#F5E4A1 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gshift 14s linear infinite;padding-bottom:.06em}
+.grad-d{background:linear-gradient(100deg,#008242 0%,#3A8047 20%,#7EBF3A 40%,#2F8FB5 62%,#008242 82%,#3A8047 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gshift 16s linear infinite;padding-bottom:.06em}
+@keyframes gshift{from{background-position:0% 50%}to{background-position:250% 50%}}
+
+/* ---- nút ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:56px;padding:0 1.5em;border-radius:999px;font-weight:600;font-size:1.0625rem;text-decoration:none;white-space:nowrap;transition:transform .25s var(--ease),background-color .25s,color .25s}
+.btn:active{transform:scale(.96)}
+.btn svg{width:1.05em;height:1.05em;flex:none;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translate(2px,-2px)}
+.btn-lime{background:var(--lime);color:var(--g800)}
+.btn-lime:hover{background:var(--lime-2)}
+.btn-green{background:var(--g500);color:#fff}
+.btn-green:hover{background:var(--g600)}
+.btn-glass{background:rgba(255,255,255,.16);color:#fff;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.btn-glass:hover{background:rgba(255,255,255,.26)}
+.btn-ink{background:var(--g800);color:#fff}
+.btn-ink:hover{background:var(--g600)}
+
+/* ---- thanh điều hướng gọn ---- */
+.nav{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);left:0;right:0;z-index:100;pointer-events:none;transition:transform .5s var(--ease)}
+.nav.hide{transform:translateY(-140%)}
+.bar{pointer-events:auto;max-width:var(--max);margin:0 auto;width:calc(100% - 28px);display:flex;align-items:center;gap:10px;min-height:66px;padding:8px 8px 8px 18px;border-radius:999px;background:rgba(17,38,21,.42);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);color:#fff;transition:background-color .4s;position:relative}
+.nav.solid .bar{background:rgba(17,38,21,.86)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+.brand svg.mk{width:38px;height:38px}
+.brand .wm{height:17px;width:auto;fill:currentColor}
+.menu{margin-left:auto;position:relative}
+.menu-trig{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 18px;border-radius:999px;font-weight:600;font-size:1.0625rem;transition:background-color .25s}
+.menu-trig:hover,.menu.open .menu-trig{background:rgba(255,255,255,.14)}
+.menu-trig .bars{width:18px;height:12px;position:relative}
+.menu-trig .bars::before,.menu-trig .bars::after{content:"";position:absolute;left:0;right:0;height:2px;border-radius:2px;background:currentColor;transition:transform .35s var(--ease)}
+.menu-trig .bars::before{top:1px}.menu-trig .bars::after{bottom:1px}
+.menu.open .menu-trig .bars::before{transform:translateY(4px) rotate(45deg)}
+.menu.open .menu-trig .bars::after{transform:translateY(-4px) rotate(-45deg)}
+.panel-m{position:absolute;right:0;top:calc(100% + 12px);width:min(560px,calc(100vw - 28px));padding:14px;border-radius:28px;background:rgba(17,38,21,.94);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:4px;opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top right;transition:opacity .3s var(--ease),transform .4s var(--ease),visibility .3s}
+.panel-m::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
+.menu.open .panel-m{opacity:1;visibility:visible;transform:none}
+@media (hover:hover) and (min-width:861px){.menu:hover .panel-m{opacity:1;visibility:visible;transform:none}}
+.panel-m a.it{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-radius:18px;text-decoration:none;transition:background-color .2s}
+.panel-m a.it:hover{background:rgba(255,255,255,.1)}
+.panel-m a.it b{font-weight:600;font-size:1.125rem}
+.panel-m a.it span{font-size:.9375rem;color:var(--on-dark-2)}
+.panel-m .row{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12)}
+.pill{min-height:46px;padding:0 16px;border-radius:999px;background:rgba(255,255,255,.1);font-weight:600;font-size:1rem}
+.pill[aria-pressed="true"]{background:var(--lime);color:var(--g800)}
+.bar .cta-vm{min-height:50px;padding:0 1.25em}
+@media (max-width:620px){.brand .wm{display:none}.bar .cta-vm span.l{display:none}.bar .cta-vm{padding:0 1em}.panel-m{grid-template-columns:1fr;max-height:calc(100svh - 120px);overflow:auto;overscroll-behavior:contain}}
+
+/* ---- HERO 3D ---- */
+.hero{position:relative;height:100svh;min-height:640px;background:#5b6c62;overflow:hidden;color:#fff}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
+.hero canvas:active{cursor:grabbing}
+.hero-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,24,12,.5) 0%,rgba(8,24,12,0) 24%,rgba(8,24,12,0) 42%,rgba(8,24,12,.8) 100%)}
+.hero-copy{position:absolute;left:0;right:0;bottom:clamp(36px,8vh,88px);z-index:3;pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
+.hero-grid .l{grid-column:1/8}
+.hero-grid .r{grid-column:8/13;padding-left:24px}
+.hero-copy h1{color:#fff}
+.hero-copy .sub{font-size:1.1875rem;line-height:1.6;color:#F3F8EE}
+.hero-copy .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;pointer-events:auto}
+.hero-kick{font-weight:600;color:var(--lime);font-size:clamp(1rem,1.3vw,1.2rem);margin-bottom:14px;display:block}
+.hero-tools{position:absolute;z-index:4;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 104px);pointer-events:none}
+.hero-tools .wrap{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.hero-tools .wrap>*{pointer-events:auto}
+.seg{display:inline-flex;padding:5px;border-radius:999px;background:rgba(12,31,16,.45);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.seg button{min-height:44px;padding:0 16px;border-radius:999px;font-weight:600;font-size:1rem;color:#fff;transition:background-color .25s,color .25s}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--g800)}
+.hint{display:inline-flex;align-items:center;gap:10px;font-size:1rem;font-weight:500;padding:0 16px;min-height:54px;border-radius:999px;background:rgba(12,31,16,.45);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.hint svg{width:20px;height:20px}
+@media (max-width:860px){
+  .hero{min-height:600px}
+  .hero-grid{display:block}
+  .hero-copy{bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+  .hero-copy h1{font-size:clamp(2.3rem,10.5vw,3.3rem)}
+  .hero-copy .sub{font-size:1.0625rem;margin-top:14px}
+  .hero-copy .acts .btn{flex:1 1 100%}
+  .hint{display:none}
+  .hero-tools .wrap{justify-content:flex-start}
+}
+@media (max-width:860px) and (max-height:760px){.hero-copy .sub{display:none}}
+
+/* ---- Về chúng tôi ---- */
+.about{padding-block:var(--sec)}
+.a-left{grid-column:1/7;min-width:0}
+.chips3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.chipbox{display:flex;align-items:center;gap:12px;padding:12px 14px 12px 10px;border-radius:20px;background:var(--white);transition:transform .45s var(--ease);min-width:0}
+.chipbox:hover{transform:translateY(-4px)}
+.chipbox svg{width:56px;height:56px;flex:none;overflow:visible}
+.chipbox div{min-width:0}
+.chipbox b{display:block;font-size:1.0625rem;font-weight:600;font-stretch:104%;line-height:1.25}
+.chipbox span{display:block;font-size:.9375rem;color:var(--muted);line-height:1.35;margin-top:2px}
+.about-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:center}
+.a-photo{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:1.02}
+.a-photo>img{width:100%;height:115%;object-fit:cover;object-position:50% 15%}
+.a-copy{grid-column:8/13}
+.a-copy p{margin-top:20px}
+.a-copy .quote{font-size:var(--fs-lead);font-weight:500;color:var(--g600);line-height:1.5;padding-left:18px;border-left:3px solid var(--lime)}
+.a-copy .btn{margin-top:30px}
+.float{animation:flo 5s ease-in-out infinite}
+.float.d2{animation-delay:-1.6s}.float.d3{animation-delay:-3.2s}
+@keyframes flo{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media (max-width:1180px) and (min-width:981px){.chipbox{flex-direction:column;align-items:flex-start;gap:8px}}
+@media (max-width:980px){.about-grid{display:block}.a-copy{margin-top:32px}.a-photo{aspect-ratio:4/3}}
+@media (max-width:620px){.a-photo{aspect-ratio:1}}
+@media (max-width:620px){.chips3{gap:8px}.chipbox{flex-direction:column;align-items:center;text-align:center;gap:6px;padding:12px 6px 14px}.chipbox svg{width:48px;height:48px}.chipbox b{font-size:1rem}.chipbox span{font-size:.8125rem}}
+
+/* ---- Số liệu ---- */
+.stats{padding-bottom:var(--sec)}
+.stat-band{position:relative;border-radius:var(--r-lg);background:var(--g800);color:#fff;overflow:hidden;padding:clamp(28px,4vw,48px)}
+.stat-band::before{content:"";position:absolute;right:-120px;top:-120px;width:380px;height:380px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 360'%3E%3Cg fill='%23ffffff' fill-opacity='.05'%3E%3Cpath d='M64 180L120 150.4L170.4 180L120 209.6Z'/%3E%3Cpath d='M296 180L240 150.4L189.6 180L240 209.6Z'/%3E%3Cpath d='M118.4 72.8L173.6 104L173.6 162.4L118.4 132.8Z'/%3E%3Cpath d='M241.6 72.8L186.4 104L186.4 162.4L241.6 132.8Z'/%3E%3Cpath d='M118.4 287.2L173.6 256L173.6 197.6L118.4 227.2Z'/%3E%3Cpath d='M241.6 287.2L186.4 256L186.4 197.6L241.6 227.2Z'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain;pointer-events:none}
+.stat-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:auto auto;gap:0;position:relative}
+.st{padding:18px 24px 20px}
+.st b{display:block;font-size:clamp(3rem,5.6vw,5.2rem);font-weight:600;font-stretch:118%;letter-spacing:-0.04em;line-height:.95}
+.st b small{font-size:.4em;font-weight:600;letter-spacing:0;margin-left:.12em;-webkit-text-fill-color:#fff;color:#fff}
+.st span{display:block;margin-top:10px;font-size:1.0625rem;color:var(--on-dark)}
+.st.big{grid-row:1/3;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.12)}
+.st.big b{font-size:clamp(5rem,10vw,9rem)}
+.st:nth-child(2),.st:nth-child(3){border-bottom:1px solid rgba(255,255,255,.12)}
+.st:nth-child(3),.st:nth-child(5){border-left:1px solid rgba(255,255,255,.12)}
+.stat-foot{position:relative;display:flex;flex-wrap:nowrap;white-space:nowrap;justify-content:space-between;max-width:none;gap:20px;margin-top:22px;padding:18px 24px 0;border-top:1px solid rgba(255,255,255,.12);font-size:1.0625rem;color:var(--on-dark)}
+.stat-foot b{color:var(--lime);font-weight:600}
+@media (max-width:760px){.stat-grid{grid-template-columns:1fr 1fr}.st.big{grid-column:1/-1;grid-row:auto;border-right:0;border-bottom:1px solid rgba(255,255,255,.12)}.st{padding:16px 10px 18px}.st:nth-child(3),.st:nth-child(5){border-left:1px solid rgba(255,255,255,.12)}.st:nth-child(2),.st:nth-child(3){border-bottom:1px solid rgba(255,255,255,.12)}.st b{font-size:clamp(2.6rem,12vw,3.4rem)}.st.big b{font-size:clamp(4.4rem,22vw,6rem)}.stat-foot{padding:16px 10px 0;gap:14px;font-size:.875rem;overflow-x:auto;scrollbar-width:none;justify-content:flex-start}}
+
+/* ---- Giá trị ---- */
+.values{padding-bottom:var(--sec)}
+.val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.vcard{position:relative;border-radius:var(--r-lg);padding:30px 28px 32px;background:var(--white);display:flex;flex-direction:column;gap:12px;min-height:320px;overflow:hidden;transition:transform .5s var(--ease)}
+.vcard:hover{transform:translateY(-6px)}
+.vcard .gem{width:56px;height:56px;margin-bottom:auto}
+.vcard p{font-size:1.0625rem}
+.vcard.ph{padding:0;min-height:0}
+.vcard.ph img{width:100%;height:100%;object-fit:cover}
+.v2{background:var(--g800);color:var(--on-dark)} .v2 h3{color:#fff}
+.v6{background:var(--lime)}
+@media (max-width:980px){.val-grid{grid-template-columns:1fr 1fr}.vcard.ph{aspect-ratio:1}}
+@media (max-width:620px){.val-grid{grid-template-columns:1fr}.vcard{min-height:0}.vcard .gem{margin-bottom:12px}.vcard.ph{aspect-ratio:16/11}}
+
+/* ---- Mô hình 3D ---- */
+.model{padding-block:var(--sec);background:var(--g900);color:var(--on-dark)}
+.model .sec-head h2{color:#fff}
+.stage{position:relative;border-radius:var(--r-lg);overflow:hidden;background:#173a22;height:clamp(640px,62vw,760px)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+.glass{position:absolute;z-index:3;left:18px;top:18px;width:min(380px,40%);display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:26px;background:rgba(12,31,16,.62);-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%)}
+.glass h3{color:#fff;font-size:1.3rem}
+.lays{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.lays li:first-child{grid-column:1/-1}
+.lay{display:flex;align-items:center;gap:8px;width:100%;min-height:50px;padding:5px 10px 5px 5px;border-radius:16px;background:rgba(255,255,255,.06);text-align:left;font-weight:600;font-size:1.0625rem;color:#fff;transition:background-color .25s,transform .25s var(--ease)}
+.lay:hover{background:rgba(255,255,255,.12)}
+.lay[aria-pressed="true"]{background:#fff;color:var(--g800)}
+.lay img,.lay svg{width:36px;height:36px;flex:none}
+.lay .c{margin-left:auto;font-variant-numeric:tabular-nums;font-size:1.125rem;opacity:.9}
+.info{border-radius:18px;background:rgba(255,255,255,.08);padding:12px 14px 14px}
+.info p{font-size:.9375rem!important;line-height:1.5}
+.info b.t{display:block;color:#fff;font-size:1.125rem;margin-bottom:6px}
+.info p{font-size:1rem;color:var(--on-dark)}
+.info small{display:block;margin-top:8px;font-size:.9375rem;color:var(--lime)}
+.zrow{display:flex;flex-wrap:wrap;gap:6px}
+.zb{min-width:46px;min-height:44px;padding:0 10px;border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:1rem;transition:background-color .2s}
+.zb:hover{background:rgba(255,255,255,.18)}
+.zb[aria-pressed="true"]{background:var(--lime);color:var(--g800)}
+.stage-note{position:absolute;z-index:3;right:20px;bottom:16px;font-size:.9375rem;color:var(--on-dark-2);text-align:right;max-width:36ch;pointer-events:none}
+.drag-hint{position:absolute;z-index:3;right:18px;top:18px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;background:rgba(12,31,16,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:.9375rem;font-weight:500;pointer-events:none}
+.drag-hint svg{width:18px;height:18px}
+@media (max-width:900px){
+  .stage{aspect-ratio:auto;min-height:0;height:auto;background:var(--g800)}
+  .stage canvas{position:relative;height:min(62svh,520px)}
+  .glass{position:relative;left:auto;top:auto;bottom:auto;width:auto;margin:0;border-radius:0 0 var(--r-lg) var(--r-lg);background:var(--g800);-webkit-backdrop-filter:none;backdrop-filter:none;overflow:visible}
+  .stage-note{display:none}
+}
+
+/* ---- Công nghệ ---- */
+.tech{padding-top:var(--sec);overflow:hidden}
+.track-wrap{padding-bottom:var(--sec)}
+.track{display:flex;gap:18px;padding-left:max(var(--gut),calc((100vw - var(--max))/2));padding-right:max(var(--gutr),calc((100vw - var(--max))/2));will-change:transform}
+.tcard{position:relative;flex:0 0 min(70vw,400px);aspect-ratio:4/5;border-radius:var(--r-lg);overflow:hidden;color:#fff;background:var(--g700)}
+.tcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.14)}
+.tcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 26%,rgba(6,20,10,.82) 52%,rgba(6,20,10,.92) 100%)}
+.tcard .tx{position:absolute;z-index:2;left:28px;right:28px;top:50%;bottom:22px;display:flex;flex-direction:column;justify-content:flex-start}
+.tcard h3{color:var(--lime);margin-bottom:10px;font-size:clamp(1.4rem,2vw,1.8rem)}
+.tcard p{font-size:1.0625rem;color:#F1F6EC}
+.tcard .no{position:absolute;z-index:2;top:20px;left:22px;font-weight:600;font-size:1rem;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+@media (max-width:860px){.track{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}.track::-webkit-scrollbar{display:none}.tcard{flex-basis:min(78vw,400px);scroll-snap-align:center}.tcard .tx{left:20px;right:20px;top:46%;bottom:18px}.tcard p{font-size:1rem}}
+
+/* ---- 3 lớp vận hành ---- */
+.layers{padding-block:var(--sec);background:var(--white)}
+.lay-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
+.lay-sticky{grid-column:1/6;position:sticky;top:130px}
+.lay-sticky p{margin-top:20px}
+.stack{grid-column:7/13;display:grid;gap:16px;perspective:1400px}
+.layer{border-radius:var(--r-lg);overflow:hidden;background:var(--paper);display:grid;grid-template-columns:.9fr 1fr;min-height:260px}
+.layer img{width:100%;height:100%;object-fit:cover}
+.layer .lt{padding:24px 24px 26px;display:flex;flex-direction:column;gap:8px}
+.layer .lt em{font-style:normal;font-weight:600;color:var(--g500);font-size:1rem}
+.layer .who{font-weight:600;font-size:1.0625rem}
+.layer p{font-size:1.0625rem}
+.l2{background:var(--paper-2)}.l3{background:var(--g800);color:var(--on-dark)} .l3 h3{color:#fff} .l3 em{color:var(--lime)!important}
+@media (max-width:980px){.lay-grid{display:block}.lay-sticky{position:static;margin-bottom:32px}.layer{min-height:0}}
+@media (max-width:620px){.layer{grid-template-columns:1fr}.layer img{aspect-ratio:16/9}}
+
+/* ---- Ứng dụng ---- */
+.apps{padding-block:var(--sec)}
+.sotay{border-radius:var(--r-lg);background:var(--g800);color:var(--on-dark);padding:clamp(26px,4vw,52px);display:grid;grid-template-columns:repeat(12,1fr);gap:24px;overflow:hidden}
+.sotay .intro{grid-column:1/6;display:flex;flex-direction:column;gap:16px;align-self:center}
+.sotay .intro h3{font-size:clamp(2rem,3.2vw,2.8rem);font-stretch:112%}
+.phones{grid-column:6/13;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:end}
+.phone{display:flex;flex-direction:column;gap:10px}
+.phone .scr{border-radius:24px;overflow:hidden;background:#fff;aspect-ratio:9/14}
+.phone .scr img{width:100%;height:100%;object-fit:cover;object-position:top}
+.phone b{color:#fff;font-size:1.0625rem;line-height:1.3}
+.phone span{font-size:.9375rem;color:var(--on-dark-2);line-height:1.45}
+.phone:nth-child(2){transform:translateY(-24px)}
+.dash{margin-top:14px;border-radius:var(--r-lg);background:var(--white);display:grid;grid-template-columns:1.1fr 1fr;overflow:hidden}
+.dash .pic{background:var(--paper-2);padding:clamp(18px,3vw,34px);display:grid;gap:12px}
+.dash .pic img{border-radius:14px;width:100%}
+.dash-h{font-size:clamp(1.8rem,3vw,2.6rem);font-stretch:112%}
+.dash .tx{padding:clamp(26px,4vw,48px);display:flex;flex-direction:column;gap:16px;justify-content:center}
+.dash ul{list-style:none;display:grid;gap:10px}
+.dash li{display:flex;gap:12px;font-weight:500;font-size:1.0625rem}
+.dash li::before{content:"";flex:none;width:12px;height:12px;margin-top:.45em;background:var(--g500);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+@media (max-width:980px){.sotay{grid-template-columns:1fr}.sotay>*{grid-column:auto!important}.phones{gap:8px}.phone:nth-child(2){transform:none}.phone b{font-size:.9375rem}.phone span{display:none}.phone .scr{border-radius:16px}.dash{grid-template-columns:1fr}.dash .pic{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.dash .pic{grid-template-columns:1fr}}
+
+/* ---- Hệ sinh thái ---- */
+.eco{padding-bottom:var(--sec)}
+.eco-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
+.eco-img{grid-column:1/6;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/4.6;position:sticky;top:120px}
+.eco-img img{width:100%;height:100%;object-fit:cover}
+.eco-list{grid-column:7/13}
+.eco-list h2{margin-bottom:30px}
+.acc{border-top:1px solid var(--paper-3)}
+.acc:last-child{border-bottom:1px solid var(--paper-3)}
+.acc button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;padding:20px 4px;min-height:70px;font-size:clamp(1.15rem,1.5vw,1.35rem);font-weight:600;color:var(--g600)}
+.acc button i{flex:none;width:44px;height:44px;border-radius:50%;background:var(--paper-2);position:relative;transition:background-color .3s}
+.acc button i::before,.acc button i::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:2.5px;margin:-1.25px 0 0 -8px;background:var(--g700);border-radius:2px}
+.acc button i::after{transform:rotate(90deg);transition:transform .4s var(--ease)}
+.acc button[aria-expanded="true"] i{background:var(--lime)}
+.acc button[aria-expanded="true"] i::after{transform:rotate(0)}
+.acc .panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.acc .panel>div{overflow:hidden}
+.acc .panel p{padding:0 4px 22px;font-size:1.0625rem}
+.acc button[aria-expanded="true"]+.panel{grid-template-rows:1fr}
+@media (max-width:980px){.eco-grid{display:block}.eco-img{position:relative;top:0;aspect-ratio:16/11;margin-bottom:32px}}
+
+/* ---- Niềm tin ---- */
+.trust{padding-bottom:var(--sec)}
+.trust-box{border-radius:var(--r-lg);overflow:hidden;display:grid;grid-template-columns:1fr 1fr;background:var(--paper-2)}
+.trust-box .tx{padding:clamp(26px,4vw,56px);display:flex;flex-direction:column;gap:20px}
+.trust-box .ph{position:relative;min-height:420px}
+.trust-box .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pair div{background:var(--white);border-radius:20px;padding:18px 18px 20px}
+.pair b{display:block;font-size:clamp(2.4rem,3.4vw,3.2rem);font-weight:600;font-stretch:116%;line-height:1;letter-spacing:-0.03em}
+.pair span{display:block;margin-top:10px;font-weight:500;font-size:1rem;line-height:1.4}
+@media (max-width:980px){.trust-box{grid-template-columns:1fr}.trust-box .ph{min-height:280px;order:-1}}
+
+/* ---- Kết thúc ---- */
+.final{position:relative;min-height:92svh;display:flex;align-items:center;overflow:hidden;color:#fff}
+.final .bg{position:absolute;inset:0;width:100%;height:120%;object-fit:cover;will-change:transform}
+.final::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,22,40,.15) 0%,rgba(6,24,14,.35) 45%,rgba(6,24,14,.86) 100%)}
+.final .wrap{position:relative;z-index:2;padding-block:120px 72px}
+.final-card{max-width:760px;margin:0 auto;text-align:center}
+.final h2{font-size:clamp(2.6rem,6vw,5.4rem);line-height:1.02;color:#fff;letter-spacing:-0.035em}
+.final p{margin:20px auto 0;color:#F3F8EE;font-size:var(--fs-lead);max-width:42ch}
+.final .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:30px}
+.foot{background:var(--g800);color:var(--on-dark);padding:clamp(56px,7vw,96px) 0 calc(28px + env(safe-area-inset-bottom,0px))}
+.foot-top{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
+.foot-top .tl{grid-column:1/9}
+.tagline{font-size:clamp(1.7rem,3vw,2.6rem);font-weight:600;font-stretch:112%;line-height:1.15;margin-top:22px;letter-spacing:-0.02em}
+.tagline span{display:block}
+.foot-top .bt{grid-column:9/13;display:flex;justify-content:flex-end}
+.fcols{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:52px;padding-top:36px;border-top:1px solid rgba(255,255,255,.14)}
+.fcols h4{font-size:1rem;font-weight:600;color:var(--lime);margin-bottom:10px}
+.fcols ul{list-style:none;display:grid;gap:2px}
+.fcols a{display:inline-block;padding:7px 0;text-decoration:none;font-size:1.0625rem}
+.fcols a:hover{color:var(--lime);text-decoration:underline}
+.fcols .c1{grid-column:1/4}.fcols .c2{grid-column:4/7}.fcols .c3{grid-column:7/13}
+.fcols .c3 p{font-size:1.0625rem;margin-bottom:10px}
+.fcols .c3 a{font-weight:600;color:#fff}
+.fbottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;margin-top:44px;font-size:1rem}
+@media (max-width:900px){.foot-top{display:block}.foot-top .bt{justify-content:flex-start;margin-top:24px}.fcols{grid-template-columns:1fr 1fr}.fcols>*{grid-column:auto!important}.fcols .c3{grid-column:1/-1!important}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);z-index:300;background:var(--g800);color:#fff;padding:16px 22px;border-radius:16px;font-weight:500;transition:transform .45s var(--ease);max-width:calc(100% - 32px)}
+.toast.on{transform:translate(-50%,0)}
+.js .rv{opacity:0;transform:translateY(28px)}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}.grad,.grad-d,.float{animation:none}}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="lg1" x1="83" y1="83" x2="277" y2="277" gradientUnits="userSpaceOnUse"><stop stop-color="#3A8047"/><stop offset="1" stop-color="#86C046"/></linearGradient>
+  <symbol id="logo" viewBox="0 0 360 360"><path d="M140.967 19.9768C162.647 -1.70319 197.797 -1.70319 219.477 19.9768L340.467 140.967C362.147 162.647 362.147 197.797 340.467 219.477L219.477 340.467C197.797 362.147 162.647 362.147 140.967 340.467L19.9768 219.477C-1.70319 197.797 -1.70319 162.647 19.9768 140.967L140.967 19.9768Z" fill="url(#lg1)"/><g fill="#F1F7E8"><path d="M64 180L120 150.4L170.4 180L120 209.6Z"/><path d="M296 180L240 150.4L189.6 180L240 209.6Z"/><path d="M118.4 72.8L173.6 104L173.6 162.4L118.4 132.8Z"/><path d="M241.6 72.8L186.4 104L186.4 162.4L241.6 132.8Z"/><path d="M118.4 287.2L173.6 256L173.6 197.6L118.4 227.2Z"/><path d="M241.6 287.2L186.4 256L186.4 197.6L241.6 227.2Z"/></g></symbol>
+  <symbol id="ext" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8"/></symbol>
+  <symbol id="arr" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="drag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></symbol>
+  <linearGradient id="gTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9BDB5E"/><stop offset="1" stop-color="#4E9D3E"/></linearGradient>
+  <linearGradient id="gSoilL" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#B4532A"/><stop offset="1" stop-color="#7A2F14"/></linearGradient>
+  <linearGradient id="gSoilR" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#93421F"/><stop offset="1" stop-color="#5E220D"/></linearGradient>
+  <linearGradient id="gPin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7ED839"/><stop offset="1" stop-color="#008242"/></linearGradient>
+  <radialGradient id="gCherry" cx=".35" cy=".3" r=".75"><stop stop-color="#FF8A7A"/><stop offset=".45" stop-color="#D3262B"/><stop offset="1" stop-color="#7C0F18"/></radialGradient>
+  <radialGradient id="gCherry2" cx=".35" cy=".3" r=".75"><stop stop-color="#FFC07A"/><stop offset=".5" stop-color="#E0532A"/><stop offset="1" stop-color="#8E2412"/></radialGradient>
+  <linearGradient id="gLeaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7ED839"/><stop offset="1" stop-color="#2E7A34"/></linearGradient>
+</defs></svg>
+
+<a class="skip" href="#noidung">Bỏ qua, đến nội dung chính</a>
+
+<header class="nav" id="nav">
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="FarmBlock – về đầu trang" translate="no"><svg class="mk" aria-hidden="true"><use href="#logo"/></svg><svg class="wm" viewBox="0 0 603 70" aria-hidden="true" focusable="false"><path d="M0 68.2207V1.17285H48.1721V12.0217H12.7026V30.0054H44.6545V40.8542H12.7026V68.2207H0Z"/><path d="M47.2622 68.2207L73.3514 1.17285H89.3762L115.563 68.2207H101.786L96.4114 53.951H65.7298L60.3556 68.2207H47.2622ZM69.736 43.1999H92.3075L85.5654 25.0208C85.3048 24.3692 84.9791 23.5547 84.5883 22.5773C84.2626 21.5348 83.9043 20.4271 83.5134 19.2543C83.1226 18.0163 82.7317 16.7782 82.3409 15.5402C81.95 14.3022 81.5917 13.1945 81.266 12.2172H80.7775C80.3866 13.5203 79.8981 15.019 79.3118 16.7131C78.7907 18.4072 78.2695 20.0036 77.7484 21.5022C77.2273 23.0009 76.8039 24.1737 76.4781 25.0208L69.736 43.1999Z"/><path d="M123.476 68.2207V1.17285H158.75C163.701 1.17285 167.805 2.0199 171.062 3.71402C174.319 5.40814 176.762 7.81899 178.39 10.9466C180.019 14.0742 180.833 17.7556 180.833 21.9909C180.833 26.3565 179.856 30.2334 177.902 33.6217C175.948 36.9447 173.081 39.4533 169.303 41.1474L183.178 68.2207H169.303L156.991 43.2977H136.179V68.2207H123.476ZM136.179 32.6443H157.773C161.03 32.6443 163.538 31.6995 165.297 29.8099C167.056 27.9203 167.935 25.314 167.935 21.9909C167.935 19.8407 167.544 18.0488 166.763 16.6154C165.981 15.1167 164.841 13.9764 163.343 13.1945C161.845 12.4126 159.988 12.0217 157.773 12.0217H136.179V32.6443Z"/><path d="M193.516 68.2207V1.17285H213.547L224.1 38.5085C224.491 39.8117 224.882 41.2778 225.272 42.9067C225.663 44.5357 226.022 46.0995 226.347 47.5981C226.738 49.0967 227.031 50.3999 227.227 51.5076H228.008C228.139 50.5302 228.334 49.3248 228.595 47.8913C228.855 46.4578 229.148 44.9266 229.474 43.2977C229.865 41.6035 230.288 39.9746 230.744 38.4108L241.297 1.17285H261.133V68.2207H248.43V34.3058C248.43 31.3085 248.463 28.3113 248.528 25.314C248.593 22.3167 248.658 19.743 248.723 17.5927C248.854 15.4425 248.919 14.1719 248.919 13.781H248.137C248.007 14.3674 247.681 15.638 247.16 17.5927C246.639 19.5475 246.085 21.6651 245.499 23.9457C244.913 26.2262 244.392 28.1809 243.936 29.8099L232.894 68.2207H221.169L210.127 29.9076C209.736 28.5393 209.28 26.9104 208.759 25.0208C208.303 23.066 207.815 21.0787 207.293 19.0588C206.837 17.0389 206.414 15.2796 206.023 13.781H205.241C205.307 15.5402 205.372 17.6579 205.437 20.1339C205.502 22.5448 205.567 25.0208 205.632 27.5619C205.697 30.038 205.73 32.2859 205.73 34.3058V68.2207H193.516Z"/><path d="M275.961 68.2207V1.17285H312.505C316.088 1.17285 319.28 1.85701 322.081 3.22533C324.947 4.59365 327.195 6.51582 328.823 8.99184C330.452 11.4679 331.266 14.3674 331.266 17.6905C331.266 20.2316 330.777 22.5448 329.8 24.6298C328.823 26.7149 327.488 28.4742 325.794 29.9076C324.165 31.276 322.309 32.3185 320.224 33.0352V33.4262C322.7 33.9475 324.915 34.9574 326.869 36.456C328.823 37.8895 330.354 39.7465 331.461 42.0271C332.569 44.2425 333.122 46.8162 333.122 49.7483C333.122 53.9185 332.178 57.3718 330.289 60.1085C328.465 62.8451 325.989 64.8976 322.863 66.2659C319.801 67.5691 316.348 68.2207 312.505 68.2207H275.961ZM288.663 57.3718H310.844C313.515 57.3718 315.697 56.6551 317.391 55.2216C319.15 53.723 320.029 51.4099 320.029 48.2823C320.029 46.4578 319.671 44.8615 318.954 43.4931C318.238 42.1248 317.13 41.0823 315.632 40.3655C314.199 39.5836 312.342 39.1927 310.062 39.1927H288.663V57.3718ZM288.663 28.5393H309.183C311.137 28.5393 312.766 28.1809 314.068 27.4642C315.436 26.7475 316.446 25.7701 317.098 24.5321C317.814 23.2941 318.172 21.9258 318.172 20.4271C318.172 17.5601 317.391 15.4425 315.827 14.0742C314.329 12.7059 312.342 12.0217 309.867 12.0217H288.663V28.5393Z"/><path d="M344.951 68.2207V1.17285H357.653V57.1764H391.267V68.2207H344.951Z"/><path d="M428.499 69.3935C421.529 69.3935 415.503 68.1555 410.422 65.6795C405.341 63.1383 401.432 59.294 398.696 54.1465C396.026 48.999 394.69 42.5158 394.69 34.6968C394.69 26.8126 396.026 20.3294 398.696 15.247C401.432 10.0995 405.341 6.28777 410.422 3.81176C415.503 1.27059 421.529 0 428.499 0C435.534 0 441.56 1.27059 446.575 3.81176C451.656 6.28777 455.532 10.0995 458.203 15.247C460.939 20.3294 462.307 26.8126 462.307 34.6968C462.307 42.5158 460.939 48.999 458.203 54.1465C455.532 59.294 451.656 63.1383 446.575 65.6795C441.56 68.1555 435.534 69.3935 428.499 69.3935ZM428.499 58.6424C431.886 58.6424 434.85 58.1537 437.391 57.1764C439.996 56.199 442.178 54.7655 443.937 52.8759C445.696 50.9212 447.031 48.5429 447.943 45.7411C448.855 42.8741 449.311 39.5836 449.311 35.8696V33.7194C449.311 29.9402 448.855 26.6171 447.943 23.7502C447.031 20.8832 445.696 18.5049 443.937 16.6154C442.178 14.6606 439.996 13.1945 437.391 12.2172C434.85 11.2398 431.886 10.7511 428.499 10.7511C425.111 10.7511 422.115 11.2398 419.509 12.2172C416.969 13.1945 414.819 14.6606 413.06 16.6154C411.301 18.5049 409.966 20.8832 409.054 23.7502C408.207 26.6171 407.784 29.9402 407.784 33.7194V35.8696C407.784 39.5836 408.207 42.8741 409.054 45.7411C409.966 48.5429 411.301 50.9212 413.06 52.8759C414.819 54.7655 416.969 56.199 419.509 57.1764C422.115 58.1537 425.111 58.6424 428.499 58.6424Z"/><path d="M503.662 69.3935C496.822 69.3935 490.959 68.1881 486.073 65.7773C481.253 63.3664 477.54 59.6198 474.934 54.5375C472.394 49.39 471.123 42.7764 471.123 34.6968C471.123 22.9031 473.99 14.1719 479.722 8.50315C485.454 2.83438 493.434 0 503.662 0C509.199 0 514.182 0.944794 518.612 2.83438C523.106 4.72397 526.657 7.59093 529.262 11.4353C531.933 15.2145 533.268 20.0362 533.268 25.9004H520.273C520.273 22.6425 519.556 19.9058 518.123 17.6905C516.755 15.4099 514.833 13.6832 512.358 12.5104C509.883 11.3375 507.049 10.7511 503.857 10.7511C499.427 10.7511 495.747 11.6307 492.815 13.39C489.884 15.0841 487.702 17.6253 486.269 21.0135C484.901 24.4018 484.217 28.6045 484.217 33.6217V35.7719C484.217 40.8542 484.901 45.0895 486.269 48.4777C487.702 51.866 489.852 54.4071 492.718 56.1013C495.649 57.7954 499.362 58.6424 503.857 58.6424C507.244 58.6424 510.208 58.0886 512.749 56.9809C515.289 55.808 517.244 54.1139 518.612 51.8985C520.045 49.618 520.761 46.8488 520.761 43.5909H533.268C533.268 49.4551 531.966 54.3094 529.36 58.1537C526.754 61.9329 523.204 64.7673 518.709 66.6569C514.28 68.4813 509.264 69.3935 503.662 69.3935Z"/><path d="M544.574 68.2207V1.17285H557.277V32.2533L586.981 1.17285H602.517L576.526 28.3438L603.006 68.2207H587.958L567.927 37.2379L557.277 46.6207V68.2207H544.574Z"/></svg></a>
+    <div class="menu" id="menu">
+      <button class="menu-trig" type="button" aria-expanded="false" aria-controls="panelM" id="menuBtn"><span class="bars" aria-hidden="true"></span>Menu</button>
+      <div class="panel-m" id="panelM">
+        <a class="it" href="#top"><b>Trang chủ</b><span>Ảnh 360° vườn IaKo</span></a>
+        <a class="it" href="#ve-chung-toi"><b>Về chúng tôi</b><span>Hành trình FarmBlock</span></a>
+        <a class="it" href="#mo-hinh"><b>Mô hình</b><span>Bản đồ 3D và thiết bị</span></a>
+        <a class="it" href="https://farmblock.vn/" target="_blank" rel="noopener"><b>Bảng tin</b><span>Tin tức FarmBlock</span></a>
+        <a class="it" href="#tai-ung-dung"><b>Tải ứng dụng</b><span>Sổ rẫy &amp; Dashboard</span></a>
+        <a class="it" href="#lien-he"><b>Liên hệ</b><span>0354 060 029</span></a>
+        <div class="row"><span role="group" aria-label="Ngôn ngữ" style="display:flex;gap:6px"><button class="pill" type="button" aria-pressed="true">VN</button><button class="pill" type="button" aria-pressed="false" data-en>EN</button></span><button class="pill" type="button" data-size aria-pressed="false">A+ Chữ to</button></div>
+      </div>
+    </div>
+    <a class="btn btn-lime cta-vm" href="https://vuonmau.farmblock.vn/ca-phe-mang-yang-1" target="_blank" rel="noopener"><span class="l">Truy cập vườn mẫu</span><span class="s" aria-hidden="true"></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
+  </div>
+</header>
+
+<main id="noidung">
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" aria-labelledby="h1">
+  <canvas id="heroGL" aria-label="Ảnh flycam 360° vườn FarmBlock IaKo. Kéo để xoay." role="img"></canvas>
+  <div class="hero-veil"></div>
+  <div class="hero-tools"><div class="wrap">
+    <div class="seg" role="group" aria-label="Chọn thời điểm chụp"><button type="button" data-season="rain" aria-pressed="true">Tháng 6</button><button type="button" data-season="dry" aria-pressed="false">Tháng 9</button></div>
+    <span class="hint"><svg aria-hidden="true"><use href="#drag"/></svg>Kéo để xoay 360°</span>
+  </div></div>
+  <div class="hero-copy">
+    <div class="wrap hero-grid">
+      <div class="l">
+        <span class="hero-kick hx">Tiên phong trong số hóa tài sản nông nghiệp</span>
+        <h1 id="h1" class="hx">Hành trình cùng <span class="grad nw">Tây Nguyên</span><br>chạm đến tương lai</h1>
+      </div>
+      <div class="r">
+        <p class="sub hx">Từ những cánh đồng cà phê Tây Nguyên, chúng tôi kết nối thiên nhiên với nền tảng công nghệ tiên phong, mang nông sản Việt đến thế giới, cùng người nông dân viết nên câu chuyện bền vững.</p>
+        <div class="acts hx">
+          <a class="btn btn-lime" href="#mo-hinh">Khám phá mô hình<svg aria-hidden="true"><use href="#arr"/></svg></a>
+          <a class="btn btn-glass" href="https://tour.panoee.net/iframe/6a33d1a6b0840200089ad6a5" target="_blank" rel="noopener">Tour 360° toàn vườn<svg aria-hidden="true"><use href="#ext"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VỀ CHÚNG TÔI ============ -->
+<section class="about" id="ve-chung-toi" aria-labelledby="h-j">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="a-left">
+      <figure class="a-photo rv-img"><img src="img/team-coffee.jpg" width="1400" height="1146" alt="Hai kỹ sư FarmBlock kiểm tra chùm cà phê chín trên cành" loading="lazy"></figure>
+    <div class="chips3">
+      <div class="chipbox rv">
+        <svg viewBox="0 0 120 130" aria-hidden="true"><g class="float"><path d="M60 52l50 25-50 25-50-25z" fill="url(#gTop)"/><path d="M10 77l50 25v14l-50-25z" fill="url(#gSoilL)"/><path d="M110 77l-50 25v14l50-25z" fill="url(#gSoilR)"/><path d="M38 80l10 5M66 70l14 7M52 92l12-6" stroke="#2E7A34" stroke-width="3" stroke-linecap="round" opacity=".55"/></g><g class="float d2"><ellipse cx="60" cy="78" rx="12" ry="5" fill="#0F2A17" opacity=".25"/><path d="M60 76c-12-16-20-24-20-35a20 20 0 0 1 40 0c0 11-8 19-20 35z" fill="url(#gPin)"/><circle cx="60" cy="41" r="8" fill="#F5E4A1"/><path d="M48 30a14 14 0 0 1 10-6" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6" fill="none"/></g></svg>
+        <div><b>Gia Lai</b><span>Thủ phủ cà phê Tây Nguyên</span></div>
+      </div>
+      <div class="chipbox rv">
+        <svg viewBox="0 0 120 130" aria-hidden="true"><g class="float d2"><path d="M60 22l46 23-46 23-46-23z" fill="url(#gTop)"/><path d="M14 45l46 23v18l-46-23z" fill="#B4532A"/><path d="M106 45l-46 23v18l46-23z" fill="#8C3B19"/><path d="M14 63l46 23v16l-46-23z" fill="#9A4220"/><path d="M106 63l-46 23v16l46-23z" fill="#76300F"/><path d="M14 79l46 23v14l-46-23z" fill="#7E3214"/><path d="M106 79l-46 23v14l46-23z" fill="#5E220D"/><circle cx="30" cy="62" r="3" fill="#E7B48F"/><circle cx="44" cy="80" r="2.5" fill="#E7B48F"/><circle cx="80" cy="76" r="3" fill="#C98A63"/><circle cx="94" cy="62" r="2" fill="#C98A63"/><path d="M60 40c0-8 4-13 10-14-1 7-4 11-10 14zM60 40c0-6-3-10-8-11 1 6 3 9 8 11z" fill="#2E7A34"/></g></svg>
+        <div><b>Đất đỏ bazan</b><span>Màu mỡ, giữ ẩm tốt</span></div>
+      </div>
+      <div class="chipbox rv">
+        <svg viewBox="0 0 120 130" aria-hidden="true"><g class="float d3"><path d="M22 40c18-22 50-24 72-8-20 6-48 10-72 8z" fill="url(#gLeaf)"/><path d="M26 39c22-4 44-6 66-7" stroke="#1E5A26" stroke-width="2" fill="none" opacity=".6"/><path d="M60 34c-2 20 0 40 4 62" stroke="#5B3A1E" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="48" cy="60" r="12" fill="url(#gCherry)"/><circle cx="70" cy="62" r="12" fill="url(#gCherry)"/><circle cx="58" cy="78" r="12" fill="url(#gCherry2)"/><circle cx="78" cy="84" r="10" fill="url(#gCherry)"/><circle cx="42" cy="82" r="10" fill="url(#gCherry)"/><circle cx="62" cy="98" r="10" fill="url(#gCherry2)"/><g fill="#fff" opacity=".55"><circle cx="44" cy="55" r="3"/><circle cx="66" cy="57" r="3"/><circle cx="54" cy="73" r="3"/><circle cx="75" cy="80" r="2.5"/><circle cx="39" cy="78" r="2.5"/><circle cx="59" cy="94" r="2.5"/></g></g></svg>
+        <div><b>Cà phê</b><span>Giống Thiện Trường</span></div>
+      </div>
+    </div>
+      </div>
+      <div class="a-copy">
+        <span class="tag rv">Về chúng tôi</span>
+        <h2 id="h-j" class="split">Hành trình ra thế giới, <span class="nw">định hình</span> <span class="grad-d nw">nông sản Việt Nam</span></h2>
+        <p class="rv">Trên nền đất đỏ Gia Lai, chúng tôi gieo những hạt giống đầu tiên, không chỉ là cà phê, sầu riêng, mà là giấc mơ về một nền nông nghiệp bền vững. Với công nghệ tiên phong từ Israel, chúng tôi chăm sóc từng cây trồng, minh bạch từng vụ mùa, và cùng nông dân Tây Nguyên viết nên câu chuyện vươn xa.</p>
+        <p class="quote rv">Hôm nay là Gia Lai, ngày mai là Tây Nguyên, và xa hơn là nông sản Việt trên bàn ăn toàn cầu.</p>
+        <a class="btn btn-green rv" href="#mo-hinh">Khám phá hành trình<svg aria-hidden="true"><use href="#arr"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SỐ LIỆU ============ -->
+<section class="stats" aria-label="FarmBlock bằng con số">
+  <div class="wrap">
+    <div class="stat-band">
+      <div class="stat-grid">
+        <div class="st big"><b class="num grad" data-to="22">22<small>ha</small></b><span>Vườn mẫu IaKo #01 tại Gia Lai</span></div>
+        <div class="st"><b class="num grad" data-to="138">138</b><span>Lô đất trên bản đồ số</span></div>
+        <div class="st"><b class="num grad" data-to="34">34</b><span>Thiết bị đo tại vườn</span></div>
+        <div class="st"><b class="num grad" data-to="15">15<small>+</small></b><span>Đối tác chiến lược</span></div>
+        <div class="st"><b class="num grad" data-to="10">10<small>+</small></b><span>Dự án đang triển khai</span></div>
+      </div>
+      <p class="stat-foot"><span><b>2.200</b> gốc cà phê mỗi ha</span><span><b>700–800 m</b> độ cao</span><span><b>24/7</b> giám sát hình ảnh</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GIÁ TRỊ ============ -->
+<section class="values" aria-labelledby="h-v">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-v" class="split">Giá trị trường tồn <span class="nw">từ đất đai</span> <span class="nw">và con người</span></h2>
+      <p class="rv">Bốn điều FarmBlock giữ trong mọi việc làm, từ thửa đất đầu tiên ở Gia Lai.</p>
+    </div>
+    <div class="val-grid">
+      <article class="vcard rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Thiên nhiên trù phú</h3><p>Những cánh đồng ở Gia Lai là nơi đất đỏ bazan nuôi dưỡng mùi vị cà phê đậm đà và hương thơm sầu riêng ngọt ngào. Chúng tôi kết hợp trồng trọt với công tác cải tạo, bảo vệ thiên nhiên, để đất đai mãi màu mỡ.</p></article>
+      <article class="vcard v2 rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Công nghệ tiên phong</h3><p>Chúng tôi áp dụng các công nghệ hiện đại như drone theo dõi, hệ thống cảm biến thông minh và nền tảng dữ liệu minh bạch, tạo tiền đề cho một nền nông nghiệp tương lai từ tinh túy đất Việt.</p></article>
+      <figure class="vcard ph rv-img"><img src="img/hmong-picking.jpg" width="1400" height="914" alt="Phụ nữ dân tộc thu hái trên đồi" loading="lazy"></figure>
+      <figure class="vcard ph rv-img"><img src="img/event-partners.jpg" width="1147" height="830" alt="Lãnh đạo FarmBlock giới thiệu nền tảng với các đối tác" loading="lazy" style="object-position:40% 30%"></figure>
+      <article class="vcard rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Cộng đồng bền vững</h3><p>Chúng tôi hỗ trợ nông dân Tây Nguyên trong hoạt động canh tác, đào tạo nâng cao chuyên môn và trao cơ hội việc làm. Mỗi cây trồng là một nụ cười, mỗi vụ mùa là một câu chuyện.</p></article>
+      <article class="vcard v6 rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Tầm nhìn toàn cầu</h3><p>Cùng các đối tác và các chuyên gia nông nghiệp quốc tế, chúng tôi đưa nông sản Việt Nam đến bữa ăn của các gia đình toàn cầu, nâng tầm giá trị nông nghiệp.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÔ HÌNH 3D ============ -->
+<section class="model dark" id="mo-hinh" aria-labelledby="h-m">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">Mô hình vận hành</span>
+      <h2 id="h-m" class="split"><span class="nw">Vườn mẫu IaKo #01,</span> <span class="nw">nhìn từ trên cao</span></h2>
+      <p class="rv">22 ha, 138 lô, 8 khu canh tác xen canh cà phê – cau. Chọn một nhóm thiết bị hoặc một khu để xem trên bản đồ 3D.</p>
+    </div>
+    <div class="stage rv-stage">
+      <canvas id="farmGL" role="img" aria-label="Mô hình 3D vườn FarmBlock IaKo #01 với 8 khu canh tác và vị trí thiết bị"></canvas>
+      <span class="drag-hint"><svg aria-hidden="true"><use href="#drag"/></svg>Kéo để xoay</span>
+      <div class="glass" id="glass">
+        <h3>Thiết bị tại vườn</h3>
+        <ul class="lays" id="lays"></ul>
+        <div class="info" id="info" aria-live="polite"></div>
+        <div><b style="display:block;color:#fff;margin-bottom:8px;font-size:1rem">Khu canh tác</b><div class="zrow" id="zrow" role="group" aria-label="Chọn khu"></div></div>
+      </div>
+      <p class="stage-note">Ranh giới khu theo sơ đồ 8/10/2026; vị trí thiết bị theo sơ đồ thiết bị FarmBlock IaKo 1.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CÔNG NGHỆ ============ -->
+<section class="tech" aria-labelledby="h-t">
+  <div class="wrap"><div class="sec-head"><span class="tag rv">Công nghệ của FarmBlock</span><h2 id="h-t" class="split">Công nghệ định hình <span class="nw">tương lai nông nghiệp</span></h2></div></div>
+  <div class="track-wrap" id="trackWrap">
+    <div class="track" id="track">
+      <article class="tcard"><img src="img/dev-camera.jpg" width="1100" height="636" alt="Camera và cảm biến trên cột giữa hàng cà phê non" loading="lazy"><span class="no">Chăm sóc</span><div class="tx"><h3>Chăm sóc thông minh</h3><p>Với hệ thống cảm biến, camera và dữ liệu vận hành theo thời gian thực, FarmBlock giúp theo dõi sức khỏe cây trồng liên tục, tối ưu tưới tiêu và canh tác chính xác hơn trong từng giai đoạn phát triển.</p></div></article>
+      <article class="tcard"><img src="img/dev-solar.jpg" width="896" height="1200" alt="Tấm pin mặt trời cấp điện cho thiết bị ngoài vườn" loading="lazy" style="object-position:50% 40%"><span class="no">Bền vững</span><div class="tx"><h3>Bền vững từ thiên nhiên</h3><p>Với hệ thống pin mặt trời và mạng lưới tưới tiêu tự động, tuân thủ các tiêu chí bảo vệ thiên nhiên chuẩn quốc tế, chúng tôi gìn giữ thiên nhiên cho thế hệ mai sau.</p></div></article>
+      <article class="tcard"><img src="img/app-map.jpg" width="1400" height="788" alt="Ứng dụng FarmBlock hiển thị bản đồ vệ tinh các vườn" loading="lazy"><span class="no">Kết nối</span><div class="tx"><h3>Kết nối từ bất kỳ đâu</h3><p>Ứng dụng di động đưa cánh đồng đến với bạn mọi lúc, mọi nơi: tiến độ phát triển, thông số kỹ thuật, tất cả nằm trong tầm tay bạn.</p></div></article>
+      <article class="tcard"><img src="img/coffee-cherries.jpg" width="1400" height="784" alt="Chùm cà phê chín đỏ trên cành" loading="lazy"><span class="no">Minh bạch</span><div class="tx"><h3>Minh bạch từ gốc</h3><p>Mỗi hạt cà phê, mỗi trái sầu riêng kể câu chuyện của mình qua các mã QR. Hồ sơ canh tác số lưu giữ niềm tin, từ đất đỏ Tây Nguyên đến tận tay khách hàng.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 LỚP VẬN HÀNH ============ -->
+<section class="layers" aria-labelledby="h-l">
+  <div class="wrap lay-grid">
+    <div class="lay-sticky">
+      <span class="tag rv">Đội ngũ vận hành</span>
+      <h2 id="h-l" class="split">Ba lớp người <span class="nw">cùng chăm</span> <span class="nw">một khu vườn</span></h2>
+      <p class="rv">Nhân sự tại vườn kiểm tra và chăm sóc hằng ngày. Hai lớp bên ngoài giúp xác minh và giám sát, để không quyết định nào chỉ dựa vào một người.</p>
+    </div>
+    <div class="stack">
+      <article class="layer l1"><img src="img/team-drying.jpg" width="1125" height="750" alt="Kỹ sư và người dân cùng kiểm tra hạt cà phê" loading="lazy"><div class="lt"><em>Lớp 1 · Thường trực tại vườn</em><h3>Có mặt mỗi ngày</h3><p class="who">01 quản lý nông trại, 02 kỹ sư nông nghiệp</p><p>Kiểm tra cây, ghi việc, thực hiện chăm sóc và cập nhật kết quả.</p></div></article>
+      <article class="layer l2"><img src="img/field-check.jpg" width="1371" height="784" alt="Kỹ sư kiểm tra cây cà phê ngoài vườn" loading="lazy"><div class="lt"><em>Lớp 2 · Kiểm tra và xác minh</em><h3>Đánh giá định kỳ</h3><p class="who">02 kỹ sư kiểm tra định kỳ</p><p>Đánh giá cây, đất, nước, thiết bị; tham vấn chuyên môn khi cần.</p></div></article>
+      <article class="layer l3"><img src="img/dash-log.jpg" width="989" height="506" alt="Nhật ký canh tác trên Dashboard FarmBlock" loading="lazy" style="object-position:left top"><div class="lt"><em>Lớp 3 · Giám sát từ xa</em><h3>Theo dõi bằng dữ liệu</h3><p class="who">01 kỹ sư giám sát</p><p>Đọc Dashboard, đối chiếu hình ảnh camera với số liệu để chỉ ra điểm cần kiểm tra.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ỨNG DỤNG ============ -->
+<section class="apps" id="tai-ung-dung" aria-labelledby="h-a">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-a" class="split"><span class="nw">Sổ rẫy cho bà con,</span> <span class="nw">Dashboard cho quản lý</span></h2>
+      <p class="rv">Hai ứng dụng trên cùng một nền tảng dữ liệu, mỗi người thấy đúng phần việc của mình.</p>
+    </div>
+    <div class="sotay">
+      <div class="intro">
+        <span class="tag">Ứng dụng cho nông dân</span>
+        <h3><span class="grad">Sổ rẫy</span></h3>
+        <p>Ứng dụng FarmBlock cho nông dân địa phương: ghi chép và theo dõi chăm sóc trên chính khu vườn của mình. Qua công cụ gần gũi với công việc hằng ngày, FarmBlock đưa công nghệ đến cộng đồng nông dân.</p>
+        <div><a class="btn btn-lime" href="https://sotay.farmblock.vn/" target="_blank" rel="noopener">Mở Sổ rẫy<svg aria-hidden="true"><use href="#ext"/></svg></a></div>
+      </div>
+      <div class="phones">
+        <div class="phone"><div class="scr"><img src="img/sotay-1.jpg" width="649" height="996" alt="Màn hình ghi việc bằng lời nói trong Sổ rẫy" loading="lazy"></div><b>Ghi việc bằng lời nói</b><span>Bấm micro, kể việc vừa làm; app ghi vào sổ, có cả tiền chi.</span></div>
+        <div class="phone"><div class="scr"><img src="img/sotay-2.jpg" width="682" height="952" alt="Màn hình khám lá, khám đất trong Sổ rẫy" loading="lazy"></div><b>Khám lá, khám đất</b><span>Chụp ba tấm ảnh, app cho biết cây bị gì, đất ra sao và việc nên làm.</span></div>
+        <div class="phone"><div class="scr"><img src="img/sotay-3.jpg" width="567" height="957" alt="Màn hình hồ sơ vùng trồng trong Sổ rẫy" loading="lazy"></div><b>Hồ sơ vùng trồng</b><span>Sổ ghi đủ thì xuất được hồ sơ nộp xã, sổ VietGAP và tọa độ vườn.</span></div>
+      </div>
+    </div>
+    <div class="dash">
+      <div class="pic"><img src="img/dash-map.jpg" width="983" height="497" alt="Dashboard: bản đồ độ ẩm và nhiệt độ theo khu" loading="lazy"><img src="img/dash-log.jpg" width="989" height="506" alt="Dashboard: nhật ký canh tác kèm ảnh" loading="lazy"></div>
+      <div class="tx">
+        <span class="tag">Dành cho chuyên gia &amp; chủ đất</span>
+        <h3 class="dash-h"><span class="grad-d">Dashboard quản lý</span></h3>
+        <ul><li>Chi tiết từng khu: độ ẩm, nhiệt độ, pH, EC, kèm vị trí và giờ cập nhật</li><li>Màu trạng thái và cảnh báo để ưu tiên khu cần kiểm tra</li><li>Xem công việc, ảnh và nhật ký ở một nơi</li></ul>
+        <div><a class="btn btn-ink" href="https://dashboard.farmblock.vn/" target="_blank" rel="noopener">Mở Dashboard<svg aria-hidden="true"><use href="#ext"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HỆ SINH THÁI ============ -->
+<section class="eco" aria-labelledby="h-e">
+  <div class="wrap eco-grid">
+    <figure class="eco-img rv-img"><img src="img/field-check.jpg" width="1371" height="784" alt="Hai kỹ sư kiểm tra cây trong vườn cà phê" loading="lazy" style="object-position:55% 50%"></figure>
+    <div class="eco-list">
+      <span class="tag rv">Hệ sinh thái của FarmBlock</span>
+      <h2 id="h-e" class="split"><span class="nw">Cùng đồng hành kiến tạo,</span> <span class="nw">cùng chia sẻ giá trị</span></h2>
+      <div class="acc"><button type="button" aria-expanded="true">Nhà đầu tư<i aria-hidden="true"></i></button><div class="panel"><div><p>Tiếp cận thị trường nông nghiệp thông qua các danh mục đầu tư đa dạng, với cơ chế pháp lý rõ ràng, dòng tiền ổn định và hệ thống theo dõi minh bạch.</p></div></div></div>
+      <div class="acc"><button type="button" aria-expanded="false">FarmBlock &amp; các đơn vị sản xuất nông nghiệp<i aria-hidden="true"></i></button><div class="panel"><div><p>Phối hợp triển khai vận hành farm, ứng dụng công nghệ giám sát và chuẩn hóa dữ liệu canh tác nhằm tối ưu hiệu quả vận hành theo quy mô lớn.</p></div></div></div>
+      <div class="acc"><button type="button" aria-expanded="false">Đối tác thương mại &amp; phân phối<i aria-hidden="true"></i></button><div class="panel"><div><p>Kết nối đầu ra cho nông sản đạt tiêu chuẩn, đồng thời hỗ trợ xây dựng chuỗi cung ứng và truy xuất nguồn gốc minh bạch hơn.</p></div></div></div>
+      <div class="acc"><button type="button" aria-expanded="false">Tổ chức nghiên cứu &amp; giáo dục<i aria-hidden="true"></i></button><div class="panel"><div><p>Thử nghiệm sản phẩm, dịch vụ hoặc ý tưởng mới ngay trên vùng trồng thật, từ công nghệ nông nghiệp đến du lịch trải nghiệm, truyền thông, giáo dục.</p></div></div></div>
+      <div class="acc"><button type="button" aria-expanded="false">Các đối tác phát triển nông nghiệp trong nước<i aria-hidden="true"></i></button><div class="panel"><div><p>Trao đổi, tiếp nhận chuyển giao công nghệ cao cùng đội ngũ Israel Agrotech và các chuyên gia đến từ châu Âu.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NIỀM TIN ============ -->
+<section class="trust" aria-labelledby="h-tr">
+  <div class="wrap">
+    <div class="trust-box">
+      <div class="tx">
+        <span class="tag">Tại sao nên đồng hành cùng FarmBlock?</span>
+        <h2 id="h-tr" class="split">Niềm tin bắt đầu <span class="nw">từ hệ sinh thái</span> <span class="grad-d nw">minh bạch</span></h2>
+        <p class="rv">FarmBlock không chỉ kết nối các mắt xích trong chuỗi giá trị nông nghiệp mà còn tái cấu trúc toàn bộ hệ thống bằng công nghệ, dữ liệu và logic vận hành thực tế. Từ sản xuất đến phân phối, mọi yếu tố đều được số hóa, chuẩn hóa và đồng bộ theo thời gian thực, tạo nên một hệ sinh thái thống nhất, minh bạch, với các cấu phần có khả năng mở rộng, nhân bản dễ dàng.</p>
+        <div class="pair rv"><div><b class="num grad-d">6</b><span>Khối chức năng được tích hợp &amp; vận hành đồng bộ</span></div><div><b class="num grad-d">100%</b><span>Dữ liệu được lưu trữ minh bạch tại nền tảng FarmBlock</span></div></div>
+      </div>
+      <figure class="ph rv-img"><img src="img/bien-ho.jpg" width="2200" height="1555" alt="Biển Hồ Pleiku và vùng cà phê Gia Lai nhìn từ trên cao lúc bình minh" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KẾT THÚC ============ -->
+<section class="final" id="lien-he" aria-labelledby="h-f">
+  <video class="bg" id="finalVid" muted loop playsinline preload="none" poster="img/final-poster.jpg" aria-hidden="true" data-src="img/final.mp4" data-src-s="img/final-s.mp4"></video>
+  <div class="wrap">
+    <div class="final-card">
+      <h2 id="h-f">Thấy tận mắt.<br>Tin tận tâm.</h2>
+      <p class="rv">Ghé vườn mẫu trực tuyến hoặc mở Dashboard để xem vườn mỗi ngày.</p>
+      <div class="acts rv">
+        <a class="btn btn-lime" href="https://vuonmau.farmblock.vn/ca-phe-mang-yang-1" target="_blank" rel="noopener">Truy cập vườn mẫu<svg aria-hidden="true"><use href="#ext"/></svg></a>
+        <a class="btn btn-glass" href="https://dashboard.farmblock.vn/" target="_blank" rel="noopener">Mở Dashboard<svg aria-hidden="true"><use href="#ext"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot dark">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="tl">
+        <span class="brand" translate="no"><svg class="mk" aria-hidden="true"><use href="#logo"/></svg><svg class="wm" viewBox="0 0 603 70" aria-hidden="true" focusable="false"><path d="M0 68.2207V1.17285H48.1721V12.0217H12.7026V30.0054H44.6545V40.8542H12.7026V68.2207H0Z"/><path d="M47.2622 68.2207L73.3514 1.17285H89.3762L115.563 68.2207H101.786L96.4114 53.951H65.7298L60.3556 68.2207H47.2622ZM69.736 43.1999H92.3075L85.5654 25.0208C85.3048 24.3692 84.9791 23.5547 84.5883 22.5773C84.2626 21.5348 83.9043 20.4271 83.5134 19.2543C83.1226 18.0163 82.7317 16.7782 82.3409 15.5402C81.95 14.3022 81.5917 13.1945 81.266 12.2172H80.7775C80.3866 13.5203 79.8981 15.019 79.3118 16.7131C78.7907 18.4072 78.2695 20.0036 77.7484 21.5022C77.2273 23.0009 76.8039 24.1737 76.4781 25.0208L69.736 43.1999Z"/><path d="M123.476 68.2207V1.17285H158.75C163.701 1.17285 167.805 2.0199 171.062 3.71402C174.319 5.40814 176.762 7.81899 178.39 10.9466C180.019 14.0742 180.833 17.7556 180.833 21.9909C180.833 26.3565 179.856 30.2334 177.902 33.6217C175.948 36.9447 173.081 39.4533 169.303 41.1474L183.178 68.2207H169.303L156.991 43.2977H136.179V68.2207H123.476ZM136.179 32.6443H157.773C161.03 32.6443 163.538 31.6995 165.297 29.8099C167.056 27.9203 167.935 25.314 167.935 21.9909C167.935 19.8407 167.544 18.0488 166.763 16.6154C165.981 15.1167 164.841 13.9764 163.343 13.1945C161.845 12.4126 159.988 12.0217 157.773 12.0217H136.179V32.6443Z"/><path d="M193.516 68.2207V1.17285H213.547L224.1 38.5085C224.491 39.8117 224.882 41.2778 225.272 42.9067C225.663 44.5357 226.022 46.0995 226.347 47.5981C226.738 49.0967 227.031 50.3999 227.227 51.5076H228.008C228.139 50.5302 228.334 49.3248 228.595 47.8913C228.855 46.4578 229.148 44.9266 229.474 43.2977C229.865 41.6035 230.288 39.9746 230.744 38.4108L241.297 1.17285H261.133V68.2207H248.43V34.3058C248.43 31.3085 248.463 28.3113 248.528 25.314C248.593 22.3167 248.658 19.743 248.723 17.5927C248.854 15.4425 248.919 14.1719 248.919 13.781H248.137C248.007 14.3674 247.681 15.638 247.16 17.5927C246.639 19.5475 246.085 21.6651 245.499 23.9457C244.913 26.2262 244.392 28.1809 243.936 29.8099L232.894 68.2207H221.169L210.127 29.9076C209.736 28.5393 209.28 26.9104 208.759 25.0208C208.303 23.066 207.815 21.0787 207.293 19.0588C206.837 17.0389 206.414 15.2796 206.023 13.781H205.241C205.307 15.5402 205.372 17.6579 205.437 20.1339C205.502 22.5448 205.567 25.0208 205.632 27.5619C205.697 30.038 205.73 32.2859 205.73 34.3058V68.2207H193.516Z"/><path d="M275.961 68.2207V1.17285H312.505C316.088 1.17285 319.28 1.85701 322.081 3.22533C324.947 4.59365 327.195 6.51582 328.823 8.99184C330.452 11.4679 331.266 14.3674 331.266 17.6905C331.266 20.2316 330.777 22.5448 329.8 24.6298C328.823 26.7149 327.488 28.4742 325.794 29.9076C324.165 31.276 322.309 32.3185 320.224 33.0352V33.4262C322.7 33.9475 324.915 34.9574 326.869 36.456C328.823 37.8895 330.354 39.7465 331.461 42.0271C332.569 44.2425 333.122 46.8162 333.122 49.7483C333.122 53.9185 332.178 57.3718 330.289 60.1085C328.465 62.8451 325.989 64.8976 322.863 66.2659C319.801 67.5691 316.348 68.2207 312.505 68.2207H275.961ZM288.663 57.3718H310.844C313.515 57.3718 315.697 56.6551 317.391 55.2216C319.15 53.723 320.029 51.4099 320.029 48.2823C320.029 46.4578 319.671 44.8615 318.954 43.4931C318.238 42.1248 317.13 41.0823 315.632 40.3655C314.199 39.5836 312.342 39.1927 310.062 39.1927H288.663V57.3718ZM288.663 28.5393H309.183C311.137 28.5393 312.766 28.1809 314.068 27.4642C315.436 26.7475 316.446 25.7701 317.098 24.5321C317.814 23.2941 318.172 21.9258 318.172 20.4271C318.172 17.5601 317.391 15.4425 315.827 14.0742C314.329 12.7059 312.342 12.0217 309.867 12.0217H288.663V28.5393Z"/><path d="M344.951 68.2207V1.17285H357.653V57.1764H391.267V68.2207H344.951Z"/><path d="M428.499 69.3935C421.529 69.3935 415.503 68.1555 410.422 65.6795C405.341 63.1383 401.432 59.294 398.696 54.1465C396.026 48.999 394.69 42.5158 394.69 34.6968C394.69 26.8126 396.026 20.3294 398.696 15.247C401.432 10.0995 405.341 6.28777 410.422 3.81176C415.503 1.27059 421.529 0 428.499 0C435.534 0 441.56 1.27059 446.575 3.81176C451.656 6.28777 455.532 10.0995 458.203 15.247C460.939 20.3294 462.307 26.8126 462.307 34.6968C462.307 42.5158 460.939 48.999 458.203 54.1465C455.532 59.294 451.656 63.1383 446.575 65.6795C441.56 68.1555 435.534 69.3935 428.499 69.3935ZM428.499 58.6424C431.886 58.6424 434.85 58.1537 437.391 57.1764C439.996 56.199 442.178 54.7655 443.937 52.8759C445.696 50.9212 447.031 48.5429 447.943 45.7411C448.855 42.8741 449.311 39.5836 449.311 35.8696V33.7194C449.311 29.9402 448.855 26.6171 447.943 23.7502C447.031 20.8832 445.696 18.5049 443.937 16.6154C442.178 14.6606 439.996 13.1945 437.391 12.2172C434.85 11.2398 431.886 10.7511 428.499 10.7511C425.111 10.7511 422.115 11.2398 419.509 12.2172C416.969 13.1945 414.819 14.6606 413.06 16.6154C411.301 18.5049 409.966 20.8832 409.054 23.7502C408.207 26.6171 407.784 29.9402 407.784 33.7194V35.8696C407.784 39.5836 408.207 42.8741 409.054 45.7411C409.966 48.5429 411.301 50.9212 413.06 52.8759C414.819 54.7655 416.969 56.199 419.509 57.1764C422.115 58.1537 425.111 58.6424 428.499 58.6424Z"/><path d="M503.662 69.3935C496.822 69.3935 490.959 68.1881 486.073 65.7773C481.253 63.3664 477.54 59.6198 474.934 54.5375C472.394 49.39 471.123 42.7764 471.123 34.6968C471.123 22.9031 473.99 14.1719 479.722 8.50315C485.454 2.83438 493.434 0 503.662 0C509.199 0 514.182 0.944794 518.612 2.83438C523.106 4.72397 526.657 7.59093 529.262 11.4353C531.933 15.2145 533.268 20.0362 533.268 25.9004H520.273C520.273 22.6425 519.556 19.9058 518.123 17.6905C516.755 15.4099 514.833 13.6832 512.358 12.5104C509.883 11.3375 507.049 10.7511 503.857 10.7511C499.427 10.7511 495.747 11.6307 492.815 13.39C489.884 15.0841 487.702 17.6253 486.269 21.0135C484.901 24.4018 484.217 28.6045 484.217 33.6217V35.7719C484.217 40.8542 484.901 45.0895 486.269 48.4777C487.702 51.866 489.852 54.4071 492.718 56.1013C495.649 57.7954 499.362 58.6424 503.857 58.6424C507.244 58.6424 510.208 58.0886 512.749 56.9809C515.289 55.808 517.244 54.1139 518.612 51.8985C520.045 49.618 520.761 46.8488 520.761 43.5909H533.268C533.268 49.4551 531.966 54.3094 529.36 58.1537C526.754 61.9329 523.204 64.7673 518.709 66.6569C514.28 68.4813 509.264 69.3935 503.662 69.3935Z"/><path d="M544.574 68.2207V1.17285H557.277V32.2533L586.981 1.17285H602.517L576.526 28.3438L603.006 68.2207H587.958L567.927 37.2379L557.277 46.6207V68.2207H544.574Z"/></svg></span>
+        <p class="tagline"><span>Số hóa nông nghiệp.</span><span>Chuẩn hóa vận hành.</span><span class="grad">Tối ưu đầu tư.</span></p>
+      </div>
+      <div class="bt"><a class="btn btn-lime" href="#top">Lên đầu trang</a></div>
+    </div>
+    <div class="fcols">
+      <nav class="c1" aria-label="Truy cập nhanh"><h4>Truy cập nhanh</h4><ul><li><a href="#top">Trang chủ</a></li><li><a href="#ve-chung-toi">Về chúng tôi</a></li><li><a href="#mo-hinh">Mô hình vận hành</a></li><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Bảng tin FarmBlock</a></li></ul></nav>
+      <nav class="c2" aria-label="Chính sách"><h4>Chính sách &amp; Điều khoản</h4><ul><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Chính sách bảo mật</a></li><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Điều khoản sử dụng dịch vụ</a></li><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Câu hỏi thường gặp</a></li></ul></nav>
+      <div class="c3"><h4>Thông tin</h4><p>Công ty Cổ phần Công nghệ Nông nghiệp FarmBlock<br>Tầng 13, Tòa nhà NIC, Ngõ 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội</p><p>Điện thoại: <a href="tel:0354060029">0354 060 029</a></p><p>Email: <a href="mailto:contact@farmblock.ai">contact@farmblock.ai</a></p></div>
+    </div>
+    <div class="fbottom"><span>Bản quyền © 2026 thuộc về FarmBlock</span><span>Hành trình cùng Tây Nguyên chạm đến tương lai</span></div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var isMobile=matchMedia('(max-width: 860px)').matches;
+var root=document.documentElement;
+
+/* ---------- tiện ích ---------- */
+var toastEl=document.getElementById('toast'),tt;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toastEl.classList.remove('on')},3200)}
+document.querySelectorAll('[data-en]').forEach(function(b){b.addEventListener('click',function(){toast('Bản tiếng Anh đang được chuẩn bị.')})});
+function setSize(lg){if(lg)root.setAttribute('data-size','lg');else root.removeAttribute('data-size');document.querySelectorAll('[data-size]').forEach(function(b){b.setAttribute('aria-pressed',lg?'true':'false')});try{localStorage.setItem('fb-size',lg?'lg':'')}catch(e){}if(window.ScrollTrigger)ScrollTrigger.refresh()}
+try{if(localStorage.getItem('fb-size')==='lg')setSize(true)}catch(e){}
+document.querySelectorAll('[data-size]').forEach(function(b){b.addEventListener('click',function(){setSize(root.getAttribute('data-size')!=='lg')})});
+/* menu: rê chuột để mở (máy tính), bấm để mở (điện thoại) */
+var menu=document.getElementById('menu'),mb=document.getElementById('menuBtn');
+function setMenu(o){menu.classList.toggle('open',o);mb.setAttribute('aria-expanded',o?'true':'false')}
+mb.addEventListener('click',function(e){e.stopPropagation();setMenu(!menu.classList.contains('open'))});
+menu.addEventListener('mouseenter',function(){if(matchMedia('(hover:hover) and (min-width:861px)').matches)mb.setAttribute('aria-expanded','true')});
+menu.addEventListener('mouseleave',function(){if(!menu.classList.contains('open'))mb.setAttribute('aria-expanded','false')});
+document.addEventListener('click',function(e){if(!menu.contains(e.target))setMenu(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){setMenu(false);mb.focus()}});
+menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+document.querySelectorAll('.acc button').forEach(function(b){b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';document.querySelectorAll('.acc button').forEach(function(x){x.setAttribute('aria-expanded','false')});b.setAttribute('aria-expanded',o?'false':'true')})});
+var nav=document.getElementById('nav'),lastY=0;
+function onScrollNav(y){nav.classList.toggle('solid',y>40);if(!menu.classList.contains('open')){if(y>lastY+8&&y>innerHeight*.9)nav.classList.add('hide');else if(y<lastY-8)nav.classList.remove('hide')}lastY=y}
+
+/* ---------- HERO: ảnh 360° + logo 3D ---------- */
+var heroCanvas=document.getElementById('heroGL');
+var H={};
+(function initHero(){
+  if(!window.THREE){return}
+  var r=new THREE.WebGLRenderer({canvas:heroCanvas,antialias:true,alpha:false,powerPreference:'high-performance'});
+  r.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.5:1.75));
+  r.outputEncoding=THREE.sRGBEncoding;
+  var scene=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(isMobile?78:64,1,.1,200);
+  var loader=new THREE.TextureLoader();
+  var sfx=isMobile?'-s':'';
+  var sphereGeo=new THREE.SphereGeometry(60,64,40);sphereGeo.scale(-1,1,1);
+  var matA=new THREE.MeshBasicMaterial({depthWrite:false});
+  var matB=new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false});
+  var sA=new THREE.Mesh(sphereGeo,matA),sB=new THREE.Mesh(sphereGeo,matB);sB.renderOrder=1;
+  scene.add(sA,sB);
+  function tex(url,m,cb){loader.load(url,function(t){t.encoding=THREE.sRGBEncoding;t.anisotropy=r.capabilities.getMaxAnisotropy();m.map=t;m.needsUpdate=true;cb&&cb()})}
+  var pmrem=new THREE.PMREMGenerator(r);
+  tex('img/pano-rain'+sfx+'.jpg',matA,function(){heroCanvas.classList.add('ready');try{scene.environment=pmrem.fromEquirectangular(matA.map).texture}catch(e){}});
+  var dryLoaded=false;
+  H.season=function(s){
+    var show=s==='dry';
+    function go(){gsap.to(matB,{opacity:show?1:0,duration:reduce?0:1.1,ease:'power2.inOut'})}
+    if(show&&!dryLoaded){tex('img/pano-dry'+sfx+'.jpg',matB,function(){dryLoaded=true;go()})}else go();
+  };
+  /* logo 3D: tấm nền + 6 cánh */
+  var logo=new THREE.Group();scene.add(logo);
+  var S=1/120;
+  function shapeFrom(pts){var sh=new THREE.Shape();pts.forEach(function(p,i){var x=(p[0]-180)*S,y=-(p[1]-180)*S;if(i)sh.lineTo(x,y);else sh.moveTo(x,y)});sh.closePath();return sh}
+  var petals=[[[64,180],[120,150.4],[170.4,180],[120,209.6]],[[296,180],[240,150.4],[189.6,180],[240,209.6]],[[118.4,72.8],[173.6,104],[173.6,162.4],[118.4,132.8]],[[241.6,72.8],[186.4,104],[186.4,162.4],[241.6,132.8]],[[118.4,287.2],[173.6,256],[173.6,197.6],[118.4,227.2]],[[241.6,287.2],[186.4,256],[186.4,197.6],[241.6,227.2]]];
+  var cream=new THREE.MeshPhysicalMaterial({color:0xF7FBF2,roughness:.3,metalness:0,transmission:.72,ior:1.46,clearcoat:1,clearcoatRoughness:.12,envMapIntensity:1.1});
+  var petalMeshes=petals.map(function(p){
+    var g=new THREE.ExtrudeGeometry(shapeFrom(p),{depth:.22,bevelEnabled:true,bevelThickness:.04,bevelSize:.03,bevelSegments:3});
+    g.computeBoundingBox();var c=new THREE.Vector3();g.boundingBox.getCenter(c);g.translate(-c.x,-c.y,-c.z);
+    var m=new THREE.Mesh(g,cream);m.position.copy(c);m.position.z=.18;m.userData.home=c.clone();m.userData.dir=new THREE.Vector3(c.x,c.y,0).normalize();logo.add(m);return m});
+  // tấm nền kim cương bo góc
+  var plate=new THREE.Shape(),s2=1.06,rr=.26;
+  (function(){var pts=[[0,s2*1.42],[s2*1.42,0],[0,-s2*1.42],[-s2*1.42,0]];for(var i=0;i<4;i++){var a=pts[i],b=pts[(i+1)%4],pv=pts[(i+3)%4];var d1=new THREE.Vector2(pv[0]-a[0],pv[1]-a[1]).normalize(),d2=new THREE.Vector2(b[0]-a[0],b[1]-a[1]).normalize();var p1=[a[0]+d1.x*rr,a[1]+d1.y*rr],p2=[a[0]+d2.x*rr,a[1]+d2.y*rr];if(i===0)plate.moveTo(p1[0],p1[1]);else plate.lineTo(p1[0],p1[1]);plate.quadraticCurveTo(a[0],a[1],p2[0],p2[1])}plate.closePath()})();
+  var pg=new THREE.ExtrudeGeometry(plate,{depth:.16,bevelEnabled:true,bevelThickness:.05,bevelSize:.05,bevelSegments:4});pg.translate(0,0,-.1);
+  var cv=document.createElement('canvas');cv.width=cv.height=256;var cx=cv.getContext('2d');var gr=cx.createLinearGradient(0,0,256,256);gr.addColorStop(0,'#2f7a40');gr.addColorStop(1,'#8cc84b');cx.fillStyle=gr;cx.fillRect(0,0,256,256);
+  var pt=new THREE.CanvasTexture(cv);pt.encoding=THREE.sRGBEncoding;
+  // ánh xạ UV phẳng
+  var pos=pg.attributes.position,uv=new Float32Array(pos.count*2);for(var i=0;i<pos.count;i++){uv[i*2]=(pos.getX(i)+1.6)/3.2;uv[i*2+1]=(pos.getY(i)+1.6)/3.2}pg.setAttribute('uv',new THREE.BufferAttribute(uv,2));
+  var plateMat=new THREE.MeshPhysicalMaterial({map:pt,color:0xffffff,roughness:.1,metalness:0,transmission:.9,ior:1.5,clearcoat:1,clearcoatRoughness:.05,envMapIntensity:1.3,transparent:true,side:THREE.DoubleSide});
+  var plateMesh=new THREE.Mesh(pg,plateMat);logo.add(plateMesh);
+  var rim=new THREE.Mesh(new THREE.TorusGeometry(1,.02,8,4),new THREE.MeshStandardMaterial({color:0xF5E4A1,roughness:.4,metalness:.4}));rim.visible=false;
+  scene.add(new THREE.HemisphereLight(0xeef6e6,0x23401f,1.05));
+  var dl=new THREE.DirectionalLight(0xffffff,1.1);dl.position.set(2,3,4);scene.add(dl);
+  var dl2=new THREE.DirectionalLight(0xc9f29a,.5);dl2.position.set(-3,-1,2);scene.add(dl2);
+  /* điều khiển */
+  scene.add(cam);scene.remove(logo);cam.add(logo);
+  var yaw=-.6,pitch=-.22,vy=0,drag=false,px=0,mx=0,my=0;
+  heroCanvas.addEventListener('pointerdown',function(e){drag=true;px=e.clientX;heroCanvas.setPointerCapture(e.pointerId)});
+  heroCanvas.addEventListener('pointermove',function(e){mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5);if(!drag)return;var dx=e.clientX-px;px=e.clientX;vy=-dx*.0045;yaw+=vy});
+  ['pointerup','pointercancel','pointerleave'].forEach(function(t){heroCanvas.addEventListener(t,function(){drag=false})});
+  H.prog=0;var home={x:0,y:0,s:1};
+  function size(){var w=heroCanvas.clientWidth,h=heroCanvas.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();var narrow=w<860;home={x:narrow?.95:1.75,y:narrow?1.75:.78,s:narrow?.42:.66}}
+  size();addEventListener('resize',size);
+  var visible=true;new IntersectionObserver(function(en){visible=en[0].isIntersecting}).observe(heroCanvas);
+  var clock=new THREE.Clock(),smx=0,smy=0;
+  function loop(){
+    requestAnimationFrame(loop);if(!visible)return;
+    var t=clock.getElapsedTime(),p=H.prog;
+    if(!drag){vy*=.94;yaw+=vy+(reduce?0:.0004)}
+    smx+=(mx-smx)*.06;smy+=(my-smy)*.06;
+    cam.rotation.order='YXZ';cam.rotation.y=yaw;cam.rotation.x=pitch-p*.7;
+    logo.position.set(home.x,home.y+p*.9,-4.6+p*1.2);logo.scale.setScalar(home.s);
+    logo.rotation.set((reduce?0:Math.cos(t*.5)*.08)+smy*.25-p*.6,(reduce?0:Math.sin(t*.6)*.22)+smx*.45+p*1.2,0);
+    petalMeshes.forEach(function(m,i){var d=m.userData.dir,h=m.userData.home,k=p*3.2;m.position.set(h.x+d.x*k,h.y+d.y*k,.18+p*(i%2?1.4:-.8));m.rotation.set(p*(i%2?2.2:-2),p*1.6,p*(i<2?1.2:-1.2))});
+    plateMesh.scale.setScalar(Math.max(.01,1-p*.8));plateMat.opacity=Math.max(0,1-p*1.6);plateMesh.visible=plateMat.opacity>0.01;
+    r.render(scene,cam);
+  }
+  loop();
+})();
+document.querySelectorAll('[data-season]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-season]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});H.season&&H.season(b.dataset.season)})});
+
+
+/* ---------- MÔ HÌNH 3D VƯỜN ---------- */
+var Z={"A":{"area":67246,"lots":53,"note":"Khu lớn nhất, nằm sát mương suối phía tây, có nhà điều hành ở góc đông bắc.","polys":[[[55,640],[200,580],[440,535],[445,660],[430,720],[380,900],[360,1000],[255,1048],[145,1105],[75,1140],[65,1000],[55,900],[55,760]]]},"B1":{"area":24420,"lots":7,"note":"Ôm lấy hồ trữ nước, nơi đặt cảm biến chất lượng nước và trạm bơm.","polys":[[[435,672],[625,718],[622,940],[475,1005],[370,995],[410,800]]]},"B2":{"area":9807,"lots":9,"note":"Khu nhỏ nhất ở trung tâm vườn, giữa hai tuyến đường đất 5 m.","polys":[[[628,718],[750,718],[758,895],[690,893],[628,925]]]},"C1":{"area":24398,"lots":12,"note":"Phía tây bắc, dọc đường dân sinh dẫn vào cổng chính.","polys":[[[80,237],[280,270],[300,300],[330,370],[430,400],[440,470],[420,520],[275,555]]]},"C2":{"area":19672,"lots":18,"note":"Dãy lô đều nhau ở phía đông nam, giáp đường đất 5 m.","polys":[[[757,720],[1060,742],[1022,898],[757,893]]]},"C3":{"area":14564,"lots":12,"note":"Nằm giữa khu C4 và C2, bao quanh bởi đường đất 5 m.","polys":[[[730,590],[940,505],[960,738],[750,715]]]},"C4":{"area":45873,"lots":26,"note":"Khu rộng thứ hai, trải dài theo đường dân sinh phía bắc.","polys":[[[710,210],[975,240],[1005,290],[1220,243],[1270,250],[1280,325],[1000,382],[960,435],[940,500],[855,515],[725,588],[712,400]],[[642,408],[712,430],[720,585]]]},"C5":{"area":2151,"lots":1,"note":"Lô cuối phía đông, cạnh suối.","polys":[[[1270,245],[1335,262],[1340,360],[1290,360],[1275,330]]]}};
+var M=[{"t":"soil","x":275,"y":473},{"t":"soil","x":263,"y":710},{"t":"soil","x":273,"y":830},{"t":"soil","x":485,"y":927},{"t":"soil","x":725,"y":863},{"t":"soil","x":963,"y":863},{"t":"soil","x":897,"y":598},{"t":"soil","x":798,"y":432},{"t":"soil","x":963,"y":378},{"t":"water","x":468,"y":698},{"t":"water","x":532,"y":760},{"t":"iot","x":377,"y":640},{"t":"weather","x":377,"y":750},{"t":"cam","x":223,"y":337},{"t":"cam","x":377,"y":490},{"t":"cam","x":252,"y":610},{"t":"cam","x":123,"y":730},{"t":"cam","x":153,"y":880},{"t":"cam","x":252,"y":980},{"t":"cam","x":400,"y":955},{"t":"cam","x":452,"y":832},{"t":"cam","x":577,"y":925},{"t":"cam","x":660,"y":760},{"t":"cam","x":805,"y":770},{"t":"cam","x":975,"y":770},{"t":"cam","x":847,"y":865},{"t":"cam","x":793,"y":685},{"t":"cam","x":920,"y":692},{"t":"cam","x":807,"y":600},{"t":"cam","x":765,"y":507},{"t":"cam","x":773,"y":310},{"t":"cam","x":925,"y":295},{"t":"cam","x":893,"y":453},{"t":"cam","x":1090,"y":310},{"t":"cam","x":1305,"y":295}];
+/* biểu tượng phẳng nhiều màu, vẽ bằng canvas, dùng cho cả bản đồ 3D và danh sách */
+function icon(t,size){
+  var c=document.createElement('canvas');c.width=c.height=size;var x=c.getContext('2d');var s=size/128;x.scale(s,s);
+  function rr(a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}
+  if(t==='soil'){x.fillStyle='#8B4A23';x.beginPath();x.ellipse(64,92,46,18,0,0,Math.PI*2);x.fill();x.fillStyle='#A65A2B';x.beginPath();x.ellipse(64,86,46,16,0,0,Math.PI*2);x.fill();x.fillStyle='#6E3618';[[42,86],[78,90],[60,80]].forEach(function(p){x.beginPath();x.arc(p[0],p[1],3,0,7);x.fill()});x.strokeStyle='#2E7A34';x.lineWidth=6;x.lineCap='round';x.beginPath();x.moveTo(64,84);x.lineTo(64,50);x.stroke();x.fillStyle='#7ED839';x.beginPath();x.moveTo(64,58);x.quadraticCurveTo(36,52,32,30);x.quadraticCurveTo(58,30,64,58);x.fill();x.fillStyle='#3A8047';x.beginPath();x.moveTo(64,52);x.quadraticCurveTo(92,44,96,22);x.quadraticCurveTo(68,24,64,52);x.fill();x.fillStyle='#C9D1D6';rr(84,52,10,40,4);x.fill();x.fillStyle='#51ADCA';rr(80,44,18,14,4);x.fill()}
+  else if(t==='water'){var g=x.createLinearGradient(30,14,98,112);g.addColorStop(0,'#8FD6EE');g.addColorStop(1,'#1F6F99');x.fillStyle=g;x.beginPath();x.moveTo(64,12);x.bezierCurveTo(64,12,24,58,24,80);x.arc(64,80,40,Math.PI,0,true);x.bezierCurveTo(104,58,64,12,64,12);x.fill();x.fillStyle='rgba(255,255,255,.7)';x.beginPath();x.ellipse(48,78,7,14,-.4,0,7);x.fill();x.strokeStyle='#fff';x.lineWidth=5;x.lineCap='round';x.beginPath();x.moveTo(52,98);x.quadraticCurveTo(64,106,78,96);x.stroke()}
+  else if(t==='weather'){x.fillStyle='#F5B92A';x.beginPath();x.arc(50,48,24,0,7);x.fill();x.strokeStyle='#F5B92A';x.lineWidth=6;x.lineCap='round';for(var i=0;i<8;i++){var a=i*Math.PI/4;x.beginPath();x.moveTo(50+Math.cos(a)*32,48+Math.sin(a)*32);x.lineTo(50+Math.cos(a)*40,48+Math.sin(a)*40);x.stroke()}x.fillStyle='#E6EEF3';x.beginPath();x.arc(58,84,20,0,7);x.arc(84,74,24,0,7);x.arc(102,88,16,0,7);x.fill();x.fillRect(58,84,48,20);x.fillStyle='#C8D6DE';x.fillRect(46,98,62,8);x.fillStyle='#51ADCA';[[60,114],[78,118],[96,114]].forEach(function(p){x.beginPath();x.ellipse(p[0],p[1],3.5,6,0,0,7);x.fill()})}
+  else if(t==='cam'){x.fillStyle='#5B6770';rr(56,82,10,34,4);x.fill();x.fillStyle='#3C454C';rr(40,108,42,10,5);x.fill();x.save();x.translate(64,56);x.rotate(-.2);var g2=x.createLinearGradient(0,-20,0,20);g2.addColorStop(0,'#F4F7F9');g2.addColorStop(1,'#B9C4CC');x.fillStyle=g2;rr(-46,-20,80,40,12);x.fill();x.fillStyle='#2B3238';x.beginPath();x.arc(30,0,17,0,7);x.fill();x.fillStyle='#51ADCA';x.beginPath();x.arc(30,0,10,0,7);x.fill();x.fillStyle='#fff';x.beginPath();x.arc(26,-4,3.5,0,7);x.fill();x.fillStyle='#D3262B';x.beginPath();x.arc(-34,-8,4,0,7);x.fill();x.restore()}
+  else {x.strokeStyle='#5B6770';x.lineWidth=6;x.lineCap='round';x.beginPath();x.moveTo(64,62);x.lineTo(46,116);x.moveTo(64,62);x.lineTo(82,116);x.moveTo(52,98);x.lineTo(76,98);x.stroke();x.fillStyle='#3A8047';x.beginPath();x.arc(64,56,10,0,7);x.fill();x.strokeStyle='#7ED839';x.lineWidth=7;[22,38].forEach(function(r,i){x.globalAlpha=1-i*.25;x.beginPath();x.arc(64,56,r,-Math.PI*.8,-Math.PI*.2);x.stroke();x.beginPath();x.arc(64,56,r,Math.PI*.2-Math.PI*.0,Math.PI*.2);x.stroke()});x.globalAlpha=1;x.strokeStyle='#51ADCA';x.lineWidth=7;x.beginPath();x.arc(64,56,38,-Math.PI*.8,-Math.PI*.2);x.stroke()}
+  return c;
+}
+function badge(t,col){
+  var S=256,c=document.createElement('canvas');c.width=c.height=S;var x=c.getContext('2d');
+  x.shadowColor='rgba(6,24,12,.45)';x.shadowBlur=26;x.shadowOffsetY=10;
+  x.fillStyle='rgba(255,255,255,.96)';x.beginPath();x.arc(128,118,92,0,7);x.fill();
+  x.shadowColor='transparent';x.lineWidth=12;x.strokeStyle=col;x.beginPath();x.arc(128,118,92,0,7);x.stroke();
+  x.drawImage(icon(t,256),128-74,118-74,148,148);
+  return c;
+}
+var LAY=[
+  {k:'all',name:'Toàn vườn',col:'#B5E383'},
+  {k:'soil',name:'Đất',col:'#A65A2B',n:9,t:'9 cảm biến đất',p:'Mỗi khu canh tác có ít nhất một cảm biến, đầu dò đặt ở vùng rễ. Đo độ ẩm, nhiệt độ, pH, EC và N, P, K để biết khi nào cần tưới, cần bón.',s:'Độ ẩm 0–100% (±3%) · pH 3–9 (±0,3) · NPK 0–1.999 mg/kg'},
+  {k:'water',name:'Nước',col:'#2F8FB5',n:2,t:'2 cảm biến nước',p:'Đặt tại hồ trữ nước, theo dõi nhiệt độ, pH và EC trước khi tưới và châm phân. Khi có bất thường, kỹ sư lấy mẫu kiểm tra lại.',s:'pH 0–14 (±0,1) · EC 1–2.000 µS/cm (±1%)'},
+  {k:'weather',name:'Trời',col:'#E3A21A',n:1,t:'1 trạm thời tiết',p:'Đặt tại nhà điều hành, giữa trung tâm vườn: gió, mưa, nhiệt độ, độ ẩm, áp suất, ánh sáng. Pin mặt trời cấp điện cho thiết bị ở điểm xa.',s:'Giúp chỉnh lịch tưới và chọn giờ làm việc ngoài vườn'},
+  {k:'cam',name:'Camera',col:'#5B6770',n:22,t:'22 camera quan sát',p:'Quan sát khu trồng và khu vận hành suốt ngày đêm, đối chiếu hình ảnh với số liệu cảm biến, hỗ trợ kiểm tra từ xa.',s:'Giám sát 24/7 · xoay 360° · điện mặt trời · loa cảnh báo'},
+  {k:'iot',name:'Kết nối',col:'#3A8047',n:1,t:'LoRa → Trạm IoT → Cloud',p:'Dữ liệu từ mọi thiết bị truyền không dây về trạm IoT tại nhà điều hành, rồi lên nền tảng FarmBlock để kỹ sư xem trên Dashboard.',s:'Màu trạng thái cho biết khu nào cần kiểm tra trước'}
+];
+LAY[0].t='22 ha · 138 lô · 34 thiết bị';LAY[0].p='Thôn Cây Xoài, xã Iako, tỉnh Gia Lai. Xen canh cà phê Thiện Trường với cau, 2.200 gốc mỗi ha. Có nhà điều hành và hồ trữ nước.';LAY[0].s='Bấm từng nhóm bên dưới để làm nổi bật trên bản đồ';
+var F={};
+(function initFarm(){
+  var canvas=document.getElementById('farmGL');
+  if(!window.THREE)return;
+  var r=new THREE.WebGLRenderer({canvas:canvas,antialias:!isMobile||devicePixelRatio<2,powerPreference:'high-performance'});
+  r.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.5:1.75));
+  r.outputEncoding=THREE.sRGBEncoding;r.shadowMap.enabled=!isMobile;r.shadowMap.type=THREE.PCFSoftShadowMap;
+  var scene=new THREE.Scene();var bgc=new THREE.Color(0x173a22).convertSRGBToLinear();scene.background=bgc;scene.fog=new THREE.Fog(bgc,22,48);
+  var cam=new THREE.PerspectiveCamera(36,1,.1,200);
+  var K=.01,CX=690,CY=605;
+  function P(x,y){return new THREE.Vector2((x-CX)*K,(y-CY)*K)}
+  var tl=new THREE.TextureLoader();
+  var mapTex=tl.load('img/farm-map-dark.png');mapTex.encoding=THREE.sRGBEncoding;mapTex.anisotropy=r.capabilities.getMaxAnisotropy();
+  var side=new THREE.MeshStandardMaterial({color:0x7a4722,roughness:1});
+  var ground=new THREE.Mesh(new THREE.BoxGeometry(13.8,.5,12.1),[side,side,new THREE.MeshStandardMaterial({map:mapTex,roughness:.95}),side,side,side]);
+  ground.position.y=-.25;ground.receiveShadow=true;scene.add(ground);
+  var zoneMeshes={};
+  Object.keys(Z).forEach(function(id){
+    var grp=new THREE.Group();
+    Z[id].polys.forEach(function(poly){
+      var sh=new THREE.Shape();poly.forEach(function(q,i){var v=P(q[0],q[1]);if(i)sh.lineTo(v.x,-v.y);else sh.moveTo(v.x,-v.y)});sh.closePath();
+      var g=new THREE.ExtrudeGeometry(sh,{depth:.1,bevelEnabled:false});g.rotateX(-Math.PI/2);
+      var zm;grp.add(zm=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:0x1E5A2A,transparent:true,opacity:0,emissive:0x0F3D1A,emissiveIntensity:0,depthWrite:false})));zm.renderOrder=2;
+    });
+    scene.add(grp);zoneMeshes[id]=grp;
+  });
+  function inPoly(x,y,poly){var c=false;for(var i=0,j=poly.length-1;i<poly.length;j=i++){var xi=poly[i][0],yi=poly[i][1],xj=poly[j][0],yj=poly[j][1];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+  var treeGeo=new THREE.IcosahedronGeometry(.055,0);var treeMat=new THREE.MeshStandardMaterial({color:0x3f8a35,roughness:.8,flatShading:true});
+  var spots=[],step=isMobile?24:17;
+  for(var y=40;y<1180;y+=step){for(var x=40;x<1360;x+=step*1.35){Object.keys(Z).some(function(id){return Z[id].polys.some(function(p){if(inPoly(x,y,p)){spots.push([x+(Math.random()-.5)*4,y+(Math.random()-.5)*4]);return true}})})}}
+  var trees=new THREE.InstancedMesh(treeGeo,treeMat,spots.length);var dm=new THREE.Object3D();
+  spots.forEach(function(s,i){var v=P(s[0],s[1]);var sc=.75+Math.random()*.55;dm.position.set(v.x,.05+sc*.04,v.y);dm.scale.set(sc,sc*1.2,sc);dm.rotation.y=Math.random()*6;dm.updateMatrix();trees.setMatrixAt(i,dm.matrix)});
+  trees.castShadow=!isMobile;scene.add(trees);
+  var hp=P(375,680);var house=new THREE.Mesh(new THREE.BoxGeometry(.5,.26,.32),new THREE.MeshStandardMaterial({color:0xF2F2EA}));house.position.set(hp.x,.13,hp.y);house.castShadow=true;scene.add(house);
+  var roof=new THREE.Mesh(new THREE.BoxGeometry(.56,.04,.38),new THREE.MeshStandardMaterial({color:0x3A8047}));roof.position.set(hp.x,.28,hp.y);scene.add(roof);
+  var pp=P(468,755);var pond=new THREE.Mesh(new THREE.BoxGeometry(.7,.05,.38),new THREE.MeshStandardMaterial({color:0x58b6d6,roughness:.15,metalness:.2,emissive:0x1b5a73,emissiveIntensity:.35}));pond.position.set(pp.x,.02,pp.y);pond.rotation.y=-.12;scene.add(pond);
+  /* thiết bị: huy hiệu nổi + cột + vòng phát sáng */
+  var tex={};LAY.slice(1).forEach(function(l){var t=new THREE.CanvasTexture(badge(l.k,l.col));t.encoding=THREE.sRGBEncoding;t.anisotropy=4;tex[l.k]=t});
+  var glowC={};function glowTex(c){if(glowC[c])return glowC[c];var cv=document.createElement('canvas');cv.width=cv.height=128;var x=cv.getContext('2d');var g=x.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,c);g.addColorStop(.35,c+'aa');g.addColorStop(1,c+'00');x.fillStyle=g;x.fillRect(0,0,128,128);var t=new THREE.CanvasTexture(cv);glowC[c]=t;return t}
+  var groups={};var poleGeo=new THREE.CylinderGeometry(.01,.01,1,6);
+  M.forEach(function(m,i){
+    var v=P(m.x,m.y);var big=m.t==='weather'||m.t==='iot';var h=big?1.0:m.t==='cam'?.7:.55;
+    var g=new THREE.Group();g.position.set(v.x,0,v.y);
+    var pole=new THREE.Mesh(poleGeo,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.75,depthWrite:false}));pole.renderOrder=6;pole.scale.y=h;pole.position.y=h/2;g.add(pole);
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex[m.t],transparent:true,depthTest:true,depthWrite:false,alphaTest:.04}));sp.renderOrder=10;var s=big?.62:m.t==='cam'?.42:.5;sp.scale.set(s,s,1);sp.position.y=h+s*.42;g.add(sp);
+    var l=LAY.filter(function(q){return q.k===m.t})[0];
+    var ring=new THREE.Mesh(new THREE.PlaneGeometry(.9,.9),new THREE.MeshBasicMaterial({map:glowTex(l.col),transparent:true,opacity:.7,depthWrite:false,blending:THREE.AdditiveBlending}));ring.rotation.x=-Math.PI/2;ring.position.y=.02;ring.renderOrder=5;g.add(ring);
+    var halo=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex('#ffffff'),transparent:true,opacity:.0,depthWrite:false,blending:THREE.AdditiveBlending}));halo.scale.set(s*2.2,s*2.2,1);halo.position.y=sp.position.y;g.add(halo);
+    g.userData={t:m.t,sp:sp,ring:ring,halo:halo,pole:pole,base:s,h:h,ph:i*.7};
+    scene.add(g);(groups[m.t]=groups[m.t]||[]).push(g);m.g=g;
+  });
+  /* đường dữ liệu về trạm IoT */
+  var iot=groups.iot[0];var arcs=new THREE.Group();scene.add(arcs);var pulses=[];
+  M.forEach(function(m){if(m.t==='iot')return;var a=m.g.position.clone();a.y=m.g.userData.h;var b=iot.position.clone();b.y=1;var mid=a.clone().lerp(b,.5);mid.y+=.8+a.distanceTo(b)*.12;var c=new THREE.QuadraticBezierCurve3(a,mid,b);var tm=new THREE.Mesh(new THREE.TubeGeometry(c,24,.007,4,false),new THREE.MeshBasicMaterial({color:0xB5E383,transparent:true,opacity:0,depthWrite:false}));arcs.add(tm);var dot=new THREE.Mesh(new THREE.SphereGeometry(.03,8,8),new THREE.MeshBasicMaterial({color:0xF5E4A1,transparent:true,opacity:0}));scene.add(dot);pulses.push({c:c,d:dot,o:Math.random()})});
+  scene.add(new THREE.HemisphereLight(0xeaf5df,0x2a1a0e,.9));
+  var sun=new THREE.DirectionalLight(0xfff3d6,1.1);sun.position.set(-6,10,5);sun.castShadow=!isMobile;sun.shadow.mapSize.set(1024,1024);var sc=sun.shadow.camera;sc.left=-8;sc.right=8;sc.top=8;sc.bottom=-8;scene.add(sun);
+  /* camera: quỹ đạo quanh tâm, kéo để xoay */
+  var o={az:-.35,el:.9,dist:15,tx:.4,tz:.6},drag=false,lx=0,vel=0;
+  canvas.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;canvas.setPointerCapture(e.pointerId)});
+  canvas.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-lx;lx=e.clientX;vel=-dx*.005;o.az+=vel});
+  ['pointerup','pointercancel','pointerleave'].forEach(function(t){canvas.addEventListener(t,function(){drag=false})});
+  var wide=true;
+  function size(){var w=canvas.clientWidth,h=canvas.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;wide=w>900;cam.fov=w<h?50:36;if(wide)cam.setViewOffset(w,h,-w*.17,0,w,h);else cam.clearViewOffset();cam.updateProjectionMatrix()}
+  size();addEventListener('resize',size);
+  var vis=false;new IntersectionObserver(function(e){vis=e[0].isIntersecting},{rootMargin:'100px'}).observe(canvas);
+  F.active='all';
+  F.focus=function(k){F.active=k;
+    Object.keys(groups).forEach(function(t){var on=k==='all'||k===t||(k==='iot');groups[t].forEach(function(g){var hl=k===t;gsap.to(g.userData.sp.material,{opacity:on?1:.18,duration:.5,overwrite:true});gsap.to(g.userData.sp.scale,{x:g.userData.base*(hl?1.35:1),y:g.userData.base*(hl?1.35:1),duration:.6,ease:'back.out(2)',overwrite:true});gsap.to(g.userData.pole.material,{opacity:on?.75:.12,duration:.5,overwrite:true})})});
+    arcs.children.forEach(function(a,i){gsap.to(a.material,{opacity:k==='iot'?.7:0,duration:.6,delay:k==='iot'?i*.015:0,overwrite:true})});
+    pulses.forEach(function(p){gsap.to(p.d.material,{opacity:k==='iot'?1:0,duration:.4,overwrite:true})});
+    var tgt={all:[.4,.6,15,.9],soil:[-.4,.2,12.5,.9],water:[-1.9,1.4,7.5,.95],weather:[-2.9,.8,7.5,.92],cam:[.2,0,14,.8],iot:[-2,.6,11,.78]}[k];
+    gsap.to(o,{tx:tgt[0],tz:tgt[1],dist:tgt[2]*(wide?1:1.3),el:tgt[3],duration:reduce?0:1.4,ease:'power3.inOut',overwrite:'auto'});
+  };
+  F.zone=function(id){Object.keys(zoneMeshes).forEach(function(k){var on=k===id;zoneMeshes[k].children.forEach(function(m){gsap.to(m.material,{opacity:on?.7:0,emissiveIntensity:on?.4:0,duration:.5,overwrite:true})});gsap.to(zoneMeshes[k].position,{y:on?.16:0,duration:.6,ease:'power3.out',overwrite:true})});
+    if(id){var b=new THREE.Box3().setFromObject(zoneMeshes[id]),c=b.getCenter(new THREE.Vector3());gsap.to(o,{tx:c.x,tz:c.z,dist:wide?10:12.5,duration:reduce?0:1.2,ease:'power3.inOut',overwrite:'auto'})}else F.focus(F.active)};
+  var clk=new THREE.Clock(),mx=0,my=0;
+  canvas.addEventListener('pointermove',function(e){var b=canvas.getBoundingClientRect();mx=(e.clientX-b.left)/b.width-.5;my=(e.clientY-b.top)/b.height-.5});
+  (function loop(){requestAnimationFrame(loop);if(!vis)return;var t=clk.getElapsedTime();
+    if(!drag){vel*=.94;o.az+=vel+(reduce?0:.0006)}
+    var az=o.az+mx*.12,el=o.el-my*.06;
+    cam.position.set(o.tx+Math.sin(az)*Math.cos(el)*o.dist,Math.sin(el)*o.dist,o.tz+Math.cos(az)*Math.cos(el)*o.dist);cam.lookAt(o.tx,0,o.tz);
+    if(!reduce){Object.keys(groups).forEach(function(k){groups[k].forEach(function(g){var u=g.userData;u.sp.position.y=u.h+u.base*.42+Math.sin(t*1.6+u.ph)*.04;u.ring.material.opacity=(F.active==='all'||F.active===u.t||F.active==='iot'?.5:.08)+Math.sin(t*1.2+u.ph)*.12;u.halo.material.opacity=F.active===u.t?.35+Math.sin(t*1.5+u.ph)*.1:0})});
+      pulses.forEach(function(p){var q=(t*.35+p.o)%1;p.d.position.copy(p.c.getPoint(q))})}
+    r.render(scene,cam)})();
+})();
+/* bảng điều khiển */
+var laysEl=document.getElementById('lays'),info=document.getElementById('info'),zrow=document.getElementById('zrow');
+function setInfo(l){info.innerHTML='<b class="t">'+l.t+'</b><p>'+l.p+'</p><small>'+l.s+'</small>';if(window.gsap&&!reduce)gsap.fromTo(info.children,{y:10,opacity:0},{y:0,opacity:1,duration:.45,stagger:.05,ease:'power2.out'})}
+LAY.forEach(function(l,i){var li=document.createElement('li');var b=document.createElement('button');b.type='button';b.className='lay';b.setAttribute('aria-pressed',i?'false':'true');
+  var ic=l.k==='all'?'<svg width="44" height="44" aria-hidden="true"><use href="#logo"/></svg>':'<img alt="" src="'+icon(l.k,96).toDataURL()+'">';
+  b.innerHTML=ic+'<span>'+l.name+'</span><span class="c">'+(l.n!=null?l.n:'')+'</span>';
+  b.addEventListener('click',function(){laysEl.querySelectorAll('.lay').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});setInfo(l);F.focus&&F.focus(l.k)});
+  li.appendChild(b);laysEl.appendChild(li)});
+setInfo(LAY[0]);
+function fmt(n){return new Intl.NumberFormat('vi-VN',{maximumFractionDigits:2}).format(n)}
+['Tất cả'].concat(Object.keys(Z)).forEach(function(id,i){var b=document.createElement('button');b.type='button';b.className='zb';b.textContent=id;b.setAttribute('aria-pressed',i?'false':'true');b.addEventListener('click',function(){zrow.querySelectorAll('.zb').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});if(i===0){setInfo(LAY.filter(function(l){return l.k===(F.active||'all')})[0]);F.zone&&F.zone(null)}else{var z=Z[id];setInfo({t:'Khu '+id+' · '+fmt(z.area/10000)+' ha · '+z.lots+' lô',p:z.note,s:'Xen canh cà phê – cau'});F.zone&&F.zone(id)}});zrow.appendChild(b)});
+
+/* video phần kết: tải khi gần tới, tạm dừng khi ra khỏi màn hình */
+(function(){var v=document.getElementById('finalVid');if(!v)return;var loaded=false;
+  new IntersectionObserver(function(en){var e=en[0];if(e.isIntersecting){if(!loaded){v.src=matchMedia('(max-width:860px)').matches?v.dataset.srcS:v.dataset.src;loaded=true}if(!reduce){var p=v.play();if(p&&p.catch)p.catch(function(){})}}else if(loaded)v.pause()},{rootMargin:'300px'}).observe(v)})();
+/* ---------- CHUYỂN ĐỘNG ---------- */
+if(!window.gsap){root.classList.remove('js');return}
+gsap.registerPlugin(ScrollTrigger);
+if(window.SplitText)gsap.registerPlugin(SplitText);
+var lenis=null;
+if(!reduce&&window.Lenis){lenis=new Lenis({lerp:.1,wheelMultiplier:.9,smoothWheel:true,syncTouch:false});window.lenis=lenis;lenis.on('scroll',function(e){ScrollTrigger.update();onScrollNav(e.scroll)});gsap.ticker.add(function(t){lenis.raf(t*1000)});gsap.ticker.lagSmoothing(0);
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');var el=id==='#top'?0:document.querySelector(id);if(el===null)return;e.preventDefault();lenis.scrollTo(el,{offset:-20,duration:1.4})})});
+}else{addEventListener('scroll',function(){onScrollNav(scrollY)},{passive:true})}
+ScrollTrigger.create({trigger:'.hero',start:'top top',end:'bottom top',scrub:true,onUpdate:function(s){H.prog=s.progress}});
+var mm=gsap.matchMedia();
+mm.add('(prefers-reduced-motion: no-preference)',function(){
+  gsap.timeline({delay:.15}).from('#heroGL',{opacity:0,duration:1.2,ease:'power2.out'}).from('.hero .hx',{y:36,opacity:0,duration:1,stagger:.12,ease:'power3.out'},.3).from('.hero-tools .wrap > *',{y:-14,opacity:0,duration:.7,stagger:.08,ease:'power3.out'},.6).from('.bar',{y:-30,opacity:0,duration:.9,ease:'power3.out'},.2);
+  gsap.to('.hero-copy',{yPercent:-25,opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'70% top',scrub:true}});
+  if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){var st=SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',once:true}})}})});ScrollTrigger.refresh()})}
+  gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}})});
+  gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img');gsap.fromTo(f,{clipPath:'inset(14% 8% 14% 8% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',ease:'power2.out',scrollTrigger:{trigger:f,start:'top 94%',end:'top 40%',scrub:.6}});gsap.fromTo(img,{scale:1.22},{scale:1,ease:'none',scrollTrigger:{trigger:f,start:'top bottom',end:'bottom top',scrub:true}})});
+  gsap.fromTo('.rv-stage',{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',ease:'power2.out',scrollTrigger:{trigger:'.rv-stage',start:'top 92%',end:'top 35%',scrub:.6}});
+  gsap.fromTo('.final .bg',{yPercent:-14},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'bottom bottom',scrub:true}});
+  gsap.from('.final h2',{y:50,opacity:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'.final',start:'top 70%',once:true}});
+  gsap.from('.st',{y:40,opacity:0,duration:.9,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.stat-band',start:'top 85%',once:true}});
+  gsap.utils.toArray('.st b[data-to]').forEach(function(b){var end=+b.dataset.to,sm=b.querySelector('small'),tail=sm?sm.outerHTML:'',o={v:0};gsap.to(o,{v:end,duration:1.8,ease:'power3.out',scrollTrigger:{trigger:b,start:'top 92%',once:true},onUpdate:function(){b.innerHTML=Math.round(o.v).toLocaleString('vi-VN')+tail}})});
+  gsap.utils.toArray('.layer').forEach(function(l){gsap.from(l,{rotateX:-22,y:70,opacity:0,scale:.95,ease:'power3.out',duration:1,scrollTrigger:{trigger:l,start:'top 92%',once:true}})});
+  gsap.from('.phone .scr',{y:60,rotate:function(i){return [-6,0,6][i]},opacity:0,duration:1,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.phones',start:'top 88%',once:true}});
+  gsap.from('.dash .pic img',{y:40,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.dash',start:'top 85%',once:true}});
+  gsap.from('.acc',{x:-30,opacity:0,duration:.7,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.eco-list',start:'top 82%',once:true}});
+  gsap.from('.chipbox svg',{scale:.4,rotate:-12,opacity:0,duration:1,stagger:.12,ease:'back.out(1.8)',scrollTrigger:{trigger:'.chips3',start:'top 88%',once:true}});
+  gsap.from('.tagline span',{y:30,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.foot',start:'top 85%',once:true}});
+});
+mm.add('(min-width: 861px) and (prefers-reduced-motion: no-preference)',function(){
+  var track=document.getElementById('track');
+  var tw=gsap.to(track,{x:function(){return -(track.scrollWidth-innerWidth)},ease:'none',scrollTrigger:{trigger:'#trackWrap',start:'top 16%',end:function(){return '+='+(track.scrollWidth-innerWidth)},pin:true,scrub:.8,invalidateOnRefresh:true,anticipatePin:1}});
+  gsap.utils.toArray('.tcard img').forEach(function(img){gsap.fromTo(img,{xPercent:-4,scale:1.14},{xPercent:4,scale:1.14,ease:'none',scrollTrigger:{trigger:img.parentNode,containerAnimation:tw,start:'left right',end:'right left',scrub:true}})});
+});
+addEventListener('load',function(){ScrollTrigger.refresh()});
+})();
+</script>
+</body>
+</html>

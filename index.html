@@ -6,6 +6,12 @@
 <title>FarmBlock IaKo</title>
 <meta name="description" content="FarmBlock – Tiên phong số hóa tài sản nông nghiệp. Hành trình cùng Tây Nguyên, chạm đến tương lai.">
 <meta name="theme-color" content="#112615">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" as="image" href="img/pano-rain.webp" media="(min-width: 861px)" fetchpriority="high" crossorigin>
+<link rel="preload" as="image" href="img/pano-rain-s.webp" media="(max-width: 860px)" fetchpriority="high" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&display=swap" rel="stylesheet">
@@ -53,13 +59,18 @@ p{max-width:60ch;text-wrap:pretty}
 .num{font-variant-numeric:tabular-nums}
 .tag{display:inline-flex;align-items:center;gap:10px;font-weight:600;color:var(--g500);font-size:1.0625rem;margin-bottom:16px}
 .tag::before{content:"";width:11px;height:11px;background:currentColor;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
-.dark .tag{color:var(--lime)}
+.dark .tag,.sotay .tag{color:var(--lime)}
 .center{text-align:center;margin-inline:auto}
 .sec-head{max-width:760px;margin:0 auto 56px;text-align:center}
 .sec-head p{margin:18px auto 0}
 /* chữ gradient chạy chậm theo màu thương hiệu */
 .grad{background:linear-gradient(100deg,#7ED839 0%,#F5E4A1 22%,#B5E383 40%,#51ADCA 60%,#7ED839 80%,#F5E4A1 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gshift 14s linear infinite;padding-bottom:.06em}
 .grad-d{background:linear-gradient(100deg,#008242 0%,#3A8047 20%,#7EBF3A 40%,#2F8FB5 62%,#008242 82%,#3A8047 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gshift 16s linear infinite;padding-bottom:.06em}
+/* chỉ chạy gradient khi chữ đang trên màn hình */
+.js .grad,.js .grad-d{animation-play-state:paused}.js .grad.on,.js .grad-d.on{animation-play-state:running}
+/* trên nền 3D đang chuyển động: bỏ làm mờ nền để đỡ tốn GPU */
+.hero .seg,.hero .hint,.hero .btn-glass{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(12,31,16,.6)}
+.nav:not(.solid) .bar{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(17,38,21,.58)}
 @keyframes gshift{from{background-position:0% 50%}to{background-position:250% 50%}}
 
 /* ---- nút ---- */
@@ -113,7 +124,8 @@ p{max-width:60ch;text-wrap:pretty}
 .hero-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,24,12,.5) 0%,rgba(8,24,12,0) 24%,rgba(8,24,12,0) 42%,rgba(8,24,12,.8) 100%)}
 .hero-copy{position:absolute;left:0;right:0;bottom:clamp(36px,8vh,88px);z-index:3;pointer-events:none}
 .hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
-.hero-grid .l{grid-column:1/8}
+.hero-grid .l{grid-column:1/10}
+@media (min-width:861px){.nw-d{white-space:nowrap}}
 .hero-grid .r{grid-column:8/13;padding-left:24px}
 .hero-copy h1{color:#fff}
 .hero-copy .sub{font-size:1.1875rem;line-height:1.6;color:#F3F8EE}
@@ -142,13 +154,6 @@ p{max-width:60ch;text-wrap:pretty}
 /* ---- Về chúng tôi ---- */
 .about{padding-block:var(--sec)}
 .a-left{grid-column:1/7;min-width:0}
-.chips3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
-.chipbox{display:flex;align-items:center;gap:12px;padding:12px 14px 12px 10px;border-radius:20px;background:var(--white);transition:transform .45s var(--ease);min-width:0}
-.chipbox:hover{transform:translateY(-4px)}
-.chipbox svg{width:56px;height:56px;flex:none;overflow:visible}
-.chipbox div{min-width:0}
-.chipbox b{display:block;font-size:1.0625rem;font-weight:600;font-stretch:104%;line-height:1.25}
-.chipbox span{display:block;font-size:.9375rem;color:var(--muted);line-height:1.35;margin-top:2px}
 .about-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:center}
 .a-photo{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:1.02}
 .a-photo>img{width:100%;height:115%;object-fit:cover;object-position:50% 15%}
@@ -159,10 +164,8 @@ p{max-width:60ch;text-wrap:pretty}
 .float{animation:flo 5s ease-in-out infinite}
 .float.d2{animation-delay:-1.6s}.float.d3{animation-delay:-3.2s}
 @keyframes flo{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-@media (max-width:1180px) and (min-width:981px){.chipbox{flex-direction:column;align-items:flex-start;gap:8px}}
 @media (max-width:980px){.about-grid{display:block}.a-copy{margin-top:32px}.a-photo{aspect-ratio:4/3}}
 @media (max-width:620px){.a-photo{aspect-ratio:1}}
-@media (max-width:620px){.chips3{gap:8px}.chipbox{flex-direction:column;align-items:center;text-align:center;gap:6px;padding:12px 6px 14px}.chipbox svg{width:48px;height:48px}.chipbox b{font-size:1rem}.chipbox span{font-size:.8125rem}}
 
 /* ---- Số liệu ---- */
 .stats{padding-bottom:var(--sec)}
@@ -231,15 +234,17 @@ p{max-width:60ch;text-wrap:pretty}
 /* ---- Công nghệ ---- */
 .tech{padding-top:var(--sec);overflow:hidden}
 .track-wrap{padding-bottom:var(--sec)}
-.track{display:flex;gap:18px;padding-left:max(var(--gut),calc((100vw - var(--max))/2));padding-right:max(var(--gutr),calc((100vw - var(--max))/2));will-change:transform}
-.tcard{position:relative;flex:0 0 min(70vw,400px);aspect-ratio:4/5;border-radius:var(--r-lg);overflow:hidden;color:#fff;background:var(--g700)}
-.tcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.14)}
-.tcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 26%,rgba(6,20,10,.82) 52%,rgba(6,20,10,.92) 100%)}
-.tcard .tx{position:absolute;z-index:2;left:28px;right:28px;top:50%;bottom:22px;display:flex;flex-direction:column;justify-content:flex-start}
+.track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;max-width:var(--max);margin:0 auto;padding-inline:var(--gut) var(--gutr)}
+.tcard{position:relative;min-width:0;min-height:560px;display:flex;flex-direction:column;border-radius:var(--r-lg);overflow:hidden;color:#fff;background:var(--g700)}
+.tcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.tcard:hover img{transform:scale(1.06)}
+@media (max-width:1180px) and (min-width:861px){.track{grid-template-columns:repeat(2,minmax(0,1fr))}.tcard{min-height:440px}}
+.tcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 22%,rgba(6,20,10,.8) 46%,rgba(6,20,10,.94) 100%)}
+.tcard .tx{position:relative;z-index:2;margin-top:auto;padding:200px 26px 28px}
 .tcard h3{color:var(--lime);margin-bottom:10px;font-size:clamp(1.4rem,2vw,1.8rem)}
 .tcard p{font-size:1.0625rem;color:#F1F6EC}
-.tcard .no{position:absolute;z-index:2;top:20px;left:22px;font-weight:600;font-size:1rem;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-@media (max-width:860px){.track{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}.track::-webkit-scrollbar{display:none}.tcard{flex-basis:min(78vw,400px);scroll-snap-align:center}.tcard .tx{left:20px;right:20px;top:46%;bottom:18px}.tcard p{font-size:1rem}}
+.tcard .no{position:absolute;z-index:2;top:20px;left:22px;font-weight:600;font-size:1rem;padding:8px 14px;border-radius:999px;background:rgba(8,26,14,.55)}
+@media (max-width:860px){.track{display:flex;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}.track::-webkit-scrollbar{display:none}.tcard{flex:0 0 min(80vw,400px);scroll-snap-align:center}.tcard{min-height:480px}.tcard .tx{padding:180px 20px 22px}.tcard p{font-size:1rem}}
 
 /* ---- 3 lớp vận hành ---- */
 .layers{padding-block:var(--sec);background:var(--white)}
@@ -314,10 +319,10 @@ p{max-width:60ch;text-wrap:pretty}
 @media (max-width:980px){.trust-box{grid-template-columns:1fr}.trust-box .ph{min-height:280px;order:-1}}
 
 /* ---- Kết thúc ---- */
-.final{position:relative;min-height:92svh;display:flex;align-items:center;overflow:hidden;color:#fff}
+.final{position:relative;height:100vh;height:100svh;min-height:560px;display:flex;align-items:center;overflow:hidden;color:#fff}
 .final .bg{position:absolute;inset:0;width:100%;height:120%;object-fit:cover;will-change:transform}
 .final::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,22,40,.15) 0%,rgba(6,24,14,.35) 45%,rgba(6,24,14,.86) 100%)}
-.final .wrap{position:relative;z-index:2;padding-block:120px 72px}
+.final .wrap{position:relative;z-index:2;padding-block:96px 64px;width:100%}
 .final-card{max-width:760px;margin:0 auto;text-align:center}
 .final h2{font-size:clamp(2.6rem,6vw,5.4rem);line-height:1.02;color:#fff;letter-spacing:-0.035em}
 .final p{margin:20px auto 0;color:#F3F8EE;font-size:var(--fs-lead);max-width:42ch}
@@ -395,7 +400,7 @@ p{max-width:60ch;text-wrap:pretty}
     <div class="wrap hero-grid">
       <div class="l">
         <span class="hero-kick hx">Tiên phong trong số hóa tài sản nông nghiệp</span>
-        <h1 id="h1" class="hx">Hành trình cùng <span class="grad nw">Tây Nguyên</span><br>chạm đến tương lai</h1>
+        <h1 id="h1" class="hx">Hành trình cùng <span class="grad nw">Tây Nguyên</span><br><span class="nw-d">chạm đến tương lai</span></h1>
       </div>
       <div class="r">
         <p class="sub hx">Từ những cánh đồng cà phê Tây Nguyên, chúng tôi kết nối thiên nhiên với nền tảng công nghệ tiên phong, mang nông sản Việt đến thế giới, cùng người nông dân viết nên câu chuyện bền vững.</p>
@@ -413,21 +418,7 @@ p{max-width:60ch;text-wrap:pretty}
   <div class="wrap">
     <div class="about-grid">
       <div class="a-left">
-      <figure class="a-photo rv-img"><img src="img/team-coffee.jpg" width="1400" height="1146" alt="Hai kỹ sư FarmBlock kiểm tra chùm cà phê chín trên cành" loading="lazy"></figure>
-    <div class="chips3">
-      <div class="chipbox rv">
-        <svg viewBox="0 0 120 130" aria-hidden="true"><g class="float"><path d="M60 52l50 25-50 25-50-25z" fill="url(#gTop)"/><path d="M10 77l50 25v14l-50-25z" fill="url(#gSoilL)"/><path d="M110 77l-50 25v14l50-25z" fill="url(#gSoilR)"/><path d="M38 80l10 5M66 70l14 7M52 92l12-6" stroke="#2E7A34" stroke-width="3" stroke-linecap="round" opacity=".55"/></g><g class="float d2"><ellipse cx="60" cy="78" rx="12" ry="5" fill="#0F2A17" opacity=".25"/><path d="M60 76c-12-16-20-24-20-35a20 20 0 0 1 40 0c0 11-8 19-20 35z" fill="url(#gPin)"/><circle cx="60" cy="41" r="8" fill="#F5E4A1"/><path d="M48 30a14 14 0 0 1 10-6" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6" fill="none"/></g></svg>
-        <div><b>Gia Lai</b><span>Thủ phủ cà phê Tây Nguyên</span></div>
-      </div>
-      <div class="chipbox rv">
-        <svg viewBox="0 0 120 130" aria-hidden="true"><g class="float d2"><path d="M60 22l46 23-46 23-46-23z" fill="url(#gTop)"/><path d="M14 45l46 23v18l-46-23z" fill="#B4532A"/><path d="M106 45l-46 23v18l46-23z" fill="#8C3B19"/><path d="M14 63l46 23v16l-46-23z" fill="#9A4220"/><path d="M106 63l-46 23v16l46-23z" fill="#76300F"/><path d="M14 79l46 23v14l-46-23z" fill="#7E3214"/><path d="M106 79l-46 23v14l46-23z" fill="#5E220D"/><circle cx="30" cy="62" r="3" fill="#E7B48F"/><circle cx="44" cy="80" r="2.5" fill="#E7B48F"/><circle cx="80" cy="76" r="3" fill="#C98A63"/><circle cx="94" cy="62" r="2" fill="#C98A63"/><path d="M60 40c0-8 4-13 10-14-1 7-4 11-10 14zM60 40c0-6-3-10-8-11 1 6 3 9 8 11z" fill="#2E7A34"/></g></svg>
-        <div><b>Đất đỏ bazan</b><span>Màu mỡ, giữ ẩm tốt</span></div>
-      </div>
-      <div class="chipbox rv">
-        <svg viewBox="0 0 120 130" aria-hidden="true"><g class="float d3"><path d="M22 40c18-22 50-24 72-8-20 6-48 10-72 8z" fill="url(#gLeaf)"/><path d="M26 39c22-4 44-6 66-7" stroke="#1E5A26" stroke-width="2" fill="none" opacity=".6"/><path d="M60 34c-2 20 0 40 4 62" stroke="#5B3A1E" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="48" cy="60" r="12" fill="url(#gCherry)"/><circle cx="70" cy="62" r="12" fill="url(#gCherry)"/><circle cx="58" cy="78" r="12" fill="url(#gCherry2)"/><circle cx="78" cy="84" r="10" fill="url(#gCherry)"/><circle cx="42" cy="82" r="10" fill="url(#gCherry)"/><circle cx="62" cy="98" r="10" fill="url(#gCherry2)"/><g fill="#fff" opacity=".55"><circle cx="44" cy="55" r="3"/><circle cx="66" cy="57" r="3"/><circle cx="54" cy="73" r="3"/><circle cx="75" cy="80" r="2.5"/><circle cx="39" cy="78" r="2.5"/><circle cx="59" cy="94" r="2.5"/></g></g></svg>
-        <div><b>Cà phê</b><span>Giống Thiện Trường</span></div>
-      </div>
-    </div>
+      <figure class="a-photo rv-img"><img src="img/team-coffee.webp" width="1400" height="1146" alt="Hai kỹ sư FarmBlock kiểm tra chùm cà phê chín trên cành" loading="lazy"></figure>
       </div>
       <div class="a-copy">
         <span class="tag rv">Về chúng tôi</span>
@@ -466,8 +457,8 @@ p{max-width:60ch;text-wrap:pretty}
     <div class="val-grid">
       <article class="vcard rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Thiên nhiên trù phú</h3><p>Những cánh đồng ở Gia Lai là nơi đất đỏ bazan nuôi dưỡng mùi vị cà phê đậm đà và hương thơm sầu riêng ngọt ngào. Chúng tôi kết hợp trồng trọt với công tác cải tạo, bảo vệ thiên nhiên, để đất đai mãi màu mỡ.</p></article>
       <article class="vcard v2 rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Công nghệ tiên phong</h3><p>Chúng tôi áp dụng các công nghệ hiện đại như drone theo dõi, hệ thống cảm biến thông minh và nền tảng dữ liệu minh bạch, tạo tiền đề cho một nền nông nghiệp tương lai từ tinh túy đất Việt.</p></article>
-      <figure class="vcard ph rv-img"><img src="img/hmong-picking.jpg" width="1400" height="914" alt="Phụ nữ dân tộc thu hái trên đồi" loading="lazy"></figure>
-      <figure class="vcard ph rv-img"><img src="img/event-partners.jpg" width="1147" height="830" alt="Lãnh đạo FarmBlock giới thiệu nền tảng với các đối tác" loading="lazy" style="object-position:40% 30%"></figure>
+      <figure class="vcard ph rv-img"><img src="img/hmong-picking.webp" width="1400" height="914" alt="Phụ nữ dân tộc thu hái trên đồi" loading="lazy"></figure>
+      <figure class="vcard ph rv-img"><img src="img/event-partners.webp" width="1147" height="830" alt="Lãnh đạo FarmBlock giới thiệu nền tảng với các đối tác" loading="lazy" style="object-position:40% 30%"></figure>
       <article class="vcard rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Cộng đồng bền vững</h3><p>Chúng tôi hỗ trợ nông dân Tây Nguyên trong hoạt động canh tác, đào tạo nâng cao chuyên môn và trao cơ hội việc làm. Mỗi cây trồng là một nụ cười, mỗi vụ mùa là một câu chuyện.</p></article>
       <article class="vcard v6 rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Tầm nhìn toàn cầu</h3><p>Cùng các đối tác và các chuyên gia nông nghiệp quốc tế, chúng tôi đưa nông sản Việt Nam đến bữa ăn của các gia đình toàn cầu, nâng tầm giá trị nông nghiệp.</p></article>
     </div>
@@ -501,10 +492,10 @@ p{max-width:60ch;text-wrap:pretty}
   <div class="wrap"><div class="sec-head"><span class="tag rv">Công nghệ của FarmBlock</span><h2 id="h-t" class="split">Công nghệ định hình <span class="nw">tương lai nông nghiệp</span></h2></div></div>
   <div class="track-wrap" id="trackWrap">
     <div class="track" id="track">
-      <article class="tcard"><img src="img/dev-camera.jpg" width="1100" height="636" alt="Camera và cảm biến trên cột giữa hàng cà phê non" loading="lazy"><span class="no">Chăm sóc</span><div class="tx"><h3>Chăm sóc thông minh</h3><p>Với hệ thống cảm biến, camera và dữ liệu vận hành theo thời gian thực, FarmBlock giúp theo dõi sức khỏe cây trồng liên tục, tối ưu tưới tiêu và canh tác chính xác hơn trong từng giai đoạn phát triển.</p></div></article>
-      <article class="tcard"><img src="img/dev-solar.jpg" width="896" height="1200" alt="Tấm pin mặt trời cấp điện cho thiết bị ngoài vườn" loading="lazy" style="object-position:50% 40%"><span class="no">Bền vững</span><div class="tx"><h3>Bền vững từ thiên nhiên</h3><p>Với hệ thống pin mặt trời và mạng lưới tưới tiêu tự động, tuân thủ các tiêu chí bảo vệ thiên nhiên chuẩn quốc tế, chúng tôi gìn giữ thiên nhiên cho thế hệ mai sau.</p></div></article>
-      <article class="tcard"><img src="img/app-map.jpg" width="1400" height="788" alt="Ứng dụng FarmBlock hiển thị bản đồ vệ tinh các vườn" loading="lazy"><span class="no">Kết nối</span><div class="tx"><h3>Kết nối từ bất kỳ đâu</h3><p>Ứng dụng di động đưa cánh đồng đến với bạn mọi lúc, mọi nơi: tiến độ phát triển, thông số kỹ thuật, tất cả nằm trong tầm tay bạn.</p></div></article>
-      <article class="tcard"><img src="img/coffee-cherries.jpg" width="1400" height="784" alt="Chùm cà phê chín đỏ trên cành" loading="lazy"><span class="no">Minh bạch</span><div class="tx"><h3>Minh bạch từ gốc</h3><p>Mỗi hạt cà phê, mỗi trái sầu riêng kể câu chuyện của mình qua các mã QR. Hồ sơ canh tác số lưu giữ niềm tin, từ đất đỏ Tây Nguyên đến tận tay khách hàng.</p></div></article>
+      <article class="tcard"><img src="img/dev-camera.webp" width="1100" height="636" alt="Camera và cảm biến trên cột giữa hàng cà phê non" loading="lazy"><span class="no">Chăm sóc</span><div class="tx"><h3>Chăm sóc thông minh</h3><p>Với hệ thống cảm biến, camera và dữ liệu vận hành theo thời gian thực, FarmBlock giúp theo dõi sức khỏe cây trồng liên tục, tối ưu tưới tiêu và canh tác chính xác hơn trong từng giai đoạn phát triển.</p></div></article>
+      <article class="tcard"><img src="img/dev-solar.webp" width="896" height="1200" alt="Tấm pin mặt trời cấp điện cho thiết bị ngoài vườn" loading="lazy" style="object-position:50% 40%"><span class="no">Bền vững</span><div class="tx"><h3>Bền vững từ thiên nhiên</h3><p>Với hệ thống pin mặt trời và mạng lưới tưới tiêu tự động, tuân thủ các tiêu chí bảo vệ thiên nhiên chuẩn quốc tế, chúng tôi gìn giữ thiên nhiên cho thế hệ mai sau.</p></div></article>
+      <article class="tcard"><img src="img/app-map.webp" width="1400" height="788" alt="Ứng dụng FarmBlock hiển thị bản đồ vệ tinh các vườn" loading="lazy"><span class="no">Kết nối</span><div class="tx"><h3>Kết nối từ bất kỳ đâu</h3><p>Ứng dụng di động đưa cánh đồng đến với bạn mọi lúc, mọi nơi: tiến độ phát triển, thông số kỹ thuật, tất cả nằm trong tầm tay bạn.</p></div></article>
+      <article class="tcard"><img src="img/coffee-cherries.webp" width="1400" height="784" alt="Chùm cà phê chín đỏ trên cành" loading="lazy"><span class="no">Minh bạch</span><div class="tx"><h3>Minh bạch từ gốc</h3><p>Mỗi hạt cà phê, mỗi trái sầu riêng kể câu chuyện của mình qua các mã QR. Hồ sơ canh tác số lưu giữ niềm tin, từ đất đỏ Tây Nguyên đến tận tay khách hàng.</p></div></article>
     </div>
   </div>
 </section>
@@ -514,13 +505,13 @@ p{max-width:60ch;text-wrap:pretty}
   <div class="wrap lay-grid">
     <div class="lay-sticky">
       <span class="tag rv">Đội ngũ vận hành</span>
-      <h2 id="h-l" class="split">Ba lớp người <span class="nw">cùng chăm</span> <span class="nw">một khu vườn</span></h2>
+      <h2 id="h-l" class="split">Ba lớp người <span class="nw grad-d">cùng chăm</span> <span class="nw">một khu vườn</span></h2>
       <p class="rv">Nhân sự tại vườn kiểm tra và chăm sóc hằng ngày. Hai lớp bên ngoài giúp xác minh và giám sát, để không quyết định nào chỉ dựa vào một người.</p>
     </div>
     <div class="stack">
-      <article class="layer l1"><img src="img/team-drying.jpg" width="1125" height="750" alt="Kỹ sư và người dân cùng kiểm tra hạt cà phê" loading="lazy"><div class="lt"><em>Lớp 1 · Thường trực tại vườn</em><h3>Có mặt mỗi ngày</h3><p class="who">01 quản lý nông trại, 02 kỹ sư nông nghiệp</p><p>Kiểm tra cây, ghi việc, thực hiện chăm sóc và cập nhật kết quả.</p></div></article>
-      <article class="layer l2"><img src="img/field-check.jpg" width="1371" height="784" alt="Kỹ sư kiểm tra cây cà phê ngoài vườn" loading="lazy"><div class="lt"><em>Lớp 2 · Kiểm tra và xác minh</em><h3>Đánh giá định kỳ</h3><p class="who">02 kỹ sư kiểm tra định kỳ</p><p>Đánh giá cây, đất, nước, thiết bị; tham vấn chuyên môn khi cần.</p></div></article>
-      <article class="layer l3"><img src="img/dash-log.jpg" width="989" height="506" alt="Nhật ký canh tác trên Dashboard FarmBlock" loading="lazy" style="object-position:left top"><div class="lt"><em>Lớp 3 · Giám sát từ xa</em><h3>Theo dõi bằng dữ liệu</h3><p class="who">01 kỹ sư giám sát</p><p>Đọc Dashboard, đối chiếu hình ảnh camera với số liệu để chỉ ra điểm cần kiểm tra.</p></div></article>
+      <article class="layer l1"><img src="img/team-drying.webp" width="1125" height="750" alt="Kỹ sư và người dân cùng kiểm tra hạt cà phê" loading="lazy"><div class="lt"><em>Lớp 1 · Thường trực tại vườn</em><h3>Có mặt mỗi ngày</h3><p class="who">01 quản lý nông trại, 02 kỹ sư nông nghiệp</p><p>Kiểm tra cây, ghi việc, thực hiện chăm sóc và cập nhật kết quả.</p></div></article>
+      <article class="layer l2"><img src="img/field-check.webp" width="1371" height="784" alt="Kỹ sư kiểm tra cây cà phê ngoài vườn" loading="lazy"><div class="lt"><em>Lớp 2 · Kiểm tra và xác minh</em><h3>Đánh giá định kỳ</h3><p class="who">02 kỹ sư kiểm tra định kỳ</p><p>Đánh giá cây, đất, nước, thiết bị; tham vấn chuyên môn khi cần.</p></div></article>
+      <article class="layer l3"><img src="img/dash-log.webp" width="989" height="506" alt="Nhật ký canh tác trên Dashboard FarmBlock" loading="lazy" style="object-position:left top"><div class="lt"><em>Lớp 3 · Giám sát từ xa</em><h3>Theo dõi bằng dữ liệu</h3><p class="who">01 kỹ sư giám sát</p><p>Đọc Dashboard, đối chiếu hình ảnh camera với số liệu để chỉ ra điểm cần kiểm tra.</p></div></article>
     </div>
   </div>
 </section>
@@ -540,13 +531,13 @@ p{max-width:60ch;text-wrap:pretty}
         <div><a class="btn btn-lime" href="https://sotay.farmblock.vn/" target="_blank" rel="noopener">Mở Sổ rẫy<svg aria-hidden="true"><use href="#ext"/></svg></a></div>
       </div>
       <div class="phones">
-        <div class="phone"><div class="scr"><img src="img/sotay-1.jpg" width="649" height="996" alt="Màn hình ghi việc bằng lời nói trong Sổ rẫy" loading="lazy"></div><b>Ghi việc bằng lời nói</b><span>Bấm micro, kể việc vừa làm; app ghi vào sổ, có cả tiền chi.</span></div>
-        <div class="phone"><div class="scr"><img src="img/sotay-2.jpg" width="682" height="952" alt="Màn hình khám lá, khám đất trong Sổ rẫy" loading="lazy"></div><b>Khám lá, khám đất</b><span>Chụp ba tấm ảnh, app cho biết cây bị gì, đất ra sao và việc nên làm.</span></div>
-        <div class="phone"><div class="scr"><img src="img/sotay-3.jpg" width="567" height="957" alt="Màn hình hồ sơ vùng trồng trong Sổ rẫy" loading="lazy"></div><b>Hồ sơ vùng trồng</b><span>Sổ ghi đủ thì xuất được hồ sơ nộp xã, sổ VietGAP và tọa độ vườn.</span></div>
+        <div class="phone"><div class="scr"><img src="img/sotay-1.webp" width="649" height="996" alt="Màn hình ghi việc bằng lời nói trong Sổ rẫy" loading="lazy"></div><b>Ghi việc bằng lời nói</b><span>Bấm micro, kể việc vừa làm; app ghi vào sổ, có cả tiền chi.</span></div>
+        <div class="phone"><div class="scr"><img src="img/sotay-2.webp" width="682" height="952" alt="Màn hình khám lá, khám đất trong Sổ rẫy" loading="lazy"></div><b>Khám lá, khám đất</b><span>Chụp ba tấm ảnh, app cho biết cây bị gì, đất ra sao và việc nên làm.</span></div>
+        <div class="phone"><div class="scr"><img src="img/sotay-3.webp" width="567" height="957" alt="Màn hình hồ sơ vùng trồng trong Sổ rẫy" loading="lazy"></div><b>Hồ sơ vùng trồng</b><span>Sổ ghi đủ thì xuất được hồ sơ nộp xã, sổ VietGAP và tọa độ vườn.</span></div>
       </div>
     </div>
     <div class="dash">
-      <div class="pic"><img src="img/dash-map.jpg" width="983" height="497" alt="Dashboard: bản đồ độ ẩm và nhiệt độ theo khu" loading="lazy"><img src="img/dash-log.jpg" width="989" height="506" alt="Dashboard: nhật ký canh tác kèm ảnh" loading="lazy"></div>
+      <div class="pic"><img src="img/dash-map.webp" width="983" height="497" alt="Dashboard: bản đồ độ ẩm và nhiệt độ theo khu" loading="lazy"><img src="img/dash-log.webp" width="989" height="506" alt="Dashboard: nhật ký canh tác kèm ảnh" loading="lazy"></div>
       <div class="tx">
         <span class="tag">Dành cho chuyên gia &amp; chủ đất</span>
         <h3 class="dash-h"><span class="grad-d">Dashboard quản lý</span></h3>
@@ -560,7 +551,7 @@ p{max-width:60ch;text-wrap:pretty}
 <!-- ============ HỆ SINH THÁI ============ -->
 <section class="eco" aria-labelledby="h-e">
   <div class="wrap eco-grid">
-    <figure class="eco-img rv-img"><img src="img/field-check.jpg" width="1371" height="784" alt="Hai kỹ sư kiểm tra cây trong vườn cà phê" loading="lazy" style="object-position:55% 50%"></figure>
+    <figure class="eco-img rv-img"><img src="img/field-check.webp" width="1371" height="784" alt="Hai kỹ sư kiểm tra cây trong vườn cà phê" loading="lazy" style="object-position:55% 50%"></figure>
     <div class="eco-list">
       <span class="tag rv">Hệ sinh thái của FarmBlock</span>
       <h2 id="h-e" class="split"><span class="nw">Cùng đồng hành kiến tạo,</span> <span class="nw">cùng chia sẻ giá trị</span></h2>
@@ -583,14 +574,14 @@ p{max-width:60ch;text-wrap:pretty}
         <p class="rv">FarmBlock không chỉ kết nối các mắt xích trong chuỗi giá trị nông nghiệp mà còn tái cấu trúc toàn bộ hệ thống bằng công nghệ, dữ liệu và logic vận hành thực tế. Từ sản xuất đến phân phối, mọi yếu tố đều được số hóa, chuẩn hóa và đồng bộ theo thời gian thực, tạo nên một hệ sinh thái thống nhất, minh bạch, với các cấu phần có khả năng mở rộng, nhân bản dễ dàng.</p>
         <div class="pair rv"><div><b class="num grad-d">6</b><span>Khối chức năng được tích hợp &amp; vận hành đồng bộ</span></div><div><b class="num grad-d">100%</b><span>Dữ liệu được lưu trữ minh bạch tại nền tảng FarmBlock</span></div></div>
       </div>
-      <figure class="ph rv-img"><img src="img/bien-ho.jpg" width="2200" height="1555" alt="Biển Hồ Pleiku và vùng cà phê Gia Lai nhìn từ trên cao lúc bình minh" loading="lazy"></figure>
+      <figure class="ph rv-img"><img src="img/eco-network.webp" width="1600" height="1067" alt="Đồi cà phê Tây Nguyên với các tuyến kết nối dữ liệu phát sáng giữa những khu vườn" loading="lazy"></figure>
     </div>
   </div>
 </section>
 
 <!-- ============ KẾT THÚC ============ -->
 <section class="final" id="lien-he" aria-labelledby="h-f">
-  <video class="bg" id="finalVid" muted loop playsinline preload="none" poster="img/final-poster.jpg" aria-hidden="true" data-src="img/final.mp4" data-src-s="img/final-s.mp4"></video>
+  <video class="bg" id="finalVid" muted loop playsinline preload="none" poster="img/final-poster.webp" aria-hidden="true" data-src="img/final.mp4" data-src-s="img/final-s.mp4"></video>
   <div class="wrap">
     <div class="final-card">
       <h2 id="h-f">Thấy tận mắt.<br>Tin tận tâm.</h2>
@@ -660,26 +651,26 @@ var heroCanvas=document.getElementById('heroGL');
 var H={};
 (function initHero(){
   if(!window.THREE){return}
-  var r=new THREE.WebGLRenderer({canvas:heroCanvas,antialias:true,alpha:false,powerPreference:'high-performance'});
-  r.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.5:1.75));
+  var r=new THREE.WebGLRenderer({canvas:heroCanvas,antialias:devicePixelRatio<1.5,alpha:false,powerPreference:'high-performance',stencil:false});
+  r.setPixelRatio(Math.min(devicePixelRatio,1.5));
   r.outputEncoding=THREE.sRGBEncoding;
   var scene=new THREE.Scene();
   var cam=new THREE.PerspectiveCamera(isMobile?78:64,1,.1,200);
   var loader=new THREE.TextureLoader();
   var sfx=isMobile?'-s':'';
-  var sphereGeo=new THREE.SphereGeometry(60,64,40);sphereGeo.scale(-1,1,1);
+  var sphereGeo=new THREE.SphereGeometry(60,48,32);sphereGeo.scale(-1,1,1);
   var matA=new THREE.MeshBasicMaterial({depthWrite:false});
   var matB=new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false});
   var sA=new THREE.Mesh(sphereGeo,matA),sB=new THREE.Mesh(sphereGeo,matB);sB.renderOrder=1;
   scene.add(sA,sB);
-  function tex(url,m,cb){loader.load(url,function(t){t.encoding=THREE.sRGBEncoding;t.anisotropy=r.capabilities.getMaxAnisotropy();m.map=t;m.needsUpdate=true;cb&&cb()})}
+  function tex(url,m,cb){loader.load(url,function(t){t.encoding=THREE.sRGBEncoding;t.anisotropy=Math.min(4,r.capabilities.getMaxAnisotropy());t.generateMipmaps=false;t.minFilter=THREE.LinearFilter;m.map=t;m.needsUpdate=true;cb&&cb()})}
   var pmrem=new THREE.PMREMGenerator(r);
-  tex('img/pano-rain'+sfx+'.jpg',matA,function(){heroCanvas.classList.add('ready');try{scene.environment=pmrem.fromEquirectangular(matA.map).texture}catch(e){}});
+  tex('img/pano-rain'+sfx+'.webp',matA,function(){heroCanvas.classList.add('ready');try{scene.environment=pmrem.fromEquirectangular(matA.map).texture;pmrem.dispose()}catch(e){}});
   var dryLoaded=false;
   H.season=function(s){
     var show=s==='dry';
     function go(){gsap.to(matB,{opacity:show?1:0,duration:reduce?0:1.1,ease:'power2.inOut'})}
-    if(show&&!dryLoaded){tex('img/pano-dry'+sfx+'.jpg',matB,function(){dryLoaded=true;go()})}else go();
+    if(show&&!dryLoaded){tex('img/pano-dry'+sfx+'.webp',matB,function(){dryLoaded=true;go()})}else go();
   };
   /* logo 3D: tấm nền + 6 cánh */
   var logo=new THREE.Group();scene.add(logo);
@@ -712,13 +703,16 @@ var H={};
   heroCanvas.addEventListener('pointermove',function(e){mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5);if(!drag)return;var dx=e.clientX-px;px=e.clientX;vy=-dx*.0045;yaw+=vy});
   ['pointerup','pointercancel','pointerleave'].forEach(function(t){heroCanvas.addEventListener(t,function(){drag=false})});
   H.prog=0;var home={x:0,y:0,s:1};
-  function size(){var w=heroCanvas.clientWidth,h=heroCanvas.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();var narrow=w<860;home={x:narrow?.95:1.75,y:narrow?1.75:.78,s:narrow?.42:.66}}
-  size();addEventListener('resize',size);
-  var visible=true;new IntersectionObserver(function(en){visible=en[0].isIntersecting}).observe(heroCanvas);
-  var clock=new THREE.Clock(),smx=0,smy=0;
-  function loop(){
-    requestAnimationFrame(loop);if(!visible)return;
-    var t=clock.getElapsedTime(),p=H.prog;
+  var sizeT;function size(){var w=heroCanvas.clientWidth,h=heroCanvas.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();var narrow=w<860;home={x:narrow?.95:1.75,y:narrow?1.75:.78,s:narrow?.42:.66}}
+  size();addEventListener('resize',function(){clearTimeout(sizeT);sizeT=setTimeout(size,120)});
+  var visible=true,raf=0,t=0,last=0,smx=0,smy=0;
+  function start(){if(!raf&&visible&&!document.hidden){last=performance.now();raf=requestAnimationFrame(loop)}}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=0}}
+  new IntersectionObserver(function(en){visible=en[0].isIntersecting;visible?start():stop()}).observe(heroCanvas);
+  document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
+  function loop(now){
+    raf=requestAnimationFrame(loop);
+    var dt=Math.min(.05,(now-last)/1000);last=now;t+=dt;var p=H.prog;
     if(!drag){vy*=.94;yaw+=vy+(reduce?0:.0004)}
     smx+=(mx-smx)*.06;smy+=(my-smy)*.06;
     cam.rotation.order='YXZ';cam.rotation.y=yaw;cam.rotation.x=pitch-p*.7;
@@ -728,7 +722,7 @@ var H={};
     plateMesh.scale.setScalar(Math.max(.01,1-p*.8));plateMat.opacity=Math.max(0,1-p*1.6);plateMesh.visible=plateMat.opacity>0.01;
     r.render(scene,cam);
   }
-  loop();
+  start();
 })();
 document.querySelectorAll('[data-season]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('[data-season]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});H.season&&H.season(b.dataset.season)})});
 
@@ -768,15 +762,15 @@ var F={};
 (function initFarm(){
   var canvas=document.getElementById('farmGL');
   if(!window.THREE)return;
-  var r=new THREE.WebGLRenderer({canvas:canvas,antialias:!isMobile||devicePixelRatio<2,powerPreference:'high-performance'});
-  r.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.5:1.75));
-  r.outputEncoding=THREE.sRGBEncoding;r.shadowMap.enabled=!isMobile;r.shadowMap.type=THREE.PCFSoftShadowMap;
+  var r=new THREE.WebGLRenderer({canvas:canvas,antialias:devicePixelRatio<1.5,powerPreference:'high-performance',stencil:false});
+  r.setPixelRatio(Math.min(devicePixelRatio,1.5));
+  r.outputEncoding=THREE.sRGBEncoding;r.shadowMap.enabled=!isMobile;r.shadowMap.autoUpdate=false;r.shadowMap.needsUpdate=true;r.shadowMap.type=THREE.PCFSoftShadowMap;
   var scene=new THREE.Scene();var bgc=new THREE.Color(0x173a22).convertSRGBToLinear();scene.background=bgc;scene.fog=new THREE.Fog(bgc,22,48);
   var cam=new THREE.PerspectiveCamera(36,1,.1,200);
   var K=.01,CX=690,CY=605;
   function P(x,y){return new THREE.Vector2((x-CX)*K,(y-CY)*K)}
   var tl=new THREE.TextureLoader();
-  var mapTex=tl.load('img/farm-map-dark.png');mapTex.encoding=THREE.sRGBEncoding;mapTex.anisotropy=r.capabilities.getMaxAnisotropy();
+  var mapTex=tl.load('img/farm-map-dark.webp',function(){r.shadowMap.needsUpdate=true});mapTex.encoding=THREE.sRGBEncoding;mapTex.anisotropy=r.capabilities.getMaxAnisotropy();
   var side=new THREE.MeshStandardMaterial({color:0x7a4722,roughness:1});
   var ground=new THREE.Mesh(new THREE.BoxGeometry(13.8,.5,12.1),[side,side,new THREE.MeshStandardMaterial({map:mapTex,roughness:.95}),side,side,side]);
   ground.position.y=-.25;ground.receiveShadow=true;scene.add(ground);
@@ -827,8 +821,12 @@ var F={};
   ['pointerup','pointercancel','pointerleave'].forEach(function(t){canvas.addEventListener(t,function(){drag=false})});
   var wide=true;
   function size(){var w=canvas.clientWidth,h=canvas.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;wide=w>900;cam.fov=w<h?50:36;if(wide)cam.setViewOffset(w,h,-w*.17,0,w,h);else cam.clearViewOffset();cam.updateProjectionMatrix()}
-  size();addEventListener('resize',size);
-  var vis=false;new IntersectionObserver(function(e){vis=e[0].isIntersecting},{rootMargin:'100px'}).observe(canvas);
+  var sizeT;size();addEventListener('resize',function(){clearTimeout(sizeT);sizeT=setTimeout(size,120)});
+  var vis=false,raf=0,last=0,tt=0;
+  function start(){if(!raf&&vis&&!document.hidden){last=performance.now();raf=requestAnimationFrame(loop)}}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=0}}
+  new IntersectionObserver(function(e){vis=e[0].isIntersecting;vis?start():stop()},{rootMargin:'100px'}).observe(canvas);
+  document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
   F.active='all';
   F.focus=function(k){F.active=k;
     Object.keys(groups).forEach(function(t){var on=k==='all'||k===t||(k==='iot');groups[t].forEach(function(g){var hl=k===t;gsap.to(g.userData.sp.material,{opacity:on?1:.18,duration:.5,overwrite:true});gsap.to(g.userData.sp.scale,{x:g.userData.base*(hl?1.35:1),y:g.userData.base*(hl?1.35:1),duration:.6,ease:'back.out(2)',overwrite:true});gsap.to(g.userData.pole.material,{opacity:on?.75:.12,duration:.5,overwrite:true})})});
@@ -839,15 +837,15 @@ var F={};
   };
   F.zone=function(id){Object.keys(zoneMeshes).forEach(function(k){var on=k===id;zoneMeshes[k].children.forEach(function(m){gsap.to(m.material,{opacity:on?.7:0,emissiveIntensity:on?.4:0,duration:.5,overwrite:true})});gsap.to(zoneMeshes[k].position,{y:on?.16:0,duration:.6,ease:'power3.out',overwrite:true})});
     if(id){var b=new THREE.Box3().setFromObject(zoneMeshes[id]),c=b.getCenter(new THREE.Vector3());gsap.to(o,{tx:c.x,tz:c.z,dist:wide?10:12.5,duration:reduce?0:1.2,ease:'power3.inOut',overwrite:'auto'})}else F.focus(F.active)};
-  var clk=new THREE.Clock(),mx=0,my=0;
+  var mx=0,my=0;
   canvas.addEventListener('pointermove',function(e){var b=canvas.getBoundingClientRect();mx=(e.clientX-b.left)/b.width-.5;my=(e.clientY-b.top)/b.height-.5});
-  (function loop(){requestAnimationFrame(loop);if(!vis)return;var t=clk.getElapsedTime();
+  function loop(now){raf=requestAnimationFrame(loop);tt+=Math.min(.05,(now-last)/1000);last=now;var t=tt;
     if(!drag){vel*=.94;o.az+=vel+(reduce?0:.0006)}
     var az=o.az+mx*.12,el=o.el-my*.06;
     cam.position.set(o.tx+Math.sin(az)*Math.cos(el)*o.dist,Math.sin(el)*o.dist,o.tz+Math.cos(az)*Math.cos(el)*o.dist);cam.lookAt(o.tx,0,o.tz);
     if(!reduce){Object.keys(groups).forEach(function(k){groups[k].forEach(function(g){var u=g.userData;u.sp.position.y=u.h+u.base*.42+Math.sin(t*1.6+u.ph)*.04;u.ring.material.opacity=(F.active==='all'||F.active===u.t||F.active==='iot'?.5:.08)+Math.sin(t*1.2+u.ph)*.12;u.halo.material.opacity=F.active===u.t?.35+Math.sin(t*1.5+u.ph)*.1:0})});
       pulses.forEach(function(p){var q=(t*.35+p.o)%1;p.d.position.copy(p.c.getPoint(q))})}
-    r.render(scene,cam)})();
+    r.render(scene,cam)}
 })();
 /* bảng điều khiển */
 var laysEl=document.getElementById('lays'),info=document.getElementById('info'),zrow=document.getElementById('zrow');
@@ -861,15 +859,17 @@ setInfo(LAY[0]);
 function fmt(n){return new Intl.NumberFormat('vi-VN',{maximumFractionDigits:2}).format(n)}
 ['Tất cả'].concat(Object.keys(Z)).forEach(function(id,i){var b=document.createElement('button');b.type='button';b.className='zb';b.textContent=id;b.setAttribute('aria-pressed',i?'false':'true');b.addEventListener('click',function(){zrow.querySelectorAll('.zb').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});if(i===0){setInfo(LAY.filter(function(l){return l.k===(F.active||'all')})[0]);F.zone&&F.zone(null)}else{var z=Z[id];setInfo({t:'Khu '+id+' · '+fmt(z.area/10000)+' ha · '+z.lots+' lô',p:z.note,s:'Xen canh cà phê – cau'});F.zone&&F.zone(id)}});zrow.appendChild(b)});
 
+if('IntersectionObserver' in window){var gio=new IntersectionObserver(function(en){en.forEach(function(e){e.target.classList.toggle('on',e.isIntersecting)})});document.querySelectorAll('.grad,.grad-d').forEach(function(el){gio.observe(el)})}
 /* video phần kết: tải khi gần tới, tạm dừng khi ra khỏi màn hình */
 (function(){var v=document.getElementById('finalVid');if(!v)return;var loaded=false;
-  new IntersectionObserver(function(en){var e=en[0];if(e.isIntersecting){if(!loaded){v.src=matchMedia('(max-width:860px)').matches?v.dataset.srcS:v.dataset.src;loaded=true}if(!reduce){var p=v.play();if(p&&p.catch)p.catch(function(){})}}else if(loaded)v.pause()},{rootMargin:'300px'}).observe(v)})();
+  new IntersectionObserver(function(en){var e=en[0];if(e.isIntersecting){if(!loaded){v.src=matchMedia('(max-width:860px)').matches?v.dataset.srcS:v.dataset.src;loaded=true}if(!reduce){var p=v.play();if(p&&p.catch)p.catch(function(){})}}else if(loaded)v.pause()},{rootMargin:'300px'}).observe(v);
+  document.addEventListener('visibilitychange',function(){if(document.hidden)v.pause();else if(loaded&&!reduce){var b=v.getBoundingClientRect();if(b.bottom>0&&b.top<innerHeight){var p=v.play();if(p&&p.catch)p.catch(function(){})}}})})();
 /* ---------- CHUYỂN ĐỘNG ---------- */
 if(!window.gsap){root.classList.remove('js');return}
 gsap.registerPlugin(ScrollTrigger);
 if(window.SplitText)gsap.registerPlugin(SplitText);
 var lenis=null;
-if(!reduce&&window.Lenis){lenis=new Lenis({lerp:.1,wheelMultiplier:.9,smoothWheel:true,syncTouch:false});window.lenis=lenis;lenis.on('scroll',function(e){ScrollTrigger.update();onScrollNav(e.scroll)});gsap.ticker.add(function(t){lenis.raf(t*1000)});gsap.ticker.lagSmoothing(0);
+if(!reduce&&window.Lenis){lenis=new Lenis({lerp:.1,wheelMultiplier:.9,smoothWheel:true,syncTouch:false});window.lenis=lenis;lenis.on('scroll',function(e){ScrollTrigger.update();onScrollNav(e.scroll)});gsap.ticker.add(function(t){lenis.raf(t*1000)});gsap.ticker.lagSmoothing(500,33);
   document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');var el=id==='#top'?0:document.querySelector(id);if(el===null)return;e.preventDefault();lenis.scrollTo(el,{offset:-20,duration:1.4})})});
 }else{addEventListener('scroll',function(){onScrollNav(scrollY)},{passive:true})}
 ScrollTrigger.create({trigger:'.hero',start:'top top',end:'bottom top',scrub:true,onUpdate:function(s){H.prog=s.progress}});
@@ -889,15 +889,22 @@ mm.add('(prefers-reduced-motion: no-preference)',function(){
   gsap.from('.phone .scr',{y:60,rotate:function(i){return [-6,0,6][i]},opacity:0,duration:1,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.phones',start:'top 88%',once:true}});
   gsap.from('.dash .pic img',{y:40,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.dash',start:'top 85%',once:true}});
   gsap.from('.acc',{x:-30,opacity:0,duration:.7,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.eco-list',start:'top 82%',once:true}});
-  gsap.from('.chipbox svg',{scale:.4,rotate:-12,opacity:0,duration:1,stagger:.12,ease:'back.out(1.8)',scrollTrigger:{trigger:'.chips3',start:'top 88%',once:true}});
   gsap.from('.tagline span',{y:30,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.foot',start:'top 85%',once:true}});
 });
-mm.add('(min-width: 861px) and (prefers-reduced-motion: no-preference)',function(){
-  var track=document.getElementById('track');
-  var tw=gsap.to(track,{x:function(){return -(track.scrollWidth-innerWidth)},ease:'none',scrollTrigger:{trigger:'#trackWrap',start:'top 16%',end:function(){return '+='+(track.scrollWidth-innerWidth)},pin:true,scrub:.8,invalidateOnRefresh:true,anticipatePin:1}});
-  gsap.utils.toArray('.tcard img').forEach(function(img){gsap.fromTo(img,{xPercent:-4,scale:1.14},{xPercent:4,scale:1.14,ease:'none',scrollTrigger:{trigger:img.parentNode,containerAnimation:tw,start:'left right',end:'right left',scrub:true}})});
-});
 addEventListener('load',function(){ScrollTrigger.refresh()});
+/* phần video kết: cuộn tới thì khóa trọn màn hình (chỉ máy tính) */
+mm.add('(min-width: 861px) and (hover: hover) and (prefers-reduced-motion: no-preference)',function(){
+  if(!lenis)return;var fin=document.querySelector('.final'),busy=false;
+  function go(y){if(busy)return;busy=true;lenis.scrollTo(Math.max(0,Math.min(y,document.documentElement.scrollHeight-innerHeight)),{duration:1.05,lock:true,force:true,easing:function(x){return 1-Math.pow(1-x,3)},onComplete:function(){setTimeout(function(){busy=false},120)}})}
+  function top(){return fin.getBoundingClientRect().top+lenis.scroll}
+  var a=ScrollTrigger.create({trigger:fin,start:'top 82%',end:'bottom 18%',
+    onEnter:function(){go(top())},
+    onEnterBack:function(){go(top())}});
+  var b=ScrollTrigger.create({trigger:fin,start:'top 18%',end:'bottom 82%',
+    onLeaveBack:function(){go(top()-innerHeight)},
+    onLeave:function(){go(top()+fin.offsetHeight)}});
+  return function(){a.kill();b.kill()};
+});
 })();
 </script>
 </body>

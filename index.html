@@ -240,6 +240,9 @@ p{max-width:60ch;text-wrap:pretty}
 .stage-note{position:absolute;z-index:3;right:20px;bottom:16px;font-size:.9375rem;color:var(--on-dark-2);text-align:right;max-width:36ch;pointer-events:none}
 .drag-hint{position:absolute;z-index:3;right:18px;top:18px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;background:rgba(12,31,16,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:.9375rem;font-weight:500;pointer-events:none}
 .drag-hint svg{width:18px;height:18px}
+.zoom-ctl{display:none}.dh-m{display:none}
+@media (max-width:900px){.dh-d{display:none}.dh-m{display:inline}}
+@media (max-width:900px){.zoom-ctl{position:absolute;z-index:3;right:14px;top:72px;display:flex;flex-direction:column;gap:8px}.zoom-ctl button{width:48px;height:48px;border-radius:50%;background:rgba(12,31,16,.62);color:#fff;font-size:1.6rem;font-weight:500;line-height:1;display:grid;place-items:center}.zoom-ctl button:active{background:var(--g600)}.drag-hint{right:14px;top:14px}}
 @media (max-width:900px){
   .stage{aspect-ratio:auto;min-height:0;height:auto;background:var(--g800)}
   .stage canvas{position:relative;height:min(62svh,520px)}
@@ -274,8 +277,8 @@ p{max-width:60ch;text-wrap:pretty}
 .lay-sticky{grid-column:1/6;position:sticky;top:130px}
 .lay-sticky p{margin-top:20px}
 .stack{grid-column:7/13;display:grid;gap:16px;perspective:1400px}
-.layer{border-radius:var(--r-lg);overflow:hidden;background:var(--paper);display:grid;grid-template-columns:.9fr 1fr;min-height:260px}
-.layer img{width:100%;height:100%;object-fit:cover}
+.layer{border-radius:var(--r-lg);overflow:hidden;isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(white,black);background:var(--paper);display:grid;grid-template-columns:.9fr 1fr;min-height:260px}
+.layer img{width:100%;height:100%;object-fit:cover;border-radius:0}
 .layer .lt{padding:24px 24px 26px;display:flex;flex-direction:column;gap:8px}
 .layer .lt em{font-style:normal;font-weight:600;color:var(--g500);font-size:1rem}
 .layer .who{font-weight:600;font-size:1.0625rem}
@@ -499,7 +502,8 @@ p{max-width:60ch;text-wrap:pretty}
     </div>
     <div class="stage rv-stage">
       <canvas id="farmGL" role="img" aria-label="Mô hình 3D vườn FarmBlock IaKo #01 với 8 khu canh tác và vị trí thiết bị"></canvas>
-      <span class="drag-hint"><svg aria-hidden="true"><use href="#drag"/></svg>Kéo để xoay</span>
+      <span class="drag-hint"><svg aria-hidden="true"><use href="#drag"/></svg><span class="dh-d">Kéo để xoay</span><span class="dh-m">Kéo xoay · chụm 2 ngón để zoom</span></span>
+      <div class="zoom-ctl" role="group" aria-label="Phóng to, thu nhỏ bản đồ"><button type="button" id="zIn" aria-label="Phóng to">+</button><button type="button" id="zOut" aria-label="Thu nhỏ">−</button></div>
       <div class="glass" id="glass">
         <h3>Thiết bị tại vườn</h3>
         <ul class="lays" id="lays"></ul>
@@ -535,7 +539,7 @@ p{max-width:60ch;text-wrap:pretty}
     </div>
     <div class="stack">
       <article class="layer l1"><img src="img/team-drying.webp" width="1125" height="750" alt="Kỹ sư và người dân cùng kiểm tra hạt cà phê" loading="lazy"><div class="lt"><em>Lớp 1 · Thường trực tại vườn</em><h3>Có mặt mỗi ngày</h3><p class="who">01 quản lý nông trại, 02 kỹ sư nông nghiệp</p><p>Kiểm tra cây, ghi việc, thực hiện chăm sóc và cập nhật kết quả.</p></div></article>
-      <article class="layer l2"><img src="img/field-check.webp" width="1371" height="784" alt="Kỹ sư kiểm tra cây cà phê ngoài vườn" loading="lazy"><div class="lt"><em>Lớp 2 · Kiểm tra và xác minh</em><h3>Đánh giá định kỳ</h3><p class="who">02 kỹ sư kiểm tra định kỳ</p><p>Đánh giá cây, đất, nước, thiết bị; tham vấn chuyên môn khi cần.</p></div></article>
+      <article class="layer l2"><img src="img/field-check.webp" width="867" height="784" alt="Kỹ sư kiểm tra cây cà phê ngoài vườn" loading="lazy"><div class="lt"><em>Lớp 2 · Kiểm tra và xác minh</em><h3>Đánh giá định kỳ</h3><p class="who">02 kỹ sư kiểm tra định kỳ</p><p>Đánh giá cây, đất, nước, thiết bị; tham vấn chuyên môn khi cần.</p></div></article>
       <article class="layer l3"><img src="img/dash-log.webp" width="989" height="506" alt="Nhật ký canh tác trên Dashboard FarmBlock" loading="lazy" style="object-position:left top"><div class="lt"><em>Lớp 3 · Giám sát từ xa</em><h3>Theo dõi bằng dữ liệu</h3><p class="who">01 kỹ sư giám sát</p><p>Đọc Dashboard, đối chiếu hình ảnh camera với số liệu để chỉ ra điểm cần kiểm tra.</p></div></article>
     </div>
   </div>
@@ -576,7 +580,7 @@ p{max-width:60ch;text-wrap:pretty}
 <!-- ============ HỆ SINH THÁI ============ -->
 <section class="eco" aria-labelledby="h-e">
   <div class="wrap eco-grid">
-    <figure class="eco-img rv-img"><img src="img/field-check.webp" width="1371" height="784" alt="Hai kỹ sư kiểm tra cây trong vườn cà phê" loading="lazy" style="object-position:55% 50%"></figure>
+    <figure class="eco-img rv-img"><img src="img/field-check.webp" width="867" height="784" alt="Hai kỹ sư kiểm tra cây trong vườn cà phê" loading="lazy" style="object-position:55% 50%"></figure>
     <div class="eco-list">
       <span class="tag rv">Hệ sinh thái của FarmBlock</span>
       <h2 id="h-e" class="split"><span class="nw">Cùng đồng hành kiến tạo,</span> <span class="nw">cùng chia sẻ giá trị</span></h2>
@@ -843,6 +847,15 @@ var F={};
   /* camera: quỹ đạo quanh tâm, kéo để xoay */
   var o={az:-.35,el:.98,dist:isMobile?12.9:15,tx:isMobile?.05:.4,tz:isMobile?.35:.6},drag=false,lx=0,vel=0;
   var tap=null;canvas.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;tap={x:e.clientX,y:e.clientY,t:performance.now(),touch:e.pointerType==='touch'};canvas.setPointerCapture(e.pointerId)});
+  /* zoom trên điện thoại: chụm 2 ngón hoặc nút +/− */
+  function setDist(d,anim){d=Math.max(4.2,Math.min(20,d));gsap.killTweensOf(o,'dist');if(anim)gsap.to(o,{dist:d,duration:.45,ease:'power2.out'});else o.dist=d}
+  var pd0=0,pdist0=0;
+  canvas.addEventListener('touchstart',function(e){if(e.touches.length===2){e.preventDefault();drag=false;tap=null;var a=e.touches[0],b=e.touches[1];pd0=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);pdist0=o.dist}},{passive:false});
+  canvas.addEventListener('touchmove',function(e){if(e.touches.length===2&&pd0){e.preventDefault();var a=e.touches[0],b=e.touches[1];var d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);setDist(pdist0*pd0/Math.max(20,d))}},{passive:false});
+  canvas.addEventListener('touchend',function(e){if(e.touches.length<2)pd0=0},{passive:true});
+  var zi=document.getElementById('zIn'),zo=document.getElementById('zOut');
+  zi&&zi.addEventListener('click',function(){setDist(o.dist*.75,true)});
+  zo&&zo.addEventListener('click',function(){setDist(o.dist/.75,true)});
   /* chạm vào một khu (điện thoại) để phóng to khu đó */
   var ray=new THREE.Raycaster(),gp=new THREE.Plane(new THREE.Vector3(0,1,0),0),hit=new THREE.Vector3();
   canvas.addEventListener('pointerup',function(e){if(!tap||!tap.touch)return;var mv=Math.abs(e.clientX-tap.x)+Math.abs(e.clientY-tap.y);if(mv>10||performance.now()-tap.t>450)return;var b=canvas.getBoundingClientRect();ray.setFromCamera({x:(e.clientX-b.left)/b.width*2-1,y:-(e.clientY-b.top)/b.height*2+1},cam);if(!ray.ray.intersectPlane(gp,hit))return;var mx2=hit.x/K+CX,my2=hit.z/K+CY,id=null;Object.keys(Z).some(function(k){return Z[k].polys.some(function(p){if(inPoly(mx2,my2,p)){id=k;return true}})});F.onTap&&F.onTap(id)});
@@ -928,7 +941,7 @@ mm.add('(prefers-reduced-motion: no-preference)',function(){
   gsap.from('.final h2',{y:50,opacity:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'.final',start:'top 70%',once:true}});
   gsap.from('.st',{y:40,opacity:0,duration:.9,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.stat-band',start:'top 85%',once:true}});
   gsap.utils.toArray('.st b[data-to]').forEach(function(b){var end=+b.dataset.to,sm=b.querySelector('small'),tail=sm?sm.outerHTML:'',o={v:0};gsap.to(o,{v:end,duration:1.8,ease:'power3.out',scrollTrigger:{trigger:b,start:'top 92%',once:true},onUpdate:function(){b.innerHTML=Math.round(o.v).toLocaleString('vi-VN')+tail}})});
-  gsap.utils.toArray('.layer').forEach(function(l){gsap.from(l,{rotateX:-22,y:70,opacity:0,scale:.95,ease:'power3.out',duration:1,scrollTrigger:{trigger:l,start:'top 92%',once:true}})});
+  gsap.utils.toArray('.layer').forEach(function(l){gsap.from(l,{rotateX:isMobile?0:-22,y:70,opacity:0,scale:.95,ease:'power3.out',duration:1,clearProps:'transform',scrollTrigger:{trigger:l,start:'top 92%',once:true}})});
   gsap.from('.phone .scr',{y:60,rotate:function(i){return [-6,0,6][i]},opacity:0,duration:1,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.phones',start:'top 88%',once:true}});
   gsap.from('.dash .pic img',{y:40,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.dash',start:'top 85%',once:true}});
   gsap.from('.acc',{x:-30,opacity:0,duration:.7,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.eco-list',start:'top 82%',once:true}});

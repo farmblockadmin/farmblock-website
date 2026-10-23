@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mô hình · Farmblock</title>
+<meta name="description" content="Mô hình trang trại Farmblock: quy hoạch bài bản, canh tác hiện đại, tiêu chuẩn rõ ràng, sẵn sàng nhân rộng ra nhiều vùng sinh thái Việt Nam.">
+<meta name="theme-color" content="#112615">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Farmblock">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:url" content="https://trungcien0120.github.io/farmblock-landing/mo-hinh.html">
+<meta property="og:title" content="Mô hình Farmblock – Hệ thống trang trại dễ dàng nhân rộng">
+<meta property="og:description" content="Từ thực địa đến một hệ sinh thái toàn diện, vì nông dân Việt Nam.">
+<meta property="og:image" content="https://trungcien0120.github.io/farmblock-landing/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Trang chủ Farmblock: đồi cà phê Tây Nguyên và logo Farmblock">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://trungcien0120.github.io/farmblock-landing/img/og-image.jpg">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&display=swap" rel="stylesheet">
+<style>
+/* Bố cục: lưới 12 cột trong khung 1200px căn giữa; câu chuyện đi từ ảnh 360° → con người → con số → mô hình 3D → ứng dụng */
+:root{
+  --paper:#F2F8EA; --paper-2:#E4EFD6; --paper-3:#D5E6C2; --white:#FFFFFF;
+  --ink:#0F2A17; --muted:#3D5845;
+  --g900:#0C1F10; --g800:#112615; --g700:#17331C; --g600:#234D2B; --g500:#3A8047; --g400:#61996C;
+  --lime:#B5E383; --lime-2:#D3F0AE; --cream:#F5E4A1; --sky:#51ADCA;
+  --on-dark:#EEF6E6; --on-dark-2:#C9DDBF;
+  --font:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --max:1200px;
+  --fs-display:clamp(2.5rem,5.2vw,4.9rem);
+  --fs-h2:clamp(2rem,3.6vw,3.3rem);
+  --fs-h3:clamp(1.3rem,1.7vw,1.6rem);
+  --fs-lead:clamp(1.15rem,1.4vw,1.35rem);
+  --fs-body:1.1875rem;
+  --gut:max(20px,env(safe-area-inset-left,0px));
+  --gutr:max(20px,env(safe-area-inset-right,0px));
+  --sec:clamp(88px,10vw,150px);
+  --r:22px; --r-lg:32px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html[data-size="lg"]{font-size:118.75%}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;overscroll-behavior-x:none;scroll-padding-top:100px}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:var(--fs-body);line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:rgba(58,128,71,.15);overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
+:focus-visible{outline:3px solid var(--g500);outline-offset:3px;border-radius:8px}
+.dark :focus-visible,.hero :focus-visible,.nav :focus-visible{outline-color:var(--lime)}
+::selection{background:var(--lime);color:var(--g800)}
+.skip{position:fixed;left:16px;top:-80px;z-index:200;background:var(--g800);color:#fff;padding:14px 22px;border-radius:999px;text-decoration:none;font-weight:600}
+.skip:focus{top:12px}
+h1,h2,h3{font-weight:600;letter-spacing:-0.02em;line-height:1.1;text-wrap:balance;font-stretch:110%}
+h1{font-size:var(--fs-display);line-height:1.04;letter-spacing:-0.03em}
+h2{font-size:var(--fs-h2)}
+h3{font-size:var(--fs-h3);line-height:1.22;font-stretch:104%}
+p{max-width:60ch;text-wrap:pretty}
+.nw{white-space:nowrap}
+.wrap{width:100%;max-width:calc(var(--max) + 40px);margin-inline:auto;padding-left:var(--gut);padding-right:var(--gutr)}
+.lead{font-size:var(--fs-lead);line-height:1.55}
+.num{font-variant-numeric:tabular-nums}
+.tag{display:inline-flex;align-items:center;gap:10px;font-weight:600;color:var(--g500);font-size:1.0625rem;margin-bottom:16px}
+.tag::before{content:"";width:11px;height:11px;background:currentColor;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.dark .tag,.sotay .tag{color:var(--lime)}
+.center{text-align:center;margin-inline:auto}
+.sec-head{max-width:760px;margin:0 auto 56px;text-align:center}
+.sec-head p{margin:18px auto 0}
+/* chữ gradient chạy chậm theo màu thương hiệu */
+.grad{background:linear-gradient(100deg,#7ED839 0%,#F5E4A1 22%,#B5E383 40%,#51ADCA 60%,#7ED839 80%,#F5E4A1 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gshift 14s linear infinite;padding-bottom:.06em}
+.grad-d{background:linear-gradient(100deg,#008242 0%,#3A8047 20%,#7EBF3A 40%,#2F8FB5 62%,#008242 82%,#3A8047 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gshift 16s linear infinite;padding-bottom:.06em}
+/* chỉ chạy gradient khi chữ đang trên màn hình */
+.js .grad,.js .grad-d{animation-play-state:paused}.js .grad.on,.js .grad-d.on{animation-play-state:running}
+/* trên nền 3D đang chuyển động: bỏ làm mờ nền để đỡ tốn GPU */
+.hero .seg,.hero .hint,.hero .btn-glass{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(12,31,16,.6)}
+.nav:not(.solid) .bar{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(17,38,21,.58)}
+@keyframes gshift{from{background-position:0% 50%}to{background-position:250% 50%}}
+
+/* ---- nút ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:56px;padding:0 1.5em;border-radius:999px;font-weight:600;font-size:1.0625rem;text-decoration:none;white-space:nowrap;transition:transform .25s var(--ease),background-color .25s,color .25s}
+.btn:active{transform:scale(.96)}
+.btn svg{width:1.05em;height:1.05em;flex:none;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translate(2px,-2px)}
+.btn-lime{background:var(--lime);color:var(--g800)}
+.btn-lime:hover{background:var(--lime-2)}
+.btn-green{background:var(--g500);color:#fff}
+.btn-green:hover{background:var(--g600)}
+.btn-glass{background:rgba(255,255,255,.16);color:#fff;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.btn-glass:hover{background:rgba(255,255,255,.26)}
+.btn-ink{background:var(--g800);color:#fff}
+.btn-ink:hover{background:var(--g600)}
+
+/* ---- thanh điều hướng gọn ---- */
+.nav{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);left:0;right:0;z-index:100;pointer-events:none;transition:transform .5s var(--ease)}
+.nav.hide{transform:translateY(-140%)}
+.bar{pointer-events:auto;max-width:var(--max);margin:0 auto;width:calc(100% - 28px);display:flex;align-items:center;gap:10px;min-height:66px;padding:8px 8px 8px 18px;border-radius:999px;background:rgba(17,38,21,.42);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);color:#fff;transition:background-color .4s;position:relative}
+.nav.solid .bar{background:rgba(17,38,21,.93);-webkit-backdrop-filter:none;backdrop-filter:none}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+.brand svg.mk{width:38px;height:38px}
+.brand .wm{height:17px;width:auto;fill:currentColor}
+.menu{margin-left:auto;position:relative}
+.menu-trig{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 18px;border-radius:999px;font-weight:600;font-size:1.0625rem;transition:background-color .25s}
+.menu-trig:hover,.menu.open .menu-trig{background:rgba(255,255,255,.14)}
+.menu-trig .bars{width:18px;height:12px;position:relative}
+.menu-trig .bars::before,.menu-trig .bars::after{content:"";position:absolute;left:0;right:0;height:2px;border-radius:2px;background:currentColor;transition:transform .35s var(--ease)}
+.menu-trig .bars::before{top:1px}.menu-trig .bars::after{bottom:1px}
+.menu.open .menu-trig .bars::before{transform:translateY(4px) rotate(45deg)}
+.menu.open .menu-trig .bars::after{transform:translateY(-4px) rotate(-45deg)}
+.panel-m{position:absolute;right:0;top:calc(100% + 12px);width:min(560px,calc(100vw - 28px));padding:14px;border-radius:28px;background:rgba(17,38,21,.94);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:4px;opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top right;transition:opacity .3s var(--ease),transform .4s var(--ease),visibility .3s}
+.panel-m::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
+.menu.open .panel-m{opacity:1;visibility:visible;transform:none}
+@media (hover:hover) and (min-width:861px){.menu:hover .panel-m{opacity:1;visibility:visible;transform:none}}
+.panel-m a.it{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-radius:18px;text-decoration:none;transition:background-color .2s}
+.panel-m a.it:hover{background:rgba(255,255,255,.1)}
+.panel-m a.it b{font-weight:600;font-size:1.125rem}
+.panel-m a.it span{font-size:.9375rem;color:var(--on-dark-2)}
+.panel-m .row{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12)}
+.pill{min-height:46px;padding:0 16px;border-radius:999px;background:rgba(255,255,255,.1);font-weight:600;font-size:1rem}
+.pill[aria-pressed="true"]{background:var(--lime);color:var(--g800)}
+.bar .cta-vm{min-height:50px;padding:0 1.25em}
+@media (max-width:860px){.menu{position:static}.panel-m{left:0;right:0;width:auto;transform-origin:top center}}
+@media (max-width:399px){.brand .wm{display:none}}
+@media (max-width:620px){.brand .wm{height:14px}.bar .cta-vm span.l{display:none}.bar .cta-vm{padding:0 1em}.panel-m{grid-template-columns:1fr;max-height:calc(100svh - 120px);overflow:auto;overscroll-behavior:contain}}
+
+/* ---- Kết thúc ---- */
+.final{position:relative;height:100vh;height:100svh;min-height:560px;display:flex;align-items:center;overflow:hidden;color:#fff}
+.final .bg{position:absolute;inset:0;width:100%;height:120%;object-fit:cover;will-change:transform}
+@media (max-width:860px){.final .bg{height:100%;will-change:auto}}
+.final::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,22,40,.15) 0%,rgba(6,24,14,.35) 45%,rgba(6,24,14,.86) 100%)}
+.final .wrap{position:relative;z-index:2;padding-block:96px 64px;width:100%}
+.final-card{max-width:760px;margin:0 auto;text-align:center}
+.f-brand{display:inline-flex;align-items:center;gap:14px;color:#fff;margin-bottom:28px}.f-brand .mk{width:58px;height:58px}.f-brand .wm{height:28px;width:auto;fill:currentColor}
+@media (max-width:620px){.f-brand{gap:10px;margin-bottom:20px}.f-brand .mk{width:44px;height:44px}.f-brand .wm{height:21px}}
+.final h2{font-size:clamp(2.6rem,6vw,5.4rem);line-height:1.02;color:#fff;letter-spacing:-0.035em}
+.final p{margin:20px auto 0;color:#F3F8EE;font-size:var(--fs-lead);max-width:42ch}
+.final .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:30px}
+.foot{background:var(--g800);color:var(--on-dark);padding:clamp(56px,7vw,96px) 0 calc(28px + env(safe-area-inset-bottom,0px))}
+.foot-top{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
+.foot-top .tl{grid-column:1/9}
+.tagline{font-size:clamp(1.7rem,3vw,2.6rem);font-weight:600;font-stretch:112%;line-height:1.15;margin-top:22px;letter-spacing:-0.02em}
+.tagline span{display:block}
+.foot-top .bt{grid-column:9/13;display:flex;justify-content:flex-end}
+.fcols{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:52px;padding-top:36px;border-top:1px solid rgba(255,255,255,.14)}
+.fcols h4{font-size:1rem;font-weight:600;color:var(--lime);margin-bottom:10px}
+.fcols ul{list-style:none;display:grid;gap:2px}
+.fcols a{display:inline-block;padding:7px 0;text-decoration:none;font-size:1.0625rem}
+.fcols a:hover{color:var(--lime);text-decoration:underline}
+.fcols .c1{grid-column:1/4}.fcols .c2{grid-column:4/7}.fcols .c3{grid-column:7/13}
+.fcols .c3 p{font-size:1.0625rem;margin-bottom:10px}
+.fcols .c3 a{font-weight:600;color:#fff}
+.fbottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;margin-top:44px;font-size:1rem}
+@media (max-width:900px){.foot-top{display:block}.foot-top .bt{justify-content:flex-start;margin-top:24px}.fcols{grid-template-columns:1fr 1fr}.fcols>*{grid-column:auto!important}.fcols .c3{grid-column:1/-1!important}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);z-index:300;background:var(--g800);color:#fff;padding:16px 22px;border-radius:16px;font-weight:500;transition:transform .45s var(--ease);max-width:calc(100% - 32px)}
+.toast.on{transform:translate(-50%,0)}
+.js .rv{opacity:0;transform:translateY(28px)}
+/* ---- mục Bảng giá trên thanh điều hướng (dùng chung 2 trang) ---- */
+.nav-price{margin-left:auto;display:inline-flex;align-items:center;gap:9px;min-height:50px;padding:0 18px 0 15px;border-radius:999px;font-weight:600;font-size:1.0625rem;text-decoration:none;white-space:nowrap;color:#fff;background:rgba(181,227,131,.14);box-shadow:inset 0 0 0 1.5px rgba(181,227,131,.8);transition:background-color .25s,color .25s,box-shadow .25s}
+.nav-price:hover{background:rgba(181,227,131,.3)}
+.nav-price i{width:9px;height:9px;border-radius:50%;background:var(--lime);animation:npulse 2.4s ease-out infinite}
+.nav-price[aria-current="page"]{background:var(--lime);color:var(--g800);box-shadow:none}
+.nav-price[aria-current="page"] i{background:var(--g500);animation:none}
+@keyframes npulse{0%{box-shadow:0 0 0 0 rgba(181,227,131,.75)}70%,100%{box-shadow:0 0 0 9px rgba(181,227,131,0)}}
+.nav-price+.menu{margin-left:0}.nav-tech{margin-left:auto}.nav-tech+.nav-price{margin-left:0}@media (max-width:620px){.bar .nav-price{display:none}.bar .menu{margin-left:auto}}
+.panel-m a.it.hot{background:rgba(181,227,131,.12)}
+.panel-m a.it.hot b{color:var(--lime)}
+.panel-m a.it[aria-current="page"]{background:var(--lime);color:var(--g800)}
+.panel-m a.it[aria-current="page"] b{color:var(--g800)}.panel-m a.it[aria-current="page"] span{color:var(--g600)}
+@media (max-width:620px){.menu-trig{width:50px;padding:0;justify-content:center;gap:0;font-size:0}.nav-price{min-height:46px;padding:0 13px 0 11px;gap:7px;font-size:1rem}}
+@media (max-width:440px){.bar{gap:7px;padding-left:14px}.brand .wm{height:12px}}
+/* ---- chuyển trang: View Transitions (Chrome, Safari 18.2+); trình duyệt khác dùng màn che ---- */
+@view-transition{navigation:auto}
+.nav{view-transition-name:fb-nav}
+::view-transition-group(fb-nav){animation-duration:.6s;animation-timing-function:cubic-bezier(.16,1,.3,1)}
+::view-transition-old(root){animation:fb-vt-out .4s cubic-bezier(.7,0,.84,0) both}
+::view-transition-new(root){animation:fb-vt-in .8s cubic-bezier(.16,1,.3,1) .05s both}
+@keyframes fb-vt-out{to{opacity:0;transform:translateY(-2.5%) scale(.985)}}
+@keyframes fb-vt-in{from{opacity:0;transform:translateY(5%)}}
+.curtain{position:fixed;inset:0;z-index:400;display:grid;place-items:center;background:var(--paper);transform:translateY(105%);pointer-events:none;visibility:hidden}
+.curtain svg{width:68px;height:68px}
+html.fb-leave .curtain{visibility:visible;transform:none;transition:transform .5s cubic-bezier(.7,0,.3,1)}
+html.fb-arrive .curtain{visibility:visible;transform:none}
+html.fb-arrive.fb-go .curtain{transform:translateY(-105%);transition:transform .75s cubic-bezier(.16,1,.3,1)}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root),::view-transition-group(fb-nav){animation:none}.nav-price i{animation:none}}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}.grad,.grad-d,.float{animation:none}}
+
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}.grad,.grad-d,.float{animation:none}}
+
+
+/* ================= TRANG MÔ HÌNH =================
+   Hero ghim 3 nhịp → ảnh thực địa bay vào rồi chụm lại → phương pháp → vùng sinh thái → nhân rộng → thư viện ảnh. */
+b.kw{font-weight:600;color:var(--g500)}
+.dark b.kw{color:var(--lime)}
+
+/* ---- HERO ghim ---- */
+.mh{position:relative;background:#0C1F10;color:#fff}
+.mh-pin{position:relative;height:100vh;height:100svh;min-height:600px;overflow:hidden;display:flex;align-items:center;background:#0C1F10}
+.mh-media{position:absolute;inset:0 0 3px}
+.mh-img{position:absolute;inset:0;transform:scale(1.14);transform-origin:50% 55%;will-change:transform,opacity;backface-visibility:hidden}
+.mh-img img{width:100%;height:100%;object-fit:cover;display:block}
+.mh-img.i2,.mh-img.i3{opacity:0}
+.mh-veil{position:absolute;inset:-2px -2px -3px;background:linear-gradient(180deg,rgba(6,18,9,.55) 0%,rgba(6,18,9,.15) 35%,rgba(6,18,9,.35) 65%,#0C1F10 99%)}
+.mh-pin::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;background:#0C1F10;z-index:2}
+.mh-copy{position:relative;z-index:2;text-align:center;padding-top:60px}
+.mh-copy::before{content:"";position:absolute;z-index:-1;left:50%;top:52%;width:min(1100px,110vw);height:150%;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(10,22,12,.5),rgba(10,22,12,0));pointer-events:none}
+.mh-copy .tag{color:var(--lime);justify-content:center}
+.mh h1{color:#fff;font-size:clamp(2.6rem,6.4vw,6.2rem);line-height:1.02;letter-spacing:-0.035em;margin:0 auto;text-shadow:0 4px 40px rgba(0,0,0,.25)}
+.mh h1 .grad{filter:drop-shadow(0 4px 24px rgba(0,0,0,.35))}
+.mh-sub{margin:24px auto 0;max-width:60ch;font-size:var(--fs-lead);color:#F1F7E8;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.mh-beats{position:absolute;z-index:3;left:0;right:0;top:50%;list-style:none;text-align:center;pointer-events:none}
+.mh-beats li{position:absolute;left:0;right:0;top:0;transform:translateY(-50%);padding-inline:20px;font-size:clamp(2.2rem,5.6vw,5.4rem);font-weight:600;font-stretch:112%;letter-spacing:-0.03em;line-height:1.05;opacity:0;will-change:transform,opacity;text-shadow:0 4px 30px rgba(0,0,0,.35)}
+.mh-beats em{display:block;font-style:normal;font-size:1rem;font-weight:600;letter-spacing:.14em;color:var(--lime);margin-bottom:14px}
+.mh-cue{position:absolute;z-index:3;left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;gap:10px;font-size:1rem;font-weight:500;color:#F1F7E8;white-space:nowrap}
+.mh-cue span{width:22px;height:34px;border:2px solid rgba(255,255,255,.75);border-radius:12px;position:relative}
+.mh-cue span::after{content:"";position:absolute;left:50%;top:7px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:#fff;animation:mcue 1.8s ease-in-out infinite}
+@keyframes mcue{0%{opacity:0;transform:translateY(-3px)}40%{opacity:1}100%{opacity:0;transform:translateY(10px)}}
+.no-pin .mh-beats{position:relative;top:auto;margin-top:28px}
+.no-pin .mh-beats li{position:relative;transform:none;opacity:1;font-size:1.25rem;display:inline-block;margin:0 10px}
+.no-pin .mh-beats em{display:inline;margin-right:8px}
+
+/* ---- 01 · Ảnh thực địa bay vào, chụm lại ---- */
+.cl{position:relative;background:var(--paper);margin-top:-2px}
+.cl-pin{position:relative;height:100vh;height:100svh;min-height:640px;overflow:hidden;display:grid;place-items:center}
+.cl-stage{position:absolute;inset:0;pointer-events:none}
+.cp{position:absolute;left:50%;top:50%;margin:0;width:var(--w);aspect-ratio:var(--ar,1);border-radius:16px;overflow:hidden;background:var(--paper-2);box-shadow:0 22px 50px -22px rgba(12,31,16,.5);will-change:transform,opacity}
+.cp img{width:100%;height:100%;object-fit:cover;display:block}
+.cp.top{z-index:3}
+.cl-copy{position:relative;z-index:2;width:min(560px,calc(100vw - 40px));text-align:center}
+.cl-copy .tag{justify-content:center}
+.cl-copy h2{font-size:clamp(2rem,3.4vw,3.2rem)}
+.cl-copy p{margin:18px auto 0;font-size:1.0625rem;line-height:1.6;color:var(--muted);max-width:56ch}
+.cl-end{position:absolute;z-index:4;left:0;right:0;bottom:clamp(40px,9vh,90px);text-align:center;font-size:clamp(1.3rem,2.2vw,1.9rem);font-weight:600;font-stretch:110%;color:var(--g800);opacity:0;padding-inline:20px;max-width:none}
+.cl-end span{display:block;font-size:.62em;font-weight:500;color:var(--g500);margin-top:4px}
+.no-pin .cl-pin{height:auto;min-height:0;padding-block:var(--sec);display:block}
+.no-pin .cl-stage{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 20px 28px}
+.no-pin .cp{position:relative;left:auto;top:auto;width:auto;aspect-ratio:1}
+.no-pin .cl-copy{margin:0 auto}
+.no-pin .cl-end{position:relative;opacity:1;margin-top:28px}
+@media (max-width:860px){
+  .cl-copy{width:min(82vw,380px)}
+  .cl-copy h2{font-size:1.75rem}
+  .cl-copy p{font-size:.9375rem;line-height:1.5}
+  .cp{border-radius:12px}
+}
+
+/* ---- 02 · Phương pháp ---- */
+.mt{padding-block:var(--sec);background:var(--paper)}
+.mt-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
+.mt-ph{grid-column:1/6;position:sticky;top:110px;margin:0;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5}
+.mt-ph img{width:100%;height:100%;object-fit:cover}
+.mt-ph figcaption{position:absolute;left:16px;bottom:16px;padding:9px 15px;border-radius:999px;background:rgba(12,31,16,.8);color:#fff;font-size:.9375rem;font-weight:500}
+.mt-copy{grid-column:6/13;padding-left:clamp(0px,2vw,28px)}
+.mt-copy h2{margin-bottom:28px}
+.mcards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mc{display:flex;flex-direction:column;gap:10px;padding:24px 22px 26px;border-radius:var(--r-lg);background:var(--white);box-shadow:inset 0 0 0 1px rgba(58,128,71,.08);transition:transform .5s var(--ease),box-shadow .5s}
+.mc:hover{transform:translateY(-6px);box-shadow:inset 0 0 0 1px rgba(58,128,71,.18),0 24px 40px -26px rgba(12,31,16,.5)}
+.mc-i{width:64px;height:64px;margin-bottom:6px}
+.mc h3{font-size:1.3rem}
+.mc p{font-size:1.0625rem;color:var(--muted)}
+.std{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;min-height:64px;align-items:center}
+.std span{padding:8px 12px;border-radius:12px;background:var(--paper);color:var(--g600);font-weight:700;font-size:.9375rem;letter-spacing:.02em;box-shadow:inset 0 0 0 1.5px rgba(58,128,71,.35)}
+@media (max-width:980px){.mt-grid{display:block}.mt-ph{position:relative;top:auto;aspect-ratio:16/11;margin-bottom:32px}.mt-copy{padding-left:0}}
+@media (max-width:620px){.mcards{grid-template-columns:1fr}}
+
+/* ---- 03 · Vùng sinh thái ---- */
+.rg{padding-block:var(--sec);background:var(--g900);color:var(--on-dark)}
+.rg h2{color:#fff}
+.rg-head{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:40px}
+.rg-head p{font-size:var(--fs-lead)}
+.rgs{display:flex;gap:12px;height:clamp(460px,58vh,600px)}
+.rgc{position:relative;flex:1 1 0;min-width:0;border-radius:var(--r-lg);overflow:hidden;text-align:left;color:#fff;transition:flex-grow .8s var(--ease);background:var(--g700);cursor:pointer}
+.rgc.on{flex-grow:3.2}
+.rgc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.2s var(--ease)}
+.rgc.on img{transform:none}
+.rgc::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,18,9,0) 30%,rgba(6,18,9,.88) 100%)}
+.rgc-in{position:absolute;z-index:1;left:0;right:0;bottom:0;padding:22px 22px 24px;display:flex;flex-direction:column;gap:6px}
+.rgc-in em{align-self:flex-start;font-style:normal;font-weight:600;font-size:.875rem;padding:5px 11px;border-radius:999px;background:rgba(245,228,161,.18);color:var(--cream)}
+.rgc-in em.live{background:var(--lime);color:var(--g800)}
+.rgc-in b{font-size:clamp(1.3rem,1.8vw,1.75rem);font-weight:600;font-stretch:108%;line-height:1.15}
+.rgc-c{font-weight:600;color:var(--lime);font-size:1rem}
+.rgc-p{font-size:1.0625rem;line-height:1.5;color:var(--on-dark);max-width:44ch;max-height:0;opacity:0;overflow:hidden;transition:max-height .7s var(--ease),opacity .5s}
+.rgc.on .rgc-p{max-height:8em;opacity:1}
+.rgc:not(.on) .rgc-c{display:none}
+.rgc:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.rg-note{margin-top:18px;font-size:.9375rem;color:var(--on-dark-2)}
+@media (max-width:980px){.rg-head{grid-template-columns:1fr}.rgs{flex-direction:column;height:auto}.rgc{flex:none;height:140px;transition:height .7s var(--ease)}.rgc.on{height:380px}.rgc:not(.on) .rgc-c{display:block}}
+
+/* ---- 04 · Nhân rộng ---- */
+.rp{background:var(--paper);padding-bottom:var(--sec)}
+.rp-band{position:relative;overflow:hidden;padding-block:clamp(90px,12vw,170px)}
+.rp-bg{position:absolute;inset:-12% 0}
+.rp-bg img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.rp-band::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,var(--paper) 0%,rgba(242,248,234,.2) 22%,rgba(242,248,234,0) 60%,rgba(242,248,234,.75) 100%)}
+.rp-card-w{position:relative;z-index:2}
+.rp-card{max-width:640px;padding:clamp(26px,3.4vw,44px);border-radius:var(--r-lg);background:rgba(255,255,255,.94);box-shadow:0 30px 60px -30px rgba(12,31,16,.5)}
+.rp-card p{margin-top:16px;font-size:1.0625rem}
+.rp-card .rp-call{font-weight:600;color:var(--g600)}
+.rp-card .btn{margin-top:24px}
+.rp-card .rp-contact{margin-top:12px;font-size:.9375rem;color:var(--muted)}
+.rp-steps-h{margin:clamp(56px,7vw,90px) 0 26px}
+.rp-steps-h h3{font-size:clamp(1.5rem,2.4vw,2.1rem)}
+.rps{list-style:none;position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;--p:0}
+.rps::before,.rps::after{content:"";position:absolute;left:28px;right:calc((100% - 66px)/4 - 28px);top:27px;height:3px;border-radius:3px;background:var(--paper-3)}
+.rps::after{background:linear-gradient(90deg,#008242,#7ED839,#B5E383);transform-origin:left;transform:scaleX(var(--p))}
+.rps li{position:relative;z-index:1}
+.rps-n{display:grid;place-items:center;width:56px;height:56px;margin-bottom:18px;border-radius:50%;background:var(--white);color:var(--g400);font-weight:700;font-size:1.25rem;box-shadow:0 0 0 6px var(--paper),inset 0 0 0 2px var(--paper-3);transition:background-color .5s,color .5s,transform .5s var(--ease)}
+.rps li.lit .rps-n{background:var(--g500);color:#fff;transform:scale(1.08);box-shadow:0 0 0 6px var(--paper)}
+.rps h4{font-size:1.25rem;font-weight:600;line-height:1.25}
+.rps p{margin-top:8px;font-size:1.0625rem;color:var(--muted)}
+.gains{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:clamp(40px,5vw,64px)}
+.gains li{padding:20px 20px 22px;border-radius:22px;background:var(--g800);color:var(--on-dark)}
+.gains b{display:block;font-size:1.125rem;color:var(--lime);font-weight:600}
+.gains span{display:block;margin-top:4px;font-size:1rem}
+@media (max-width:980px){
+  .rps{grid-template-columns:1fr;gap:26px;padding-left:76px}
+  .rps::before,.rps::after{left:27px;right:auto;top:28px;bottom:28px;width:3px;height:auto}
+  .rps::after{transform-origin:top;transform:scaleY(var(--p))}
+  .rps-n{position:absolute;left:-76px;top:-6px;margin:0}
+  .gains{grid-template-columns:1fr 1fr}
+  .rp-band::before{background:linear-gradient(180deg,var(--paper) 0%,rgba(242,248,234,.1) 30%,rgba(242,248,234,.6) 100%)}
+}
+@media (max-width:520px){.gains{grid-template-columns:1fr}}
+
+/* ---- 05 · Thư viện ảnh: một khối, ảnh tự chạy trái → phải ---- */
+.gal{padding-block:var(--sec);background:var(--paper)}
+.gbox{border-radius:var(--r-lg);background:var(--g800);color:var(--on-dark);padding:clamp(28px,4vw,56px) 0 clamp(28px,4vw,48px);overflow:hidden}
+.gbox h2{color:#fff}
+.gbox b.kw{color:var(--lime)}
+.gal-head{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(24px,4vw,56px);align-items:end;margin-bottom:clamp(28px,3vw,40px);padding-inline:clamp(22px,4vw,56px)}
+.gal-head p{font-size:1.0625rem}
+.gmq{display:flex;width:max-content;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);width:100%;overflow:hidden}
+.gmq-in{display:flex;will-change:transform;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.gmq-in.drag{cursor:grabbing}
+.gmq-in img{-webkit-user-drag:none;pointer-events:none}
+.gmq-t{flex:none;display:flex;gap:18px;padding-right:18px}
+.gs{position:relative;flex:none;height:clamp(240px,30vw,400px);margin:0;border-radius:22px;overflow:hidden;background:var(--g700)}
+.gs img{height:100%;width:auto;display:block;object-fit:cover}
+.gs:nth-child(4) img,.gs:nth-child(5) img{width:clamp(520px,58vw,860px)}
+.gs figcaption{position:absolute;left:14px;bottom:14px;padding:8px 14px;border-radius:999px;background:rgba(12,31,16,.82);color:#fff;font-size:.9375rem;font-weight:500}
+@media (max-width:860px){.gal-head{grid-template-columns:1fr}.gs{height:220px}.gs:nth-child(4) img,.gs:nth-child(5) img{width:480px}}
+
+
+.final p.fin-2{margin-top:12px;font-weight:600}
+@media (prefers-reduced-motion:reduce){.mh-cue span::after{animation:none}.rgc,.rgc img,.rgc-p,.gs,.mc{transition:none}}
+/* ---- menu mới (vòng 8): Công nghệ + Bảng giá nổi bật trong hộp menu, nút Truy cập xổ xuống ---- */
+.bar .menu{margin-left:auto}
+.panel-m.pm2{background:#132a18!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;width:min(720px,calc(100vw - 28px));display:grid;grid-template-columns:1fr 1.08fr;gap:10px;padding:12px}
+.pm-feat{display:grid;gap:10px;align-content:start}
+.pm-list{display:grid;gap:4px;align-content:start}
+.pmf{position:relative;display:flex;flex-direction:column;border-radius:22px;text-decoration:none;color:#fff;overflow:hidden;border:2px solid transparent;
+  background:linear-gradient(#14301a,#14301a) padding-box,linear-gradient(120deg,#008242,#7ED839,#F5E4A1,#51ADCA,#7ED839,#008242) border-box;background-size:100% 100%,300% 300%;
+  animation:pmfglow 6s linear infinite;box-shadow:0 0 0 0 rgba(181,227,131,0),0 10px 30px -12px rgba(126,216,57,.55);transition:transform .35s var(--ease),box-shadow .35s}
+.pmf:hover{transform:translateY(-2px);box-shadow:0 0 26px -4px rgba(181,227,131,.55),0 14px 34px -12px rgba(126,216,57,.7)}
+@keyframes pmfglow{from{background-position:0 0,0% 50%}to{background-position:0 0,300% 50%}}
+.pmf-img{display:block;aspect-ratio:16/8;overflow:hidden}
+.pmf-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.pmf:hover .pmf-img img{transform:scale(1.06)}
+.pmf-tx{display:flex;flex-direction:column;gap:2px;padding:10px 14px 12px}
+.pmf-tx b{font-size:1.1875rem;font-weight:600;background:linear-gradient(100deg,#B5E383,#F5E4A1 45%,#7ED839 70%,#B5E383);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:gshift 9s linear infinite}
+.pmf-tx>span{font-size:.9375rem;color:var(--on-dark-2)}
+.pmf-now{display:none;position:absolute;top:10px;right:10px;font-style:normal;font-weight:600;font-size:.8125rem;padding:5px 10px;border-radius:999px;background:var(--lime);color:var(--g800)}
+.pmf[aria-current="page"] .pmf-now{display:block}
+.it2{display:flex;align-items:center;gap:12px;min-height:60px;padding:7px 10px 7px 7px;border-radius:18px;text-decoration:none;color:#fff;transition:background-color .2s}
+a.it2:hover{background:rgba(255,255,255,.1)}
+.it2>img{flex:none;width:50px;height:50px;border-radius:14px;object-fit:cover}
+.it2 .t{display:flex;flex-direction:column;gap:1px;min-width:0}
+.it2 b{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:1.0625rem}
+.it2 b svg{width:14px;height:14px;opacity:.7}
+.it2 .t>span{font-size:.9375rem;color:var(--on-dark-2)}
+.it2[aria-current="page"]{background:rgba(181,227,131,.16)}
+.it2[aria-current="page"] b{color:var(--lime)}
+.it2.soon{cursor:not-allowed;opacity:.5;filter:saturate(.35)}
+.it2.soon .s2{display:none;color:var(--cream)!important;font-weight:600}
+.it2.soon:hover,.it2.soon:focus-visible{opacity:.8;background:rgba(255,255,255,.05)}
+.it2.soon:hover .s1,.it2.soon:focus-visible .s1{display:none}.it2.soon:hover .s2,.it2.soon:focus-visible .s2{display:block}
+/* nút Truy cập */
+.go-m{position:relative;flex:none}
+.go-m .cta-vm .chev{width:18px;height:18px;transition:transform .35s var(--ease)}
+.go-m .btn:hover svg.chev{transform:none}
+.go-m.open .cta-vm svg.chev{transform:rotate(180deg)}
+@media (hover:hover) and (min-width:861px){.go-m:hover .cta-vm svg.chev{transform:rotate(180deg)}}
+.go-p{position:absolute;right:0;top:calc(100% + 12px);width:340px;padding:8px;border-radius:24px;background:#132a18;color:#fff;display:grid;gap:4px;opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top right;transition:opacity .3s var(--ease),transform .4s var(--ease),visibility .3s;z-index:2}
+.go-p::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
+.go-m.open .go-p{opacity:1;visibility:visible;transform:none}
+@media (hover:hover) and (min-width:861px){.go-m:hover .go-p{opacity:1;visibility:visible;transform:none}}
+.go-p a{display:flex;align-items:center;gap:12px;min-height:62px;padding:8px 12px 8px 8px;border-radius:18px;text-decoration:none;transition:background-color .2s}
+.go-p a:hover{background:rgba(255,255,255,.1)}
+.go-p a>span{display:flex;flex-direction:column;flex:1;min-width:0}
+.go-p b{font-weight:600;font-size:1.0625rem}
+.go-p a>span>span{font-size:.9375rem;color:var(--on-dark-2)}
+.go-p a>svg{width:16px;height:16px;opacity:.6;flex:none}
+.gi{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:rgba(181,227,131,.14);color:var(--lime)}
+.gi svg{width:24px;height:24px}.gi.g1 svg{width:30px;height:30px}
+.gi.g2{background:rgba(81,173,202,.16);color:#8fd3ea}.gi.g3{background:rgba(245,228,161,.14);color:var(--cream)}
+@media (max-width:860px){.go-m{position:static}.go-p{left:0;right:0;width:auto;transform-origin:top center}}
+@media (max-width:620px){
+  .panel-m.pm2{grid-template-columns:1fr;max-height:calc(100svh - 110px);overflow:auto}
+  .pm-feat{grid-template-columns:1fr 1fr}
+  .pmf-img{aspect-ratio:16/9}.pmf-tx{padding:8px 10px 10px}.pmf-tx b{font-size:1.0625rem}.pmf-tx>span{font-size:.8125rem;line-height:1.35}
+  .bar .cta-vm span.l{display:inline}.bar .go-m .cta-vm{padding:0 .95em;gap:.35em}
+}
+@media (max-width:399px){.bar .go-m .cta-vm span.l{display:none}}
+@media (prefers-reduced-motion:reduce){.pmf,.pmf-tx b{animation:none}}
+
+</style>
+<script>(function(){var R=document.documentElement;if('CSSViewTransitionRule' in window||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+try{if(sessionStorage.getItem('fb-go')){sessionStorage.removeItem('fb-go');R.classList.add('fb-arrive');addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){requestAnimationFrame(function(){R.classList.add('fb-go');setTimeout(function(){R.classList.remove('fb-arrive','fb-go')},800)})})})}}catch(e){}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-page]');if(!a||e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.getAttribute('aria-current')==='page')return;e.preventDefault();try{sessionStorage.setItem('fb-go','1')}catch(x){}R.classList.add('fb-leave');setTimeout(function(){location.href=a.href},470)});
+addEventListener('pageshow',function(e){if(e.persisted)R.classList.remove('fb-leave','fb-arrive','fb-go')})})();</script>
+<script type="speculationrules">{"prerender":[{"source":"list","urls":["./","ve-chung-toi.html"],"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<div class="curtain" aria-hidden="true"><svg><use href="#logo"/></svg></div>
+<script>document.documentElement.classList.add('js');</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="lg1" x1="83" y1="83" x2="277" y2="277" gradientUnits="userSpaceOnUse"><stop stop-color="#3A8047"/><stop offset="1" stop-color="#86C046"/></linearGradient>
+  <symbol id="logo" viewBox="0 0 360 360"><path d="M140.967 19.9768C162.647 -1.70319 197.797 -1.70319 219.477 19.9768L340.467 140.967C362.147 162.647 362.147 197.797 340.467 219.477L219.477 340.467C197.797 362.147 162.647 362.147 140.967 340.467L19.9768 219.477C-1.70319 197.797 -1.70319 162.647 19.9768 140.967L140.967 19.9768Z" fill="url(#lg1)"/><g fill="#F1F7E8"><path d="M64 180L120 150.4L170.4 180L120 209.6Z"/><path d="M296 180L240 150.4L189.6 180L240 209.6Z"/><path d="M118.4 72.8L173.6 104L173.6 162.4L118.4 132.8Z"/><path d="M241.6 72.8L186.4 104L186.4 162.4L241.6 132.8Z"/><path d="M118.4 287.2L173.6 256L173.6 197.6L118.4 227.2Z"/><path d="M241.6 287.2L186.4 256L186.4 197.6L241.6 227.2Z"/></g></symbol>
+  <symbol id="ext" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8"/></symbol>
+  <symbol id="arr" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="drag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></symbol>
+  <linearGradient id="gTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9BDB5E"/><stop offset="1" stop-color="#4E9D3E"/></linearGradient>
+  <linearGradient id="gSoilL" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#B4532A"/><stop offset="1" stop-color="#7A2F14"/></linearGradient>
+  <linearGradient id="gSoilR" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#93421F"/><stop offset="1" stop-color="#5E220D"/></linearGradient>
+  <linearGradient id="gPin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7ED839"/><stop offset="1" stop-color="#008242"/></linearGradient>
+  <radialGradient id="gCherry" cx=".35" cy=".3" r=".75"><stop stop-color="#FF8A7A"/><stop offset=".45" stop-color="#D3262B"/><stop offset="1" stop-color="#7C0F18"/></radialGradient>
+  <radialGradient id="gCherry2" cx=".35" cy=".3" r=".75"><stop stop-color="#FFC07A"/><stop offset=".5" stop-color="#E0532A"/><stop offset="1" stop-color="#8E2412"/></radialGradient>
+  <linearGradient id="gLeaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7ED839"/><stop offset="1" stop-color="#2E7A34"/></linearGradient>
+</defs></svg>
+
+<a class="skip" href="#noidung">Bỏ qua, đến nội dung chính</a>
+
+<header class="nav" id="nav">
+  <div class="bar">
+    <a class="brand" href="./" data-page aria-label="Farmblock – về đầu trang" translate="no"><svg class="mk" aria-hidden="true"><use href="#logo"/></svg><svg class="wm" viewBox="0 0 603 70" aria-hidden="true" focusable="false"><path d="M0 68.2207V1.17285H48.1721V12.0217H12.7026V30.0054H44.6545V40.8542H12.7026V68.2207H0Z"/><path d="M47.2622 68.2207L73.3514 1.17285H89.3762L115.563 68.2207H101.786L96.4114 53.951H65.7298L60.3556 68.2207H47.2622ZM69.736 43.1999H92.3075L85.5654 25.0208C85.3048 24.3692 84.9791 23.5547 84.5883 22.5773C84.2626 21.5348 83.9043 20.4271 83.5134 19.2543C83.1226 18.0163 82.7317 16.7782 82.3409 15.5402C81.95 14.3022 81.5917 13.1945 81.266 12.2172H80.7775C80.3866 13.5203 79.8981 15.019 79.3118 16.7131C78.7907 18.4072 78.2695 20.0036 77.7484 21.5022C77.2273 23.0009 76.8039 24.1737 76.4781 25.0208L69.736 43.1999Z"/><path d="M123.476 68.2207V1.17285H158.75C163.701 1.17285 167.805 2.0199 171.062 3.71402C174.319 5.40814 176.762 7.81899 178.39 10.9466C180.019 14.0742 180.833 17.7556 180.833 21.9909C180.833 26.3565 179.856 30.2334 177.902 33.6217C175.948 36.9447 173.081 39.4533 169.303 41.1474L183.178 68.2207H169.303L156.991 43.2977H136.179V68.2207H123.476ZM136.179 32.6443H157.773C161.03 32.6443 163.538 31.6995 165.297 29.8099C167.056 27.9203 167.935 25.314 167.935 21.9909C167.935 19.8407 167.544 18.0488 166.763 16.6154C165.981 15.1167 164.841 13.9764 163.343 13.1945C161.845 12.4126 159.988 12.0217 157.773 12.0217H136.179V32.6443Z"/><path d="M193.516 68.2207V1.17285H213.547L224.1 38.5085C224.491 39.8117 224.882 41.2778 225.272 42.9067C225.663 44.5357 226.022 46.0995 226.347 47.5981C226.738 49.0967 227.031 50.3999 227.227 51.5076H228.008C228.139 50.5302 228.334 49.3248 228.595 47.8913C228.855 46.4578 229.148 44.9266 229.474 43.2977C229.865 41.6035 230.288 39.9746 230.744 38.4108L241.297 1.17285H261.133V68.2207H248.43V34.3058C248.43 31.3085 248.463 28.3113 248.528 25.314C248.593 22.3167 248.658 19.743 248.723 17.5927C248.854 15.4425 248.919 14.1719 248.919 13.781H248.137C248.007 14.3674 247.681 15.638 247.16 17.5927C246.639 19.5475 246.085 21.6651 245.499 23.9457C244.913 26.2262 244.392 28.1809 243.936 29.8099L232.894 68.2207H221.169L210.127 29.9076C209.736 28.5393 209.28 26.9104 208.759 25.0208C208.303 23.066 207.815 21.0787 207.293 19.0588C206.837 17.0389 206.414 15.2796 206.023 13.781H205.241C205.307 15.5402 205.372 17.6579 205.437 20.1339C205.502 22.5448 205.567 25.0208 205.632 27.5619C205.697 30.038 205.73 32.2859 205.73 34.3058V68.2207H193.516Z"/><path d="M275.961 68.2207V1.17285H312.505C316.088 1.17285 319.28 1.85701 322.081 3.22533C324.947 4.59365 327.195 6.51582 328.823 8.99184C330.452 11.4679 331.266 14.3674 331.266 17.6905C331.266 20.2316 330.777 22.5448 329.8 24.6298C328.823 26.7149 327.488 28.4742 325.794 29.9076C324.165 31.276 322.309 32.3185 320.224 33.0352V33.4262C322.7 33.9475 324.915 34.9574 326.869 36.456C328.823 37.8895 330.354 39.7465 331.461 42.0271C332.569 44.2425 333.122 46.8162 333.122 49.7483C333.122 53.9185 332.178 57.3718 330.289 60.1085C328.465 62.8451 325.989 64.8976 322.863 66.2659C319.801 67.5691 316.348 68.2207 312.505 68.2207H275.961ZM288.663 57.3718H310.844C313.515 57.3718 315.697 56.6551 317.391 55.2216C319.15 53.723 320.029 51.4099 320.029 48.2823C320.029 46.4578 319.671 44.8615 318.954 43.4931C318.238 42.1248 317.13 41.0823 315.632 40.3655C314.199 39.5836 312.342 39.1927 310.062 39.1927H288.663V57.3718ZM288.663 28.5393H309.183C311.137 28.5393 312.766 28.1809 314.068 27.4642C315.436 26.7475 316.446 25.7701 317.098 24.5321C317.814 23.2941 318.172 21.9258 318.172 20.4271C318.172 17.5601 317.391 15.4425 315.827 14.0742C314.329 12.7059 312.342 12.0217 309.867 12.0217H288.663V28.5393Z"/><path d="M344.951 68.2207V1.17285H357.653V57.1764H391.267V68.2207H344.951Z"/><path d="M428.499 69.3935C421.529 69.3935 415.503 68.1555 410.422 65.6795C405.341 63.1383 401.432 59.294 398.696 54.1465C396.026 48.999 394.69 42.5158 394.69 34.6968C394.69 26.8126 396.026 20.3294 398.696 15.247C401.432 10.0995 405.341 6.28777 410.422 3.81176C415.503 1.27059 421.529 0 428.499 0C435.534 0 441.56 1.27059 446.575 3.81176C451.656 6.28777 455.532 10.0995 458.203 15.247C460.939 20.3294 462.307 26.8126 462.307 34.6968C462.307 42.5158 460.939 48.999 458.203 54.1465C455.532 59.294 451.656 63.1383 446.575 65.6795C441.56 68.1555 435.534 69.3935 428.499 69.3935ZM428.499 58.6424C431.886 58.6424 434.85 58.1537 437.391 57.1764C439.996 56.199 442.178 54.7655 443.937 52.8759C445.696 50.9212 447.031 48.5429 447.943 45.7411C448.855 42.8741 449.311 39.5836 449.311 35.8696V33.7194C449.311 29.9402 448.855 26.6171 447.943 23.7502C447.031 20.8832 445.696 18.5049 443.937 16.6154C442.178 14.6606 439.996 13.1945 437.391 12.2172C434.85 11.2398 431.886 10.7511 428.499 10.7511C425.111 10.7511 422.115 11.2398 419.509 12.2172C416.969 13.1945 414.819 14.6606 413.06 16.6154C411.301 18.5049 409.966 20.8832 409.054 23.7502C408.207 26.6171 407.784 29.9402 407.784 33.7194V35.8696C407.784 39.5836 408.207 42.8741 409.054 45.7411C409.966 48.5429 411.301 50.9212 413.06 52.8759C414.819 54.7655 416.969 56.199 419.509 57.1764C422.115 58.1537 425.111 58.6424 428.499 58.6424Z"/><path d="M503.662 69.3935C496.822 69.3935 490.959 68.1881 486.073 65.7773C481.253 63.3664 477.54 59.6198 474.934 54.5375C472.394 49.39 471.123 42.7764 471.123 34.6968C471.123 22.9031 473.99 14.1719 479.722 8.50315C485.454 2.83438 493.434 0 503.662 0C509.199 0 514.182 0.944794 518.612 2.83438C523.106 4.72397 526.657 7.59093 529.262 11.4353C531.933 15.2145 533.268 20.0362 533.268 25.9004H520.273C520.273 22.6425 519.556 19.9058 518.123 17.6905C516.755 15.4099 514.833 13.6832 512.358 12.5104C509.883 11.3375 507.049 10.7511 503.857 10.7511C499.427 10.7511 495.747 11.6307 492.815 13.39C489.884 15.0841 487.702 17.6253 486.269 21.0135C484.901 24.4018 484.217 28.6045 484.217 33.6217V35.7719C484.217 40.8542 484.901 45.0895 486.269 48.4777C487.702 51.866 489.852 54.4071 492.718 56.1013C495.649 57.7954 499.362 58.6424 503.857 58.6424C507.244 58.6424 510.208 58.0886 512.749 56.9809C515.289 55.808 517.244 54.1139 518.612 51.8985C520.045 49.618 520.761 46.8488 520.761 43.5909H533.268C533.268 49.4551 531.966 54.3094 529.36 58.1537C526.754 61.9329 523.204 64.7673 518.709 66.6569C514.28 68.4813 509.264 69.3935 503.662 69.3935Z"/><path d="M544.574 68.2207V1.17285H557.277V32.2533L586.981 1.17285H602.517L576.526 28.3438L603.006 68.2207H587.958L567.927 37.2379L557.277 46.6207V68.2207H544.574Z"/></svg></a>
+    <div class="menu" id="menu">
+      <button class="menu-trig" type="button" aria-expanded="false" aria-controls="panelM" id="menuBtn"><span class="bars" aria-hidden="true"></span>Menu</button>
+      <div class="panel-m pm2" id="panelM">
+        <div class="pm-feat">
+          <a class="pmf" href="cong-nghe.html" data-page><span class="pmf-img"><img src="img/nav-tech.webp" width="640" height="360" alt="" loading="lazy" decoding="async"></span><span class="pmf-tx"><b>Công nghệ</b><span>Thiết bị, dữ liệu và phần mềm</span></span><em class="pmf-now">Đang xem</em></a>
+          <a class="pmf" href="bang-gia.html" data-page><span class="pmf-img"><img src="img/nav-price.webp" width="640" height="360" alt="" loading="lazy" decoding="async"></span><span class="pmf-tx"><b>Bảng giá</b><span>3 gói dịch vụ trên sa bàn 3D</span></span><em class="pmf-now">Đang xem</em></a>
+        </div>
+        <div class="pm-list">
+          <a class="it2" href="./" data-page><img src="img/nav-home.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Trang chủ</b><span>Tầm nhìn Farmblock</span></span></a>
+          <a class="it2" href="ve-chung-toi.html" data-page><img src="img/nav-about.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Về chúng tôi</b><span>Hành trình Farmblock</span></span></a>
+          <a class="it2" href="#top" aria-current="page"><img src="img/nav-model.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Mô hình</b><span>Mạng lưới vườn Farmblock</span></span></a>
+          <span class="it2 soon" role="link" aria-disabled="true" tabindex="0"><img src="img/nav-news.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Bảng tin<svg aria-hidden="true"><use href="#ext"/></svg></b><span class="s1">Tin tức Farmblock</span><span class="s2">Sắp ra mắt</span></span></span>
+          <span class="it2 soon" role="link" aria-disabled="true" tabindex="0"><img src="img/nav-academy.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Học viện<svg aria-hidden="true"><use href="#ext"/></svg></b><span class="s1">Khoá học nông nghiệp số</span><span class="s2">Sắp ra mắt</span></span></span>
+        </div>
+      </div>
+    </div>
+    <div class="go-m" id="goM">
+      <button class="btn btn-lime cta-vm" type="button" id="goBtn" aria-expanded="false" aria-controls="goP"><span class="l">Truy cập</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+      <div class="go-p" id="goP">
+        <a href="https://vuonmau.farmblock.vn/ca-phe-mang-yang-1" target="_blank" rel="noopener"><i class="gi g1" aria-hidden="true"><svg><use href="#logo"/></svg></i><span><b>Truy cập vườn mẫu</b><span>Xem vườn IaKo #01 trực tuyến</span></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
+        <a href="https://dashboard.farmblock.vn/" target="_blank" rel="noopener"><i class="gi g2" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2.5"/><path d="M7 14l3-3 3 2 4-5M8 21h8"/></g></svg></i><span><b>Truy cập Dashboard</b><span>Cho chuyên gia &amp; chủ đất</span></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
+        <a href="https://sotay.farmblock.vn/" target="_blank" rel="noopener"><i class="gi g3" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4M12 7v5M9.5 10a2.5 2.5 0 0 0 5 0"/></g></svg></i><span><b>Truy cập Sổ rẫy</b><span>Ứng dụng cho bà con</span></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
+      </div>
+    </div>
+  </div>
+</header>
+<script>
+/* nút Truy cập: rê chuột (máy tính) hoặc bấm để mở; chỉ mở một hộp mỗi lúc */
+(function(){var g=document.getElementById('goM'),b=document.getElementById('goBtn'),m=document.getElementById('menu');if(!g||!b)return;
+  function set(o){g.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false');if(o&&m){m.classList.remove('open');var mb=document.getElementById('menuBtn');mb&&mb.setAttribute('aria-expanded','false')}}
+  b.addEventListener('click',function(e){e.stopPropagation();set(!g.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!g.contains(e.target))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+  var mbt=document.getElementById('menuBtn');mbt&&mbt.addEventListener('click',function(){set(false)});
+  g.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
+  document.querySelectorAll('.it2.soon').forEach(function(s){s.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();s.focus()})});
+})();
+</script>
+
+<main id="noidung">
+<!-- ============ HERO ghim: ba nhịp, ba vùng trồng ============ -->
+<section class="mh" id="top" aria-labelledby="h1">
+  <div class="mh-pin">
+    <div class="mh-media" aria-hidden="true">
+      <div class="mh-img i1"><img src="img/model-coffee-hills.webp" width="1800" height="1020" alt="" fetchpriority="high"></div>
+      <div class="mh-img i2"><img src="img/model-pepper.webp" width="1800" height="1350" alt="" loading="lazy"></div>
+      <div class="mh-img i3"><img src="img/model-farmer-field.webp" width="1600" height="1067" alt="" loading="lazy"></div>
+    </div>
+    <div class="mh-veil" aria-hidden="true"></div>
+    <div class="wrap mh-copy">
+      <span class="tag mh-x">Mô hình vận hành</span>
+      <h1 id="h1" class="mh-x"><span class="nw">Hệ thống trang trại</span><br><span class="grad nw">Farmblock</span></h1>
+      <p class="mh-sub mh-x">Từ vườn mẫu ở Tây Nguyên, Farmblock xây dựng một mô hình trang trại có quy trình, công nghệ và tiêu chuẩn rõ ràng, sẵn sàng nhân rộng ra nhiều vùng sinh thái trên khắp Việt Nam.</p>
+    </div>
+    <ol class="mh-beats" aria-label="Ba điều làm nên mô hình Farmblock">
+      <li>Một mô hình chuẩn.</li>
+      <li>Cho nhiều vùng trồng.</li>
+      <li>Vì <span class="grad">nông dân Việt Nam</span>.</li>
+    </ol>
+    <p class="mh-cue" aria-hidden="true"><span></span>Cuộn để xem mô hình</p>
+  </div>
+</section>
+
+<!-- ============ 01 · THỰC ĐỊA: ảnh bay vào, chụm lại ============ -->
+<section class="cl" id="thuc-dia" aria-labelledby="h-cl">
+  <div class="cl-pin">
+    <div class="cl-stage" id="clStage" aria-hidden="true">
+      <figure class="cp" data-k="greenhouse"><img src="img/model-greenhouse.webp" width="400" height="400" alt="" loading="lazy"></figure>
+      <figure class="cp" data-k="karst"><img src="img/model-karst.webp" width="1088" height="480" alt="" loading="lazy"></figure>
+      <figure class="cp" data-k="kids"><img src="img/model-kids.webp" width="400" height="400" alt="" loading="lazy"></figure>
+      <figure class="cp" data-k="hmong"><img src="img/model-hmong-tea.webp" width="800" height="800" alt="" loading="lazy"></figure>
+      <figure class="cp" data-k="rice"><img src="img/model-rice.webp" width="320" height="200" alt="" loading="lazy"></figure>
+      <figure class="cp" data-k="nursery"><img src="img/model-nursery.webp" width="260" height="260" alt="" loading="lazy"></figure>
+      <figure class="cp" data-k="terrace"><img src="img/model-terrace.webp" width="320" height="200" alt="" loading="lazy"></figure>
+      <figure class="cp top" data-k="picker"><img src="img/model-picker.webp" width="400" height="400" alt="" loading="lazy"></figure>
+    </div>
+    <div class="cl-copy">
+      <span class="tag">01 · Từ thực địa</span>
+      <h2 id="h-cl">Từ thực địa đến <span class="nw grad-d">một hệ sinh thái</span> <span class="nw grad-d">toàn diện</span></h2>
+      <p>Farmblock xây dựng các vùng trồng thực tế, được sở hữu trực tiếp bởi các đơn vị sản xuất tại địa phương – nơi công nghệ, tiêu chuẩn và cơ chế quản trị hiện đại được áp dụng nhằm nâng cao hiệu suất, minh bạch hóa quy trình và kết nối đồng bộ với toàn hệ thống. Mô hình này đã được triển khai tại Tây Nguyên và đang tiếp tục mở rộng trên nhiều vùng sinh thái khác, trở thành lớp hạ tầng thực địa của hệ sinh thái Farmblock.</p>
+    </div>
+    <p class="cl-end"><b>Mỗi bức ảnh là một vùng trồng.</b> <span>Cùng một cách làm, cùng một hệ thống.</span></p>
+  </div>
+</section>
+
+<!-- ============ 02 · PHƯƠNG PHÁP ============ -->
+<section class="mt" id="phuong-phap" aria-labelledby="h-mt">
+  <div class="wrap mt-grid">
+    <figure class="mt-ph rv-img"><img src="img/model-robot.webp" width="1100" height="1378" alt="Robot thu hoạch rau trong nhà kính công nghệ cao" loading="lazy"><figcaption>Công nghệ đi vào từng luống</figcaption></figure>
+    <div class="mt-copy">
+      <span class="tag rv">02 · Phương pháp canh tác</span>
+      <h2 id="h-mt" class="split">Áp dụng các phương pháp <span class="nw grad-d">canh tác hiện đại</span></h2>
+      <div class="mcards">
+        <article class="mc"><svg class="mc-i" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 30L32 12l24 18v24H8z" fill="#DCEFF7"/><path d="M8 30L32 12l24 18" fill="none" stroke="#51ADCA" stroke-width="3" stroke-linejoin="round"/><path d="M32 12v42M20 21v33M44 21v33" stroke="#9CCFE3" stroke-width="2"/><rect x="6" y="52" width="52" height="5" rx="2" fill="#8A3416"/><path d="M20 50c0-6 0-10 0-12" stroke="#2E7A34" stroke-width="3" stroke-linecap="round"/><path d="M20 40c-6 0-8-4-8-7 5 0 8 3 8 7zM20 40c6 0 8-4 8-7-5 0-8 3-8 7z" fill="#3A8047"/><path d="M44 50V38" stroke="#2E7A34" stroke-width="3" stroke-linecap="round"/><path d="M44 40c-6 0-8-4-8-7 5 0 8 3 8 7zM44 40c6 0 8-4 8-7-5 0-8 3-8 7z" fill="#3A8047"/></svg><h3>Quy hoạch bài bản</h3><p>Các vùng trồng được thiết kế dưới sự cố vấn của các chuyên gia nông nghiệp trong nước và quốc tế, với định hướng dài hạn và có các phân khu chức năng rõ ràng.</p></article>
+        <article class="mc"><svg class="mc-i" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 22c-2-8-10-12-16-12 0 8 6 13 16 12z" fill="#7ED839"/><path d="M32 22c2-8 10-12 16-12 0 8-6 13-16 12z" fill="#3A8047"/><circle cx="24" cy="38" r="11" fill="#D3262B"/><circle cx="40" cy="38" r="11" fill="#B3121F"/><circle cx="32" cy="48" r="11" fill="#E0532A"/><circle cx="28" cy="44" r="3" fill="#FF8A7A" opacity=".7"/></svg><h3>Danh mục nông sản đa dạng</h3><p>Các giống cây được lựa chọn dựa trên đặc tính sinh thái và hiệu quả mùa vụ, kết hợp xen canh hợp lý giữa đặc sản, cây trồng lâu năm và cây trồng ngắn ngày.</p></article>
+        <article class="mc"><svg class="mc-i" viewBox="0 0 64 64" aria-hidden="true"><rect x="14" y="28" width="12" height="28" rx="6" fill="#DCEFF7" stroke="#51ADCA" stroke-width="2.5"/><rect x="38" y="28" width="12" height="28" rx="6" fill="#DCEFF7" stroke="#51ADCA" stroke-width="2.5"/><path d="M15 44h10v6a5 5 0 0 1-10 0zM39 40h10v10a5 5 0 0 1-10 0z" fill="#51ADCA"/><path d="M20 28V16M44 28V16" stroke="#2E7A34" stroke-width="3" stroke-linecap="round"/><path d="M20 18c-5 0-7-4-7-7 4 0 7 3 7 7zM20 18c5 0 7-4 7-7-4 0-7 3-7 7zM44 18c-5 0-7-4-7-7 4 0 7 3 7 7zM44 18c5 0 7-4 7-7-4 0-7 3-7 7z" fill="#3A8047"/></svg><h3>Giống cây năng suất cao</h3><p>Sử dụng các giống cây trồng mới, đã được nghiên cứu và kiểm chứng thực nghiệm, nhằm tăng năng suất, giảm rủi ro và tối ưu điều kiện chăm sóc.</p></article>
+        <article class="mc"><div class="std" aria-label="Các tiêu chuẩn: GlobalG.A.P, ISO 22000, HACCP"><span>GlobalG.A.P</span><span>ISO 22000</span><span>HACCP</span></div><h3>Tiêu chuẩn chất lượng uy tín</h3><p>Quy trình canh tác được hướng đến việc vận hành theo các tiêu chuẩn hiện đại như GlobalG.A.P, ISO 22000 và HACCP, đảm bảo chất lượng ổn định và phù hợp với nhu cầu của thị trường.</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · VÙNG SINH THÁI (mới) ============ -->
+<section class="rg dark" id="vung-sinh-thai" aria-labelledby="h-rg">
+  <div class="wrap">
+    <div class="rg-head">
+      <div>
+        <span class="tag rv">03 · Một mô hình, nhiều vùng sinh thái</span>
+        <h2 id="h-rg" class="split">Thích ứng với <span class="nw grad">từng vùng đất Việt</span></h2>
+      </div>
+      <p class="rv">Mô hình không đóng khung ở một loại cây. Quy trình, công nghệ và tiêu chuẩn được điều chỉnh theo thổ nhưỡng, khí hậu và cây trồng chủ lực của từng vùng.</p>
+    </div>
+    <div class="rgs" id="rgs">
+      <button class="rgc on" type="button" aria-expanded="true"><img src="img/model-coffee-hills.webp" width="1800" height="1020" alt="" loading="lazy"><span class="rgc-in"><em class="live">Đang vận hành</em><b>Tây Nguyên</b><span class="rgc-c">Cà phê · Sầu riêng · Hồ tiêu</span><span class="rgc-p">Đất đỏ bazan, nơi vườn mẫu IaKo #01 kiểm chứng toàn bộ mô hình: thiết bị, quy trình ba lớp và hồ sơ vùng trồng.</span></span></button>
+      <button class="rgc" type="button" aria-expanded="false"><img src="img/about-green.webp" width="1600" height="900" alt="" loading="lazy"><span class="rgc-in"><em>Định hướng</em><b>Cao nguyên Lâm Đồng</b><span class="rgc-c">Cà phê · Rau · Hoa công nghệ cao</span><span class="rgc-p">Khí hậu mát quanh năm, phù hợp nhà kính, tưới nhỏ giọt và giám sát vi khí hậu bằng cảm biến.</span></span></button>
+      <button class="rgc" type="button" aria-expanded="false"><img src="img/model-hmong-tea.webp" width="800" height="800" alt="" loading="lazy" style="object-position:40% 40%"><span class="rgc-in"><em>Định hướng</em><b>Trung du &amp; miền núi phía Bắc</b><span class="rgc-c">Chè · Cây dược liệu</span><span class="rgc-p">Đồng hành cùng đồng bào dân tộc, chuẩn hoá nhật ký và truy xuất để đặc sản vùng cao đi xa hơn.</span></span></button>
+      <button class="rgc" type="button" aria-expanded="false"><img src="img/model-karst.webp" width="1088" height="480" alt="" loading="lazy"><span class="rgc-in"><em>Định hướng</em><b>Vùng chuyên canh rau màu</b><span class="rgc-c">Rau · Cây ngắn ngày</span><span class="rgc-p">Luân canh nhiều vụ mỗi năm, cần lịch tưới bón chính xác và hồ sơ an toàn thực phẩm cho từng lô.</span></span></button>
+    </div>
+    <p class="rg-note rv">Các vùng ngoài Tây Nguyên là định hướng mở rộng của Farmblock.</p>
+  </div>
+</section>
+
+<!-- ============ 04 · NHÂN RỘNG ============ -->
+<section class="rp" id="nhan-rong" aria-labelledby="h-rp">
+  <div class="rp-band">
+    <div class="rp-bg" aria-hidden="true"><img src="img/model-vans.webp" width="1920" height="665" alt="" loading="lazy"></div>
+    <div class="wrap rp-card-w">
+      <div class="rp-card">
+        <span class="tag">04 · Nhân rộng</span>
+        <h2 id="h-rp" class="split">Mô hình trại mẫu <span class="nw grad-d">dễ dàng nhân rộng</span></h2>
+        <p>Các vùng trồng trong hệ thống Farmblock được thiết kế như các mô hình trại mẫu – với quy trình sản xuất bài bản, hạ tầng công nghệ tích hợp và tiêu chuẩn chất lượng rõ ràng. Đây là nền tảng để Farmblock có thể nhân rộng, chuyển giao kỹ thuật và mở rộng hợp tác đầu tư, sản xuất hoặc nghiên cứu theo từng khu vực cụ thể.</p>
+        <p class="rp-call">Hãy kết nối cùng chúng tôi để hợp tác quy hoạch, vận hành và mở rộng mô hình trại mẫu tại địa phương của bạn!</p>
+        <a class="btn btn-green" href="mailto:contact@farmblock.ai?subject=H%E1%BB%A3p%20t%C3%A1c%20m%C3%B4%20h%C3%ACnh%20tr%E1%BA%A1i%20m%E1%BA%ABu">Liên hệ hợp tác<svg aria-hidden="true"><use href="#arr"/></svg></a>
+        <p class="rp-contact">contact@farmblock.ai · 0354 060 029</p>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="rp-steps-h"><h3 class="rv">Một vùng trồng mới đi qua bốn bước</h3></div>
+    <ol class="rps" id="rps">
+      <li><span class="rps-n">1</span><h4>Khảo sát &amp; quy hoạch</h4><p>Đánh giá đất, nước, khí hậu; chọn cây trồng chủ lực và chia phân khu chức năng.</p></li>
+      <li><span class="rps-n">2</span><h4>Lắp đặt hạ tầng</h4><p>Cảm biến, camera, trạm IoT, điện mặt trời và hệ thống tưới theo sơ đồ chuẩn.</p></li>
+      <li><span class="rps-n">3</span><h4>Vận hành &amp; đào tạo</h4><p>Kỹ sư Farmblock vận hành cùng bà con, hướng dẫn ghi Sổ rẫy và quy trình chăm sóc.</p></li>
+      <li><span class="rps-n">4</span><h4>Chuyển giao &amp; nhân rộng</h4><p>Địa phương làm chủ quy trình, dữ liệu nối về Farmblock Cloud để nhân rộng sang vườn kế tiếp.</p></li>
+    </ol>
+    <ul class="gains">
+      <li class="rv"><b>Chuyển giao kỹ thuật</b><span>ngay trên luống đất của bà con</span></li>
+      <li class="rv"><b>Việc làm tại chỗ</b><span>đội canh tác, vận hành thường trực</span></li>
+      <li class="rv"><b>Hồ sơ vùng trồng chuẩn</b><span>sẵn sàng cho truy xuất và EUDR</span></li>
+      <li class="rv"><b>Kết nối đầu ra</b><span>qua hệ sinh thái đối tác Farmblock</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 05 · HÌNH ẢNH THỰC TẾ ============ -->
+<section class="gal" id="hinh-anh" aria-labelledby="h-gal">
+  <div class="wrap">
+    <div class="gbox">
+      <div class="gal-head">
+        <div><span class="tag rv">05 · Hình ảnh thực tế</span><h2 id="h-gal" class="split">Những hình ảnh thực tế từ <span class="nw grad">các vùng trồng</span> <span class="nw">của Farmblock</span></h2></div>
+        <p class="rv">Những hình ảnh dưới đây được ghi nhận tại các vùng trồng trong hệ thống <b class="kw">Farmblock</b> – nơi các mô hình sản xuất, giống cây và hạ tầng công nghệ đang từng bước được áp dụng, giám sát và phát triển.</p>
+      </div>
+      <div class="gmq" aria-label="Ảnh thực tế các vùng trồng Farmblock, kéo để xem thêm">
+        <div class="gmq-in" id="gmqIn">
+        <div class="gmq-t">
+        <figure class="gs"><img src="img/model-farmer-field.webp" width="1600" height="1067" alt="Nông dân chăm sóc cà phê non giữa vườn" loading="lazy"><figcaption>Chăm sóc cà phê non</figcaption></figure>
+        <figure class="gs"><img src="img/model-pepper.webp" width="1800" height="1350" alt="Vườn hồ tiêu thẳng hàng bên hồ nước nhìn từ flycam" loading="lazy"><figcaption>Vườn hồ tiêu nhìn từ flycam</figcaption></figure>
+        <figure class="gs"><img src="img/model-coffee-hills.webp" width="1800" height="1020" alt="Vườn cà phê xanh tốt dưới chân núi" loading="lazy"><figcaption>Cà phê dưới chân núi</figcaption></figure>
+        <figure class="gs"><img src="img/model-durian.webp" width="1920" height="525" alt="Vườn sầu riêng trồng thẳng hàng trên đồi" loading="lazy"><figcaption>Vườn sầu riêng trên đồi</figcaption></figure>
+        <figure class="gs"><img src="img/model-vans.webp" width="1920" height="665" alt="Đoàn khách tham quan vườn trồng mới" loading="lazy"><figcaption>Đoàn đối tác tham quan vùng trồng</figcaption></figure>
+        <figure class="gs"><img src="img/model-cherries.webp" width="1400" height="971" alt="Chùm cà phê chín đỏ trên cành" loading="lazy"><figcaption>Cà phê vào mùa chín</figcaption></figure>
+        </div>
+        <div class="gmq-t" aria-hidden="true">
+        <figure class="gs"><img src="img/model-farmer-field.webp" width="1600" height="1067" alt="Nông dân chăm sóc cà phê non giữa vườn" loading="lazy" aria-hidden="true"><figcaption>Chăm sóc cà phê non</figcaption></figure>
+        <figure class="gs"><img src="img/model-pepper.webp" width="1800" height="1350" alt="Vườn hồ tiêu thẳng hàng bên hồ nước nhìn từ flycam" loading="lazy" aria-hidden="true"><figcaption>Vườn hồ tiêu nhìn từ flycam</figcaption></figure>
+        <figure class="gs"><img src="img/model-coffee-hills.webp" width="1800" height="1020" alt="Vườn cà phê xanh tốt dưới chân núi" loading="lazy" aria-hidden="true"><figcaption>Cà phê dưới chân núi</figcaption></figure>
+        <figure class="gs"><img src="img/model-durian.webp" width="1920" height="525" alt="Vườn sầu riêng trồng thẳng hàng trên đồi" loading="lazy" aria-hidden="true"><figcaption>Vườn sầu riêng trên đồi</figcaption></figure>
+        <figure class="gs"><img src="img/model-vans.webp" width="1920" height="665" alt="Đoàn khách tham quan vườn trồng mới" loading="lazy" aria-hidden="true"><figcaption>Đoàn đối tác tham quan vùng trồng</figcaption></figure>
+        <figure class="gs"><img src="img/model-cherries.webp" width="1400" height="971" alt="Chùm cà phê chín đỏ trên cành" loading="lazy" aria-hidden="true"><figcaption>Cà phê vào mùa chín</figcaption></figure>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="lien-he" aria-labelledby="h-f">
+  <video class="bg" id="finalVid" muted loop playsinline preload="none" poster="img/final-poster.webp" aria-hidden="true" data-src="img/final.mp4" data-src-s="img/final-s.mp4"></video>
+  <div class="wrap">
+    <div class="final-card">
+      <div class="f-brand" translate="no" aria-hidden="true"><svg class="mk"><use href="#logo"/></svg><svg class="wm" viewBox="0 0 603 70" aria-hidden="true" focusable="false"><path d="M0 68.2207V1.17285H48.1721V12.0217H12.7026V30.0054H44.6545V40.8542H12.7026V68.2207H0Z"/><path d="M47.2622 68.2207L73.3514 1.17285H89.3762L115.563 68.2207H101.786L96.4114 53.951H65.7298L60.3556 68.2207H47.2622ZM69.736 43.1999H92.3075L85.5654 25.0208C85.3048 24.3692 84.9791 23.5547 84.5883 22.5773C84.2626 21.5348 83.9043 20.4271 83.5134 19.2543C83.1226 18.0163 82.7317 16.7782 82.3409 15.5402C81.95 14.3022 81.5917 13.1945 81.266 12.2172H80.7775C80.3866 13.5203 79.8981 15.019 79.3118 16.7131C78.7907 18.4072 78.2695 20.0036 77.7484 21.5022C77.2273 23.0009 76.8039 24.1737 76.4781 25.0208L69.736 43.1999Z"/><path d="M123.476 68.2207V1.17285H158.75C163.701 1.17285 167.805 2.0199 171.062 3.71402C174.319 5.40814 176.762 7.81899 178.39 10.9466C180.019 14.0742 180.833 17.7556 180.833 21.9909C180.833 26.3565 179.856 30.2334 177.902 33.6217C175.948 36.9447 173.081 39.4533 169.303 41.1474L183.178 68.2207H169.303L156.991 43.2977H136.179V68.2207H123.476ZM136.179 32.6443H157.773C161.03 32.6443 163.538 31.6995 165.297 29.8099C167.056 27.9203 167.935 25.314 167.935 21.9909C167.935 19.8407 167.544 18.0488 166.763 16.6154C165.981 15.1167 164.841 13.9764 163.343 13.1945C161.845 12.4126 159.988 12.0217 157.773 12.0217H136.179V32.6443Z"/><path d="M193.516 68.2207V1.17285H213.547L224.1 38.5085C224.491 39.8117 224.882 41.2778 225.272 42.9067C225.663 44.5357 226.022 46.0995 226.347 47.5981C226.738 49.0967 227.031 50.3999 227.227 51.5076H228.008C228.139 50.5302 228.334 49.3248 228.595 47.8913C228.855 46.4578 229.148 44.9266 229.474 43.2977C229.865 41.6035 230.288 39.9746 230.744 38.4108L241.297 1.17285H261.133V68.2207H248.43V34.3058C248.43 31.3085 248.463 28.3113 248.528 25.314C248.593 22.3167 248.658 19.743 248.723 17.5927C248.854 15.4425 248.919 14.1719 248.919 13.781H248.137C248.007 14.3674 247.681 15.638 247.16 17.5927C246.639 19.5475 246.085 21.6651 245.499 23.9457C244.913 26.2262 244.392 28.1809 243.936 29.8099L232.894 68.2207H221.169L210.127 29.9076C209.736 28.5393 209.28 26.9104 208.759 25.0208C208.303 23.066 207.815 21.0787 207.293 19.0588C206.837 17.0389 206.414 15.2796 206.023 13.781H205.241C205.307 15.5402 205.372 17.6579 205.437 20.1339C205.502 22.5448 205.567 25.0208 205.632 27.5619C205.697 30.038 205.73 32.2859 205.73 34.3058V68.2207H193.516Z"/><path d="M275.961 68.2207V1.17285H312.505C316.088 1.17285 319.28 1.85701 322.081 3.22533C324.947 4.59365 327.195 6.51582 328.823 8.99184C330.452 11.4679 331.266 14.3674 331.266 17.6905C331.266 20.2316 330.777 22.5448 329.8 24.6298C328.823 26.7149 327.488 28.4742 325.794 29.9076C324.165 31.276 322.309 32.3185 320.224 33.0352V33.4262C322.7 33.9475 324.915 34.9574 326.869 36.456C328.823 37.8895 330.354 39.7465 331.461 42.0271C332.569 44.2425 333.122 46.8162 333.122 49.7483C333.122 53.9185 332.178 57.3718 330.289 60.1085C328.465 62.8451 325.989 64.8976 322.863 66.2659C319.801 67.5691 316.348 68.2207 312.505 68.2207H275.961ZM288.663 57.3718H310.844C313.515 57.3718 315.697 56.6551 317.391 55.2216C319.15 53.723 320.029 51.4099 320.029 48.2823C320.029 46.4578 319.671 44.8615 318.954 43.4931C318.238 42.1248 317.13 41.0823 315.632 40.3655C314.199 39.5836 312.342 39.1927 310.062 39.1927H288.663V57.3718ZM288.663 28.5393H309.183C311.137 28.5393 312.766 28.1809 314.068 27.4642C315.436 26.7475 316.446 25.7701 317.098 24.5321C317.814 23.2941 318.172 21.9258 318.172 20.4271C318.172 17.5601 317.391 15.4425 315.827 14.0742C314.329 12.7059 312.342 12.0217 309.867 12.0217H288.663V28.5393Z"/><path d="M344.951 68.2207V1.17285H357.653V57.1764H391.267V68.2207H344.951Z"/><path d="M428.499 69.3935C421.529 69.3935 415.503 68.1555 410.422 65.6795C405.341 63.1383 401.432 59.294 398.696 54.1465C396.026 48.999 394.69 42.5158 394.69 34.6968C394.69 26.8126 396.026 20.3294 398.696 15.247C401.432 10.0995 405.341 6.28777 410.422 3.81176C415.503 1.27059 421.529 0 428.499 0C435.534 0 441.56 1.27059 446.575 3.81176C451.656 6.28777 455.532 10.0995 458.203 15.247C460.939 20.3294 462.307 26.8126 462.307 34.6968C462.307 42.5158 460.939 48.999 458.203 54.1465C455.532 59.294 451.656 63.1383 446.575 65.6795C441.56 68.1555 435.534 69.3935 428.499 69.3935ZM428.499 58.6424C431.886 58.6424 434.85 58.1537 437.391 57.1764C439.996 56.199 442.178 54.7655 443.937 52.8759C445.696 50.9212 447.031 48.5429 447.943 45.7411C448.855 42.8741 449.311 39.5836 449.311 35.8696V33.7194C449.311 29.9402 448.855 26.6171 447.943 23.7502C447.031 20.8832 445.696 18.5049 443.937 16.6154C442.178 14.6606 439.996 13.1945 437.391 12.2172C434.85 11.2398 431.886 10.7511 428.499 10.7511C425.111 10.7511 422.115 11.2398 419.509 12.2172C416.969 13.1945 414.819 14.6606 413.06 16.6154C411.301 18.5049 409.966 20.8832 409.054 23.7502C408.207 26.6171 407.784 29.9402 407.784 33.7194V35.8696C407.784 39.5836 408.207 42.8741 409.054 45.7411C409.966 48.5429 411.301 50.9212 413.06 52.8759C414.819 54.7655 416.969 56.199 419.509 57.1764C422.115 58.1537 425.111 58.6424 428.499 58.6424Z"/><path d="M503.662 69.3935C496.822 69.3935 490.959 68.1881 486.073 65.7773C481.253 63.3664 477.54 59.6198 474.934 54.5375C472.394 49.39 471.123 42.7764 471.123 34.6968C471.123 22.9031 473.99 14.1719 479.722 8.50315C485.454 2.83438 493.434 0 503.662 0C509.199 0 514.182 0.944794 518.612 2.83438C523.106 4.72397 526.657 7.59093 529.262 11.4353C531.933 15.2145 533.268 20.0362 533.268 25.9004H520.273C520.273 22.6425 519.556 19.9058 518.123 17.6905C516.755 15.4099 514.833 13.6832 512.358 12.5104C509.883 11.3375 507.049 10.7511 503.857 10.7511C499.427 10.7511 495.747 11.6307 492.815 13.39C489.884 15.0841 487.702 17.6253 486.269 21.0135C484.901 24.4018 484.217 28.6045 484.217 33.6217V35.7719C484.217 40.8542 484.901 45.0895 486.269 48.4777C487.702 51.866 489.852 54.4071 492.718 56.1013C495.649 57.7954 499.362 58.6424 503.857 58.6424C507.244 58.6424 510.208 58.0886 512.749 56.9809C515.289 55.808 517.244 54.1139 518.612 51.8985C520.045 49.618 520.761 46.8488 520.761 43.5909H533.268C533.268 49.4551 531.966 54.3094 529.36 58.1537C526.754 61.9329 523.204 64.7673 518.709 66.6569C514.28 68.4813 509.264 69.3935 503.662 69.3935Z"/><path d="M544.574 68.2207V1.17285H557.277V32.2533L586.981 1.17285H602.517L576.526 28.3438L603.006 68.2207H587.958L567.927 37.2379L557.277 46.6207V68.2207H544.574Z"/></svg></div>
+      <h2 id="h-f">Thấy tận mắt.<br>Tin tận tâm.</h2>
+      <p class="rv">Farmblock cho phép bạn theo dõi trực tiếp các hoạt động canh tác thực tế – từ tiến độ gieo trồng, tưới tiêu, đến dữ liệu môi trường và hình ảnh thực tế tại các vùng trồng. Tất cả được cập nhật liên tục từ hệ thống cảm biến và camera tại nông trại.</p><p class="rv fin-2">Không cần quảng cáo, giờ đây, hãy tự mình nhìn quy trình sản xuất đang diễn ra mỗi ngày!</p>
+      <div class="acts rv">
+        <a class="btn btn-lime" href="https://vuonmau.farmblock.vn/ca-phe-mang-yang-1" target="_blank" rel="noopener">Truy cập vườn mẫu<svg aria-hidden="true"><use href="#ext"/></svg></a>
+        <a class="btn btn-glass" href="https://dashboard.farmblock.vn/" target="_blank" rel="noopener">Mở Dashboard<svg aria-hidden="true"><use href="#ext"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot dark">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="tl">
+        <span class="brand" translate="no"><svg class="mk" aria-hidden="true"><use href="#logo"/></svg><svg class="wm" viewBox="0 0 603 70" aria-hidden="true" focusable="false"><path d="M0 68.2207V1.17285H48.1721V12.0217H12.7026V30.0054H44.6545V40.8542H12.7026V68.2207H0Z"/><path d="M47.2622 68.2207L73.3514 1.17285H89.3762L115.563 68.2207H101.786L96.4114 53.951H65.7298L60.3556 68.2207H47.2622ZM69.736 43.1999H92.3075L85.5654 25.0208C85.3048 24.3692 84.9791 23.5547 84.5883 22.5773C84.2626 21.5348 83.9043 20.4271 83.5134 19.2543C83.1226 18.0163 82.7317 16.7782 82.3409 15.5402C81.95 14.3022 81.5917 13.1945 81.266 12.2172H80.7775C80.3866 13.5203 79.8981 15.019 79.3118 16.7131C78.7907 18.4072 78.2695 20.0036 77.7484 21.5022C77.2273 23.0009 76.8039 24.1737 76.4781 25.0208L69.736 43.1999Z"/><path d="M123.476 68.2207V1.17285H158.75C163.701 1.17285 167.805 2.0199 171.062 3.71402C174.319 5.40814 176.762 7.81899 178.39 10.9466C180.019 14.0742 180.833 17.7556 180.833 21.9909C180.833 26.3565 179.856 30.2334 177.902 33.6217C175.948 36.9447 173.081 39.4533 169.303 41.1474L183.178 68.2207H169.303L156.991 43.2977H136.179V68.2207H123.476ZM136.179 32.6443H157.773C161.03 32.6443 163.538 31.6995 165.297 29.8099C167.056 27.9203 167.935 25.314 167.935 21.9909C167.935 19.8407 167.544 18.0488 166.763 16.6154C165.981 15.1167 164.841 13.9764 163.343 13.1945C161.845 12.4126 159.988 12.0217 157.773 12.0217H136.179V32.6443Z"/><path d="M193.516 68.2207V1.17285H213.547L224.1 38.5085C224.491 39.8117 224.882 41.2778 225.272 42.9067C225.663 44.5357 226.022 46.0995 226.347 47.5981C226.738 49.0967 227.031 50.3999 227.227 51.5076H228.008C228.139 50.5302 228.334 49.3248 228.595 47.8913C228.855 46.4578 229.148 44.9266 229.474 43.2977C229.865 41.6035 230.288 39.9746 230.744 38.4108L241.297 1.17285H261.133V68.2207H248.43V34.3058C248.43 31.3085 248.463 28.3113 248.528 25.314C248.593 22.3167 248.658 19.743 248.723 17.5927C248.854 15.4425 248.919 14.1719 248.919 13.781H248.137C248.007 14.3674 247.681 15.638 247.16 17.5927C246.639 19.5475 246.085 21.6651 245.499 23.9457C244.913 26.2262 244.392 28.1809 243.936 29.8099L232.894 68.2207H221.169L210.127 29.9076C209.736 28.5393 209.28 26.9104 208.759 25.0208C208.303 23.066 207.815 21.0787 207.293 19.0588C206.837 17.0389 206.414 15.2796 206.023 13.781H205.241C205.307 15.5402 205.372 17.6579 205.437 20.1339C205.502 22.5448 205.567 25.0208 205.632 27.5619C205.697 30.038 205.73 32.2859 205.73 34.3058V68.2207H193.516Z"/><path d="M275.961 68.2207V1.17285H312.505C316.088 1.17285 319.28 1.85701 322.081 3.22533C324.947 4.59365 327.195 6.51582 328.823 8.99184C330.452 11.4679 331.266 14.3674 331.266 17.6905C331.266 20.2316 330.777 22.5448 329.8 24.6298C328.823 26.7149 327.488 28.4742 325.794 29.9076C324.165 31.276 322.309 32.3185 320.224 33.0352V33.4262C322.7 33.9475 324.915 34.9574 326.869 36.456C328.823 37.8895 330.354 39.7465 331.461 42.0271C332.569 44.2425 333.122 46.8162 333.122 49.7483C333.122 53.9185 332.178 57.3718 330.289 60.1085C328.465 62.8451 325.989 64.8976 322.863 66.2659C319.801 67.5691 316.348 68.2207 312.505 68.2207H275.961ZM288.663 57.3718H310.844C313.515 57.3718 315.697 56.6551 317.391 55.2216C319.15 53.723 320.029 51.4099 320.029 48.2823C320.029 46.4578 319.671 44.8615 318.954 43.4931C318.238 42.1248 317.13 41.0823 315.632 40.3655C314.199 39.5836 312.342 39.1927 310.062 39.1927H288.663V57.3718ZM288.663 28.5393H309.183C311.137 28.5393 312.766 28.1809 314.068 27.4642C315.436 26.7475 316.446 25.7701 317.098 24.5321C317.814 23.2941 318.172 21.9258 318.172 20.4271C318.172 17.5601 317.391 15.4425 315.827 14.0742C314.329 12.7059 312.342 12.0217 309.867 12.0217H288.663V28.5393Z"/><path d="M344.951 68.2207V1.17285H357.653V57.1764H391.267V68.2207H344.951Z"/><path d="M428.499 69.3935C421.529 69.3935 415.503 68.1555 410.422 65.6795C405.341 63.1383 401.432 59.294 398.696 54.1465C396.026 48.999 394.69 42.5158 394.69 34.6968C394.69 26.8126 396.026 20.3294 398.696 15.247C401.432 10.0995 405.341 6.28777 410.422 3.81176C415.503 1.27059 421.529 0 428.499 0C435.534 0 441.56 1.27059 446.575 3.81176C451.656 6.28777 455.532 10.0995 458.203 15.247C460.939 20.3294 462.307 26.8126 462.307 34.6968C462.307 42.5158 460.939 48.999 458.203 54.1465C455.532 59.294 451.656 63.1383 446.575 65.6795C441.56 68.1555 435.534 69.3935 428.499 69.3935ZM428.499 58.6424C431.886 58.6424 434.85 58.1537 437.391 57.1764C439.996 56.199 442.178 54.7655 443.937 52.8759C445.696 50.9212 447.031 48.5429 447.943 45.7411C448.855 42.8741 449.311 39.5836 449.311 35.8696V33.7194C449.311 29.9402 448.855 26.6171 447.943 23.7502C447.031 20.8832 445.696 18.5049 443.937 16.6154C442.178 14.6606 439.996 13.1945 437.391 12.2172C434.85 11.2398 431.886 10.7511 428.499 10.7511C425.111 10.7511 422.115 11.2398 419.509 12.2172C416.969 13.1945 414.819 14.6606 413.06 16.6154C411.301 18.5049 409.966 20.8832 409.054 23.7502C408.207 26.6171 407.784 29.9402 407.784 33.7194V35.8696C407.784 39.5836 408.207 42.8741 409.054 45.7411C409.966 48.5429 411.301 50.9212 413.06 52.8759C414.819 54.7655 416.969 56.199 419.509 57.1764C422.115 58.1537 425.111 58.6424 428.499 58.6424Z"/><path d="M503.662 69.3935C496.822 69.3935 490.959 68.1881 486.073 65.7773C481.253 63.3664 477.54 59.6198 474.934 54.5375C472.394 49.39 471.123 42.7764 471.123 34.6968C471.123 22.9031 473.99 14.1719 479.722 8.50315C485.454 2.83438 493.434 0 503.662 0C509.199 0 514.182 0.944794 518.612 2.83438C523.106 4.72397 526.657 7.59093 529.262 11.4353C531.933 15.2145 533.268 20.0362 533.268 25.9004H520.273C520.273 22.6425 519.556 19.9058 518.123 17.6905C516.755 15.4099 514.833 13.6832 512.358 12.5104C509.883 11.3375 507.049 10.7511 503.857 10.7511C499.427 10.7511 495.747 11.6307 492.815 13.39C489.884 15.0841 487.702 17.6253 486.269 21.0135C484.901 24.4018 484.217 28.6045 484.217 33.6217V35.7719C484.217 40.8542 484.901 45.0895 486.269 48.4777C487.702 51.866 489.852 54.4071 492.718 56.1013C495.649 57.7954 499.362 58.6424 503.857 58.6424C507.244 58.6424 510.208 58.0886 512.749 56.9809C515.289 55.808 517.244 54.1139 518.612 51.8985C520.045 49.618 520.761 46.8488 520.761 43.5909H533.268C533.268 49.4551 531.966 54.3094 529.36 58.1537C526.754 61.9329 523.204 64.7673 518.709 66.6569C514.28 68.4813 509.264 69.3935 503.662 69.3935Z"/><path d="M544.574 68.2207V1.17285H557.277V32.2533L586.981 1.17285H602.517L576.526 28.3438L603.006 68.2207H587.958L567.927 37.2379L557.277 46.6207V68.2207H544.574Z"/></svg></span>
+        <p class="tagline"><span>Số hóa nông nghiệp.</span><span>Chuẩn hóa vận hành.</span><span class="grad">Tối ưu đầu tư.</span></p>
+      </div>
+      <div class="bt"><a class="btn btn-lime" href="#top">Lên đầu trang</a></div>
+    </div>
+    <div class="fcols">
+      <nav class="c1" aria-label="Truy cập nhanh"><h4>Truy cập nhanh</h4><ul><li><a href="./" data-page>Trang chủ</a></li><li><a href="ve-chung-toi.html" data-page>Về chúng tôi</a></li><li><a href="#top">Mô hình vận hành</a></li><li><a href="cong-nghe.html" data-page>Công nghệ &amp; thiết bị</a></li><li><a href="bang-gia.html" data-page>Bảng giá dịch vụ</a></li><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Bảng tin Farmblock</a></li></ul></nav>
+      <nav class="c2" aria-label="Chính sách"><h4>Chính sách &amp; Điều khoản</h4><ul><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Chính sách bảo mật</a></li><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Điều khoản sử dụng dịch vụ</a></li><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Câu hỏi thường gặp</a></li></ul></nav>
+      <div class="c3"><h4>Thông tin</h4><p>Công ty Cổ phần Công nghệ Nông nghiệp Farmblock<br>Tầng 13, Tòa nhà NIC, Ngõ 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội</p><p>Điện thoại: <a href="tel:0354060029">0354 060 029</a></p><p>Email: <a href="mailto:contact@farmblock.ai">contact@farmblock.ai</a></p></div>
+    </div>
+    <div class="fbottom"><span>Bản quyền © 2026 thuộc về Farmblock</span><span>Hành trình cùng Tây Nguyên chạm đến tương lai</span></div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var isMobile=matchMedia('(max-width: 860px)').matches;
+var root=document.documentElement;
+
+/* ---------- tiện ích ---------- */
+var toastEl=document.getElementById('toast'),tt;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toastEl.classList.remove('on')},3200)}
+document.querySelectorAll('[data-en]').forEach(function(b){b.addEventListener('click',function(){toast('Bản tiếng Anh đang được chuẩn bị.')})});
+function setSize(lg){if(lg)root.setAttribute('data-size','lg');else root.removeAttribute('data-size');document.querySelectorAll('[data-size]').forEach(function(b){b.setAttribute('aria-pressed',lg?'true':'false')});try{localStorage.setItem('fb-size',lg?'lg':'')}catch(e){}if(window.ScrollTrigger)ScrollTrigger.refresh()}
+try{if(localStorage.getItem('fb-size')==='lg')setSize(true)}catch(e){}
+document.querySelectorAll('[data-size]').forEach(function(b){b.addEventListener('click',function(){setSize(root.getAttribute('data-size')!=='lg')})});
+/* menu: rê chuột để mở (máy tính), bấm để mở (điện thoại) */
+var menu=document.getElementById('menu'),mb=document.getElementById('menuBtn');
+function setMenu(o){menu.classList.toggle('open',o);mb.setAttribute('aria-expanded',o?'true':'false')}
+mb.addEventListener('click',function(e){e.stopPropagation();setMenu(!menu.classList.contains('open'))});
+menu.addEventListener('mouseenter',function(){if(matchMedia('(hover:hover) and (min-width:861px)').matches)mb.setAttribute('aria-expanded','true')});
+menu.addEventListener('mouseleave',function(){if(!menu.classList.contains('open'))mb.setAttribute('aria-expanded','false')});
+document.addEventListener('click',function(e){if(!menu.contains(e.target))setMenu(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){setMenu(false);mb.focus()}});
+menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+document.querySelectorAll('.acc button').forEach(function(b){b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';document.querySelectorAll('.acc button').forEach(function(x){x.setAttribute('aria-expanded','false')});b.setAttribute('aria-expanded',o?'false':'true')})});
+var nav=document.getElementById('nav'),lastY=0;
+function onScrollNav(y){nav.classList.toggle('solid',y>40);if(!menu.classList.contains('open')){if(y>lastY+8&&y>innerHeight*.9)nav.classList.add('hide');else if(y<lastY-8)nav.classList.remove('hide')}lastY=y}
+
+/* ---------- vùng sinh thái: rê chuột / bấm để mở ---------- */
+(function(){var cs=[].slice.call(document.querySelectorAll('.rgc'));
+  function on(c){cs.forEach(function(x){var o=x===c;x.classList.toggle('on',o);x.setAttribute('aria-expanded',o?'true':'false')})}
+  cs.forEach(function(c){c.addEventListener('click',function(){on(c)});c.addEventListener('mouseenter',function(){if(matchMedia('(hover:hover) and (min-width:981px)').matches)on(c)});c.addEventListener('focus',function(){on(c)})})})();
+
+/* ---------- ảnh thực tế: tự chạy trái → phải, kéo chuột / vuốt để xem ---------- */
+(function(){var inn=document.getElementById('gmqIn');if(!inn)return;var t=inn.querySelector('.gmq-t'),pos=0,vel=0,drag=false,lx=0,lt=0,vis=false,last=0,speed=innerWidth<=860?38:55;
+  function w(){return t.offsetWidth}
+  function draw(){var W=w();if(!W)return;var x=((pos%W)+W)%W-W;inn.style.transform='translate3d('+x.toFixed(1)+'px,0,0)'}
+  function loop(now){requestAnimationFrame(loop);var dt=Math.min(.05,(now-last)/1000||0);last=now;if(document.hidden)return;if(now-chk>250){chk=now;var r=box.getBoundingClientRect();vis=r.bottom>0&&r.top<innerHeight}if(!vis)return;
+    if(!drag){if(Math.abs(vel)>5){pos+=vel*dt;vel*=Math.pow(.04,dt)}else{vel=0;if(!reduce)pos+=speed*dt}}draw()}
+  var box=inn.parentNode,chk=0;
+  inn.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;lt=performance.now();vel=0;inn.classList.add('drag');inn.setPointerCapture(e.pointerId)});
+  inn.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-lx,n=performance.now();pos+=dx;vel=dx/Math.max(.008,(n-lt)/1000);lx=e.clientX;lt=n;draw()});
+  ['pointerup','pointercancel'].forEach(function(ev){inn.addEventListener(ev,function(){if(!drag)return;drag=false;inn.classList.remove('drag');if(performance.now()-lt>80)vel=0;vel=Math.max(-2500,Math.min(2500,vel))})});
+  draw();requestAnimationFrame(loop)})();
+
+/* ---------- video phần kết ---------- */
+(function(){var v=document.getElementById('finalVid');if(!v)return;var loaded=false;
+  new IntersectionObserver(function(en){var e=en[0];if(e.isIntersecting){if(!loaded){v.src=matchMedia('(max-width:860px)').matches?v.dataset.srcS:v.dataset.src;loaded=true}if(!reduce){var p=v.play();if(p&&p.catch)p.catch(function(){})}}else if(loaded)v.pause()},{rootMargin:'300px'}).observe(v);
+  document.addEventListener('visibilitychange',function(){if(document.hidden)v.pause()})})();
+
+/* ---------- CHUYỂN ĐỘNG ---------- */
+if(!window.gsap){root.classList.remove('js');root.classList.add('no-pin');return}
+gsap.registerPlugin(ScrollTrigger);ScrollTrigger.config({ignoreMobileResize:true});
+if(window.SplitText)gsap.registerPlugin(SplitText);
+var lenis=null;
+if(!reduce&&window.Lenis){lenis=new Lenis({lerp:.1,wheelMultiplier:.9,smoothWheel:true,syncTouch:false});window.lenis=lenis;lenis.on('scroll',function(e){ScrollTrigger.update();onScrollNav(e.scroll)});gsap.ticker.add(function(t){lenis.raf(t*1000)});gsap.ticker.lagSmoothing(500,33);
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');var el=id==='#top'?0:document.querySelector(id);if(el===null)return;e.preventDefault();lenis.scrollTo(el,{offset:-20,duration:1.4})})});
+}else{addEventListener('scroll',function(){onScrollNav(scrollY)},{passive:true})}
+if(reduce)root.classList.add('no-pin');
+
+/* bố cục ảnh thực địa: tính theo khung chữ thật, luôn chừa khoảng cách g quanh chữ */
+var AR={greenhouse:1,karst:2.27,kids:1,hmong:1,rice:1.6,nursery:1,terrace:1.6,picker:1};
+var LAY={};
+function layout(){var W=innerWidth,H=innerHeight,mob=W<=860,cp=document.querySelector('.cl-copy');
+  var tw=cp.offsetWidth,th=cp.offsetHeight,g=mob?22:36,navH=mob?78:96,edge=mob?10:24;
+  var band=Math.max(60,(H-th)/2-g-(navH/2)-edge);
+  function row(keys,yEdge,dir,maxW){var h=Math.min(band,mob?150:260),gap=mob?10:18;var tot=function(h){return keys.reduce(function(a,k){return a+h*AR[k]},0)+gap*(keys.length-1)};while(tot(h)>maxW&&h>40)h-=4;
+    var x=-tot(h)/2;keys.forEach(function(k){var w=h*AR[k];LAY[k]={w:w,x:x+w/2,y:yEdge+dir*h/2};x+=w+gap})}
+  row(['greenhouse','karst','kids'],-th/2-g,-1,mob?W-2*edge:tw+80);
+  row(['terrace','nursery','rice'],th/2+g,1,mob?W-2*edge:tw+80);
+  if(mob){var s=Math.min(130,W*.3);LAY.picker={w:s,x:-W/2+s*.18,y:-th/2-g-band-s*.1};LAY.hmong={w:s,x:W/2-s*.18,y:th/2+g+band+s*.1}}
+  else{var s2=Math.max(140,Math.min((W-tw)/2-g-edge,H*.42,380));LAY.picker={w:s2,x:-tw/2-g-s2/2,y:0};LAY.hmong={w:s2,x:tw/2+g+s2/2,y:0}}
+  var pw=LAY.picker.w;Object.keys(LAY).forEach(function(k){var L=LAY[k];L.cs=k==='picker'?(mob?1.5:1.15):k==='karst'?pw*1.45/L.w:pw*.92/L.w;L.cx=k==='picker'?0:k==='karst'?0:(k.length%2?1:-1)*pw*.06;L.cy=k==='karst'?-pw*.06:0});
+  document.querySelectorAll('.cp').forEach(function(el){var L=LAY[el.dataset.k];el.style.setProperty('--w',L.w+'px');el.style.setProperty('--ar',AR[el.dataset.k])})}
+function P(el,k){return LAY[el.dataset.k][k]}
+var mm=gsap.matchMedia();
+mm.add('(prefers-reduced-motion: no-preference)',function(){
+  /* HERO */
+  var beats=gsap.utils.toArray('.mh-beats li');
+  gsap.timeline({delay:.1}).from('.mh-img.i1',{scale:1.3,duration:2.2,ease:'power2.out'},0).from('.mh-x',{y:40,opacity:0,duration:1.1,stagger:.12,ease:'power3.out'},.25).from('.bar',{y:-30,opacity:0,duration:.9,ease:'power3.out'},.2).from('.mh-cue',{opacity:0,y:10,duration:.8},.9);
+  var tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'.mh',start:'top top',end:function(){return '+='+Math.round(innerHeight*(isMobile?2.2:2.6))},pin:'.mh-pin',scrub:1,anticipatePin:1}});
+  tl.to('.mh-copy',{yPercent:-30,opacity:0,duration:1},0).to('.mh-cue',{opacity:0,duration:.3},0).to('.mh-img.i1',{scale:1,duration:2.1},0);
+  beats.forEach(function(b,i){var at=.9+i*1.05;tl.fromTo(b,{opacity:0,y:60},{opacity:1,y:0,duration:.5,ease:'power2.out'},at);if(i<beats.length-1)tl.to(b,{opacity:0,y:-60,duration:.4,ease:'power2.in'},at+.75)});
+  tl.fromTo('.mh-img.i2',{opacity:0,scale:1.16},{opacity:1,scale:1.02,duration:1.2},1.65).fromTo('.mh-img.i3',{opacity:0,scale:1.16},{opacity:1,scale:1.02,duration:1.2},2.7);
+  tl.to({},{duration:.4});
+
+  /* 01 · ẢNH THỰC ĐỊA: bay vào (300%) → quanh chữ, có khoảng cách (100%) → chụm thành một chồng (0%) */
+  var cps=gsap.utils.toArray('.cp');layout();ScrollTrigger.addEventListener('refreshInit',layout);
+  cps.forEach(function(el,i){gsap.set(el,{xPercent:-50,yPercent:-50,x:function(){return P(el,'x')*3},y:function(){return P(el,'y')*3},rotation:(i%2?1:-1)*(8+i*3),scale:1.2,opacity:0})});
+  var ct=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'.cl',start:'top top',end:function(){return '+='+Math.round(innerHeight*(isMobile?1.8:2.1))},pin:'.cl-pin',scrub:1,anticipatePin:1,invalidateOnRefresh:true}});
+  ct.fromTo('.cl-copy',{scale:1.06,opacity:.25},{scale:1,opacity:1,duration:.9,ease:'power2.out'},0);
+  cps.forEach(function(el,i){ct.to(el,{x:function(){return P(el,'x')},y:function(){return P(el,'y')},rotation:0,scale:1,opacity:1,duration:1,ease:'power3.out'},i*.05)});
+  ct.to({},{duration:.25});
+  var tC=1.55;
+  ct.to('.cl-copy',{opacity:0,scale:.9,duration:.4,ease:'power2.in'},tC);
+  cps.forEach(function(el){ct.to(el,{x:function(){return P(el,'cx')},y:function(){return P(el,'cy')},scale:function(){return P(el,'cs')},rotation:function(){return el.dataset.k==='picker'||el.dataset.k==='karst'?0:gsap.utils.random(-7,7)},duration:.8,ease:'power3.inOut'},tC+.05)});
+  ct.to('.cp:not(.top):not([data-k="karst"])',{opacity:0,duration:.25},tC+.65);
+  ct.fromTo('.cl-end',{opacity:0,y:30},{opacity:1,y:0,duration:.35},tC+.6);
+  ct.to({},{duration:.15});
+
+  /* tiêu đề tách dòng, hiện dần */
+  if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',once:true}})}})});ScrollTrigger.refresh()})}
+  gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}})});
+  gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img');gsap.timeline({scrollTrigger:{trigger:f,start:'top 88%',once:true}}).fromTo(f,{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath'}).fromTo(img,{scale:1.15},{scale:1,duration:1.6,ease:'power3.out',clearProps:'transform'},0)});
+
+  /* 02 */
+  gsap.from('.mc',{y:60,opacity:0,duration:.9,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.mcards',start:'top 85%',once:true}});
+  gsap.from('.mc-i,.std',{scale:.4,rotation:-12,opacity:0,duration:.9,stagger:.1,ease:'back.out(2)',scrollTrigger:{trigger:'.mcards',start:'top 80%',once:true},delay:.25});
+  /* 03 */
+  gsap.from('.rgc',{y:80,opacity:0,duration:1,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.rgs',start:'top 85%',once:true}});
+  /* 04 */
+  gsap.fromTo('.rp-bg img',{yPercent:-8,scale:1.12},{yPercent:8,scale:1,ease:'none',scrollTrigger:{trigger:'.rp-band',start:'top bottom',end:'bottom top',scrub:true}});
+  gsap.from('.rp-card',{y:80,opacity:0,duration:1.1,ease:'power3.out',scrollTrigger:{trigger:'.rp-band',start:'top 70%',once:true}});
+  (function(){var ol=document.getElementById('rps'),it=gsap.utils.toArray('.rps li');
+    ScrollTrigger.create({trigger:ol,start:'top 78%',end:'bottom 55%',scrub:.6,onUpdate:function(s){ol.style.setProperty('--p',s.progress.toFixed(3));it.forEach(function(el,i){el.classList.toggle('lit',s.progress>=i/(it.length-1)-.02)})}});
+    gsap.from(it,{y:40,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:ol,start:'top 85%',once:true}})})();
+  /* 05 */
+  if(!isMobile)gsap.fromTo('.final .bg',{yPercent:-14},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'bottom bottom',scrub:true}});
+  gsap.from('.final h2',{y:50,opacity:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'.final',start:'top 70%',once:true}});
+  gsap.from('.tagline span',{y:30,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.foot',start:'top 85%',once:true}});
+});
+addEventListener('load',function(){ScrollTrigger.refresh()});
+
+
+})();
+</script>
+</body>
+</html>

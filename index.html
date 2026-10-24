@@ -541,6 +541,27 @@ a.it2:hover{background:rgba(255,255,255,.1)}
 .fsoon .s2::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cream)}
 .fsoon:hover .s1,.fsoon:focus .s1{opacity:0}
 .fsoon:hover .s2,.fsoon:focus .s2{opacity:1}
+.ct-b b .sm{display:none}
+@media (max-width:620px){
+  .panel-m.pm2{gap:8px;padding:10px}
+  .pm-feat{gap:8px}
+  .pmf{border-radius:18px}
+  .pmf-img{aspect-ratio:16/7}
+  .pmf-tx{padding:7px 10px 9px}
+  .pmf-tx>span{display:none}
+  .pm2 .pm-list{gap:2px}
+  .it2{min-height:50px;padding:4px 8px 4px 4px;gap:10px;border-radius:14px}
+  .it2>img{width:56px;height:41px;border-radius:10px}
+  .it2 b{font-size:1rem}
+  .it2 .t>span{font-size:.8125rem}
+  .pm-ct{grid-template-columns:1fr 1fr;gap:6px;padding-top:8px;margin-top:6px}
+  .ct-b{min-height:50px;padding:5px 10px 5px 5px;gap:8px;border-radius:14px}
+  .ct-b .ci{width:38px;height:38px;border-radius:11px}
+  .ct-b .go{display:none}
+  .ct-b small{font-size:.75rem}
+  .ct-b b{font-size:.9375rem}
+  .ct-b b .lg{display:none}.ct-b b .sm{display:inline}
+}
 /* ---- hết vòng 20 ---- */
 /* ---- vòng 21: tên trang + nút quay lại ---- */
 .nav-pg{display:inline-flex;align-items:center;gap:12px;min-width:0;margin-left:2px;font-weight:600;font-size:1rem;color:var(--lime);white-space:nowrap}
@@ -594,7 +615,7 @@ addEventListener('pageshow',function(e){if(e.persisted)R.classList.remove('fb-le
           <a class="it2" href="mo-hinh.html" data-page><img src="img/nav-model-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Mô hình</b><span>Mạng lưới vườn Farmblock</span></span></a>
           <a class="it2" href="bang-tin.html" data-page><img src="img/nav-news-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Bảng tin</b><span>Tin tức Farmblock</span></span></a>
           <a class="it2" href="hoc-vien.html" data-page><img src="img/nav-academy-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Học viện</b><span>Khoá học nông nghiệp số</span></span></a>
-          <div class="pm-ct"><a class="ct-b" href="tel:0354060029" data-k="tel" data-v="0354060029" data-l="Hotline" aria-label="Gọi 0354 060 029"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span class="ct"><small>Hotline</small><b>0354 060 029</b></span><span class="go">Gọi ngay</span></a><a class="ct-b" href="mailto:contact@farmblock.ai" data-k="mail" data-v="contact@farmblock.ai" data-l="Email" aria-label="Gửi email contact@farmblock.ai"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></g></svg></span><span class="ct"><small>Email</small><b>contact@farmblock.ai</b></span><span class="go">Gửi thư</span></a></div>
+          <div class="pm-ct"><a class="ct-b" href="tel:0354060029" data-k="tel" data-v="0354060029" data-l="Hotline" aria-label="Gọi 0354 060 029"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span class="ct"><small>Hotline</small><b>0354 060 029</b></span><span class="go">Gọi ngay</span></a><a class="ct-b" href="mailto:contact@farmblock.ai" data-k="mail" data-v="contact@farmblock.ai" data-l="Email" aria-label="Gửi email contact@farmblock.ai"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></g></svg></span><span class="ct"><small>Email</small><b><span class="lg">contact@farmblock.ai</span><span class="sm">Gửi email</span></b></span><span class="go">Gửi thư</span></a></div>
         </div>
       </div>
     </div>

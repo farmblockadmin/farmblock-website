@@ -484,6 +484,18 @@ a.it2:hover{background:rgba(255,255,255,.1)}
 .ch5-ph figcaption{position:absolute;left:16px;right:16px;bottom:16px;width:fit-content;max-width:calc(100% - 32px);padding:10px 16px;border-radius:16px;background:rgba(12,31,16,.8);color:#fff;font-size:1rem;font-weight:500}
 @media (max-width:980px){.ch5-top{grid-template-columns:1fr}.ch5-top .ch5-head{text-align:center}.ch5-top .ch5-head .lead{margin-inline:auto}}
 .pp figure{background:var(--g700)}
+/* ---- vòng 22: biểu tượng mốc lật như hoạ tiết ---- */
+.mi-m{transition:filter .6s,transform .7s var(--ease)}
+.mi.lit .mi-m.flip{transform:scale(1.06) rotateY(180deg)}
+/* ---- hết vòng 22 ---- */
+/* ---- vòng 22b: chữ chạy sau ảnh thì ẩn (điện thoại) ---- */
+@media (max-width:980px){
+  .ch1{overflow:clip}
+  .ch1-media{background:var(--g900);padding-bottom:18px}
+  .ch1-media::before{content:"";position:absolute;left:-40px;right:-40px;bottom:100%;height:120vh;background:var(--g900)}
+  .ch1-media::after{content:"";position:absolute;left:-40px;right:-40px;top:100%;height:56px;background:linear-gradient(var(--g900),rgba(12,31,16,0));pointer-events:none}
+}
+/* ---- hết vòng 22b ---- */
 /* ---- vòng 20: menu liên hệ + chân trang ---- */
 .it2>img{width:68px;height:50px;border-radius:12px;box-shadow:0 0 0 1px rgba(255,255,255,.1)}
 .pm2 .pm-list{display:flex;flex-direction:column;gap:4px}
@@ -503,6 +515,27 @@ a.it2:hover{background:rgba(255,255,255,.1)}
 .fsoon .s2::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cream)}
 .fsoon:hover .s1,.fsoon:focus .s1{opacity:0}
 .fsoon:hover .s2,.fsoon:focus .s2{opacity:1}
+.ct-b b .sm{display:none}
+@media (max-width:620px){
+  .panel-m.pm2{gap:8px;padding:10px}
+  .pm-feat{gap:8px}
+  .pmf{border-radius:18px}
+  .pmf-img{aspect-ratio:16/7}
+  .pmf-tx{padding:7px 10px 9px}
+  .pmf-tx>span{display:none}
+  .pm2 .pm-list{gap:2px}
+  .it2{min-height:50px;padding:4px 8px 4px 4px;gap:10px;border-radius:14px}
+  .it2>img{width:56px;height:41px;border-radius:10px}
+  .it2 b{font-size:1rem}
+  .it2 .t>span{font-size:.8125rem}
+  .pm-ct{grid-template-columns:1fr 1fr;gap:6px;padding-top:8px;margin-top:6px}
+  .ct-b{min-height:50px;padding:5px 10px 5px 5px;gap:8px;border-radius:14px}
+  .ct-b .ci{width:38px;height:38px;border-radius:11px}
+  .ct-b .go{display:none}
+  .ct-b small{font-size:.75rem}
+  .ct-b b{font-size:.9375rem}
+  .ct-b b .lg{display:none}.ct-b b .sm{display:inline}
+}
 /* ---- hết vòng 20 ---- */
 /* ---- vòng 21: tên trang + nút quay lại ---- */
 .nav-pg{display:inline-flex;align-items:center;gap:12px;min-width:0;margin-left:2px;font-weight:600;font-size:1rem;color:var(--lime);white-space:nowrap}
@@ -556,7 +589,7 @@ addEventListener('pageshow',function(e){if(e.persisted)R.classList.remove('fb-le
           <a class="it2" href="mo-hinh.html" data-page><img src="img/nav-model-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Mô hình</b><span>Mạng lưới vườn Farmblock</span></span></a>
           <a class="it2" href="bang-tin.html" data-page><img src="img/nav-news-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Bảng tin</b><span>Tin tức Farmblock</span></span></a>
           <a class="it2" href="hoc-vien.html" data-page><img src="img/nav-academy-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Học viện</b><span>Khoá học nông nghiệp số</span></span></a>
-          <div class="pm-ct"><a class="ct-b" href="tel:0354060029" data-k="tel" data-v="0354060029" data-l="Hotline" aria-label="Gọi 0354 060 029"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span class="ct"><small>Hotline</small><b>0354 060 029</b></span><span class="go">Gọi ngay</span></a><a class="ct-b" href="mailto:contact@farmblock.ai" data-k="mail" data-v="contact@farmblock.ai" data-l="Email" aria-label="Gửi email contact@farmblock.ai"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></g></svg></span><span class="ct"><small>Email</small><b>contact@farmblock.ai</b></span><span class="go">Gửi thư</span></a></div>
+          <div class="pm-ct"><a class="ct-b" href="tel:0354060029" data-k="tel" data-v="0354060029" data-l="Hotline" aria-label="Gọi 0354 060 029"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span class="ct"><small>Hotline</small><b>0354 060 029</b></span><span class="go">Gọi ngay</span></a><a class="ct-b" href="mailto:contact@farmblock.ai" data-k="mail" data-v="contact@farmblock.ai" data-l="Email" aria-label="Gửi email contact@farmblock.ai"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></g></svg></span><span class="ct"><small>Email</small><b><span class="lg">contact@farmblock.ai</span><span class="sm">Gửi email</span></b></span><span class="go">Gửi thư</span></a></div>
         </div>
       </div>
     </div>
@@ -734,9 +767,9 @@ addEventListener('pageshow',function(e){if(e.persisted)R.classList.remove('fb-le
       <h2 id="h-c6" class="split">Hành trình <span class="nw grad-d">vươn xa</span></h2>
     </div>
     <ol class="ms" id="ms">
-      <li class="mi"><svg class="mi-m mi-a1" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#2E6B3A"/><g class="mi-gr"><rect class="b1" x="14" y="16" width="10" height="68" fill="#F1F7E8"/><rect class="b2" x="45" y="16" width="10" height="68" fill="#163A1F"/><rect class="b3" x="76" y="16" width="10" height="68" fill="#163A1F"/></g><path class="lf l1" d="M19 18c-6-6-6-11-4-14 4 1 7 6 4 14z" fill="#B5E383"/><path class="lf l2" d="M50 18c6-6 6-11 4-14-4 1-7 6-4 14z" fill="#B5E383"/><path class="lf l3" d="M81 18c-6-6-6-11-4-14 4 1 7 6 4 14z" fill="#B5E383"/></svg><div class="mi-y"><em>Mốc 1</em><b>2025</b></div><div class="mi-t"><h3>Các vườn mẫu khởi đầu</h3><p>Trên nền đất đỏ Gia Lai, chúng tôi gieo những hạt giống đầu tiên, kết hợp truyền thống Tây Nguyên với công nghệ tự động hóa hiện đại.</p></div></li>
-      <li class="mi"><svg class="mi-m mi-a2" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#163A1F"/><circle class="halo" cx="50" cy="50" r="22" fill="none" stroke="#B5E383" stroke-width="2"/><g class="st"><path d="M50 12C53 38 62 47 88 50C62 53 53 62 50 88C47 62 38 53 12 50C38 47 47 38 50 12Z" fill="#F1F7E8"/></g><path class="sp s1" d="M20 14c1 5 2 6 7 7-5 1-6 2-7 7-1-5-2-6-7-7 5-1 6-2 7-7z" fill="#B5E383"/><path class="sp s2" d="M80 72c1 5 2 6 7 7-5 1-6 2-7 7-1-5-2-6-7-7 5-1 6-2 7-7z" fill="#B5E383"/><path class="sp s3" d="M82 14c.7 3 1.3 3.7 4.5 4.5-3.2.8-3.8 1.5-4.5 4.5-.7-3-1.3-3.7-4.5-4.5 3.2-.8 3.8-1.5 4.5-4.5z" fill="#F1F7E8"/></svg><div class="mi-y"><em>Mốc 2</em><b>2028</b></div><div class="mi-t"><h3>200 ha thông minh</h3><p>Mở rộng lên 200 ha, chúng tôi xây dựng những trang trại thông minh, nơi drone, hệ thống cảm biến và nền tảng dữ liệu minh bạch hóa nông nghiệp.</p></div></li>
-      <li class="mi"><svg class="mi-m mi-a3" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#F1F7E8"/><g class="hg"><path d="M20 0H80L50 50Z" fill="#2E6B3A" opacity=".18"/><path d="M20 100H80L50 50Z" fill="#2E6B3A" opacity=".18"/><path class="top" d="M20 0H80L50 50Z" fill="#2E6B3A"/><path class="bot" d="M20 100H80L50 50Z" fill="#0F2A17"/><rect class="flow" x="48.6" y="48" width="2.8" height="52" fill="#2E6B3A"/></g></svg><div class="mi-y"><em>Mốc 3</em><b>Tương lai</b></div><div class="mi-t"><h3>Nông sản toàn cầu</h3><p>Mang cà phê và sầu riêng chất lượng cao của Việt Nam đến bữa ăn mọi gia đình trên thế giới, chúng tôi viết tiếp câu chuyện về miền đất đỏ và những con người nơi đây.</p></div></li>
+      <li class="mi"><svg class="mi-m" aria-hidden="true"><use href="#m-bars"/></svg><div class="mi-y"><em>Mốc 1</em><b>2025</b></div><div class="mi-t"><h3>Các vườn mẫu khởi đầu</h3><p>Trên nền đất đỏ Gia Lai, chúng tôi gieo những hạt giống đầu tiên, kết hợp truyền thống Tây Nguyên với công nghệ tự động hóa hiện đại.</p></div></li>
+      <li class="mi"><svg class="mi-m" aria-hidden="true"><use href="#m-star"/></svg><div class="mi-y"><em>Mốc 2</em><b>2028</b></div><div class="mi-t"><h3>200 ha thông minh</h3><p>Mở rộng lên 200 ha, chúng tôi xây dựng những trang trại thông minh, nơi drone, hệ thống cảm biến và nền tảng dữ liệu minh bạch hóa nông nghiệp.</p></div></li>
+      <li class="mi"><svg class="mi-m" aria-hidden="true"><use href="#m-hour"/></svg><div class="mi-y"><em>Mốc 3</em><b>Tương lai</b></div><div class="mi-t"><h3>Nông sản toàn cầu</h3><p>Mang cà phê và sầu riêng chất lượng cao của Việt Nam đến bữa ăn mọi gia đình trên thế giới, chúng tôi viết tiếp câu chuyện về miền đất đỏ và những con người nơi đây.</p></div></li>
     </ol>
     <div class="ch6-more rv"><a class="btn btn-line2" href="./#tuong-lai" data-page>Xem lộ trình nhân rộng mô hình<svg aria-hidden="true"><use href="#arr"/></svg></a></div>
   </div>
@@ -935,6 +968,10 @@ document.querySelectorAll('.ct-b').forEach(function(a){a.addEventListener('click
 </script>
 <script>/* vòng 21: nút quay lại */
 document.querySelectorAll('.nav-back').forEach(function(a){a.addEventListener('click',function(e){try{var r=document.referrer&&new URL(document.referrer);if(r&&r.origin===location.origin&&history.length>1){e.preventDefault();e.stopImmediatePropagation();history.back()}}catch(x){}},true)});
+</script>
+<script>/* vòng 22: mốc sáng thì lật nhẹ theo nhịp, giống hàng hoạ tiết */
+(function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var k=0;
+setInterval(function(){if(document.hidden)return;var lit=document.querySelectorAll('.mi.lit .mi-m');if(!lit.length)return;lit[k++%lit.length].classList.toggle('flip')},1400)})();
 </script>
 </body>
 </html>

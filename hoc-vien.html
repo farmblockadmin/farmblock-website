@@ -395,6 +395,27 @@ a.it2:hover{background:rgba(255,255,255,.1)}
 .fsoon .s2::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cream)}
 .fsoon:hover .s1,.fsoon:focus .s1{opacity:0}
 .fsoon:hover .s2,.fsoon:focus .s2{opacity:1}
+.ct-b b .sm{display:none}
+@media (max-width:620px){
+  .panel-m.pm2{gap:8px;padding:10px}
+  .pm-feat{gap:8px}
+  .pmf{border-radius:18px}
+  .pmf-img{aspect-ratio:16/7}
+  .pmf-tx{padding:7px 10px 9px}
+  .pmf-tx>span{display:none}
+  .pm2 .pm-list{gap:2px}
+  .it2{min-height:50px;padding:4px 8px 4px 4px;gap:10px;border-radius:14px}
+  .it2>img{width:56px;height:41px;border-radius:10px}
+  .it2 b{font-size:1rem}
+  .it2 .t>span{font-size:.8125rem}
+  .pm-ct{grid-template-columns:1fr 1fr;gap:6px;padding-top:8px;margin-top:6px}
+  .ct-b{min-height:50px;padding:5px 10px 5px 5px;gap:8px;border-radius:14px}
+  .ct-b .ci{width:38px;height:38px;border-radius:11px}
+  .ct-b .go{display:none}
+  .ct-b small{font-size:.75rem}
+  .ct-b b{font-size:.9375rem}
+  .ct-b b .lg{display:none}.ct-b b .sm{display:inline}
+}
 /* ---- hết vòng 20 ---- */
 
 /* ================= HỌC VIỆN: phần tự làm nổi bật + thẻ bài ================= */
@@ -456,17 +477,20 @@ a.it2:hover{background:rgba(255,255,255,.1)}
 .ar-hero h1,.ar-ex,.prose,.toc,.hvc-tx,.feat-tx,.crumb{overflow-wrap:anywhere}
 
 /* danh sách Học viện */
-.hv-hero{background:#0A1A0E}
-.hv-hero::before{background:linear-gradient(180deg,rgba(81,173,202,.10),transparent 38%),radial-gradient(ellipse 52% 80% at 80% 50%,rgba(126,216,57,.17),transparent 62%),radial-gradient(ellipse 50% 60% at 6% 108%,rgba(181,227,131,.13),transparent 65%),radial-gradient(ellipse 30% 40% at 40% -10%,rgba(245,228,161,.10),transparent 70%)}
-.hv-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-radial-gradient(circle at 80% 50%,transparent 0 44px,rgba(181,227,131,.08) 44px 45.2px);-webkit-mask:radial-gradient(ellipse 46% 78% at 80% 50%,#000 20%,transparent 72%);mask:radial-gradient(ellipse 46% 78% at 80% 50%,#000 20%,transparent 72%)}
+.hv-hero{background:#08161D}
+.hv-hero::before{background:linear-gradient(180deg,rgba(81,173,202,.16),transparent 42%),radial-gradient(ellipse 55% 85% at 80% 50%,rgba(81,173,202,.30),transparent 62%),radial-gradient(ellipse 50% 60% at 4% 110%,rgba(126,216,57,.14),transparent 65%),radial-gradient(ellipse 34% 44% at 42% -12%,rgba(150,214,236,.14),transparent 70%)}
+.hv-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-radial-gradient(circle at 80% 50%,transparent 0 44px,rgba(141,208,230,.08) 44px 45.2px);-webkit-mask:radial-gradient(ellipse 46% 78% at 80% 50%,#000 20%,transparent 72%);mask:radial-gradient(ellipse 46% 78% at 80% 50%,#000 20%,transparent 72%)}
+.hv-hero .tag{color:#9BD8EA}
 .hv-orb{position:absolute;left:80%;top:50%;width:0;height:0;z-index:0;pointer-events:none}
-.hv-orb b{position:absolute;left:-70px;top:-70px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#E9F7D6,#B5E383 34%,#3A8047 72%,#17331C);box-shadow:0 0 80px 20px rgba(181,227,131,.25),inset -14px -18px 30px rgba(12,31,16,.45);animation:hvFloat 7s ease-in-out infinite}
-.hv-orb i{position:absolute;left:0;top:0;width:140px;height:140px;margin:-70px 0 0 -70px;border-radius:50%;border:1.5px solid rgba(181,227,131,.5);animation:hvRing 6s cubic-bezier(.2,.6,.3,1) infinite;opacity:0}
+.hv-orb b{position:absolute;left:-90px;top:-90px;width:180px;height:180px;display:grid;place-items:center;animation:hvFloat 7s ease-in-out infinite}
+.hv-orb b::before{content:"";position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(81,173,202,.45),rgba(126,216,57,.12) 45%,transparent 70%);filter:blur(6px)}
+.hv-orb svg{position:relative;width:180px;height:180px;filter:drop-shadow(0 24px 40px rgba(4,20,28,.6)) drop-shadow(0 0 24px rgba(141,208,230,.35))}
+.hv-orb i{position:absolute;left:0;top:0;width:180px;height:180px;margin:-90px 0 0 -90px;border-radius:50%;border:1.5px solid rgba(141,208,230,.55);animation:hvRing 6s cubic-bezier(.2,.6,.3,1) infinite;opacity:0}
 .hv-orb i:nth-child(2){animation-delay:2s}.hv-orb i:nth-child(3){animation-delay:4s}
-@keyframes hvRing{0%{transform:scale(1);opacity:.6}100%{transform:scale(4.2);opacity:0}}
-@keyframes hvFloat{0%,100%{transform:translateY(-6px)}50%{transform:translateY(8px)}}
-@media (max-width:980px){.hv-orb{left:auto;right:-40px;top:120px}.hv-orb b{transform:scale(.7)}.hv-hero::after{background:repeating-radial-gradient(circle at calc(100% - 40px) 120px,transparent 0 40px,rgba(181,227,131,.07) 40px 41px);-webkit-mask:radial-gradient(circle at 100% 120px,#000 10%,transparent 60%);mask:radial-gradient(circle at 100% 120px,#000 10%,transparent 60%)}}
-@media (max-width:620px){.hv-orb{opacity:.55}}
+@keyframes hvRing{0%{transform:scale(1);opacity:.6}100%{transform:scale(3.6);opacity:0}}
+@keyframes hvFloat{0%,100%{transform:translateY(-8px) rotate(-4deg)}50%{transform:translateY(10px) rotate(4deg)}}
+@media (max-width:980px){.hv-orb{left:auto;right:30px;top:150px}.hv-orb b{left:-50px;top:-50px;width:100px;height:100px}.hv-orb svg{width:100px;height:100px}.hv-orb i{width:100px;height:100px;margin:-50px 0 0 -50px}.hv-hero::after{background:repeating-radial-gradient(circle at calc(100% - 30px) 150px,transparent 0 40px,rgba(141,208,230,.07) 40px 41px);-webkit-mask:radial-gradient(circle at 100% 150px,#000 10%,transparent 60%);mask:radial-gradient(circle at 100% 150px,#000 10%,transparent 60%)}}
+@media (max-width:620px){.hv-orb{opacity:.5;right:10px;top:130px}}
 @media (prefers-reduced-motion:reduce){.hv-orb i,.hv-orb b{animation:none}}
 .hv-hero .wrap{z-index:1}
 .hv-search{display:block;position:relative;max-width:640px;margin-top:30px}
@@ -542,9 +566,9 @@ addEventListener('pageshow',function(e){if(e.persisted)R.classList.remove('fb-le
           <a class="it2" href="./" data-page><img src="img/nav-home-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Trang chủ</b><span>Tầm nhìn Farmblock</span></span></a>
           <a class="it2" href="ve-chung-toi.html" data-page><img src="img/nav-about-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Về chúng tôi</b><span>Hành trình Farmblock</span></span></a>
           <a class="it2" href="mo-hinh.html" data-page><img src="img/nav-model-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Mô hình</b><span>Mạng lưới vườn Farmblock</span></span></a>
-          <a class="it2" href="#top" aria-current="page"><img src="img/nav-news-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Bảng tin</b><span>Tin tức Farmblock</span></span></a>
+          <a class="it2" href="bang-tin.html" data-page><img src="img/nav-news-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Bảng tin</b><span>Tin tức Farmblock</span></span></a>
           <a class="it2" href="hoc-vien.html" data-page aria-current="page"><img src="img/nav-academy-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Học viện</b><span>Khoá học nông nghiệp số</span></span></a>
-          <div class="pm-ct"><a class="ct-b" href="tel:0354060029" data-k="tel" data-v="0354060029" data-l="Hotline" aria-label="Gọi 0354 060 029"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span class="ct"><small>Hotline</small><b>0354 060 029</b></span><span class="go">Gọi ngay</span></a><a class="ct-b" href="mailto:contact@farmblock.ai" data-k="mail" data-v="contact@farmblock.ai" data-l="Email" aria-label="Gửi email contact@farmblock.ai"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></g></svg></span><span class="ct"><small>Email</small><b>contact@farmblock.ai</b></span><span class="go">Gửi thư</span></a></div>
+          <div class="pm-ct"><a class="ct-b" href="tel:0354060029" data-k="tel" data-v="0354060029" data-l="Hotline" aria-label="Gọi 0354 060 029"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span class="ct"><small>Hotline</small><b>0354 060 029</b></span><span class="go">Gọi ngay</span></a><a class="ct-b" href="mailto:contact@farmblock.ai" data-k="mail" data-v="contact@farmblock.ai" data-l="Email" aria-label="Gửi email contact@farmblock.ai"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></g></svg></span><span class="ct"><small>Email</small><b><span class="lg">contact@farmblock.ai</span><span class="sm">Gửi email</span></b></span><span class="go">Gửi thư</span></a></div>
         </div>
       </div>
     </div>
@@ -573,7 +597,7 @@ addEventListener('pageshow',function(e){if(e.persisted)R.classList.remove('fb-le
 
 <main id="noidung">
 <header class="bl-hero hv-hero" id="top">
-  <div class="hv-orb" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+  <div class="hv-orb" aria-hidden="true"><i></i><i></i><i></i><b><svg><use href="#logo"/></svg></b></div>
   <div class="wrap">
     <span class="tag bl-x">Học viện Farmblock</span>
     <h1 class="bl-x">Một nơi để hiểu thêm về <span class="grad">nông nghiệp</span></h1>

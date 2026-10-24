@@ -491,7 +491,7 @@ function slugClash(){return !S.editing&&INDEX.some(function(p){return p.slug===S
 var pvT,pvBusy=false;
 function preview(){clearTimeout(pvT);$('#pvL').classList.add('on');pvT=setTimeout(function(){if(!TPL)return;var y=0;try{y=pv.contentWindow.scrollY}catch(e){}
   var base=location.href.replace(/[#?].*$/,'').replace(/[^\/]*$/,'');
-  var h=HV.page(TPL,post(),'').replace('<head>','<head><base href="'+base+'"><style>.curtain{display:none!important}html{scroll-behavior:auto!important}</style>')
+  var h=HV.page(TPL,post(),'').replace('<head>','<head><base href="'+base+'"><style>.curtain,.fbl{display:none!important}html{scroll-behavior:auto!important}</style>')
     .replace('</body>','<script>document.addEventListener("click",function(e){var a=e.target.closest("a");if(a&&!/^#/.test(a.getAttribute("href")||"")){e.preventDefault();e.stopPropagation()}},true);addEventListener("load",function(){setTimeout(function(){window.lenis?lenis.scrollTo('+y+',{immediate:true,force:true}):scrollTo(0,'+y+')},60)})<\/script></body>');
   pv.onload=function(){$('#pvL').classList.remove('on')};pv.srcdoc=h},700)}
 function changed(){analyse();preview();saveDraft()}

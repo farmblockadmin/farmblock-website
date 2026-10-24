@@ -840,7 +840,6 @@ html.fbl-close .fbl-m .mk{animation:none}
 @media (prefers-reduced-motion:reduce){.fbl-s{transition:none!important}html.fbl-open .fbl{opacity:0;transition:opacity .3s}.fbl-m .mk,.fbl-m b,.fbl-c .pg::after{animation:none}}
 /* ---- hết vòng 23 ---- */
 </style>
-<script type="speculationrules">{"prerender":[{"source":"list","urls":["./","cong-nghe.html"],"eagerness":"moderate"}]}</script>
 <script>/* vòng 23: màn chờ */
 (function(){var R=document.documentElement,t0=performance.now(),opened=false,MIN=700,MAX=4500;
 document.addEventListener('DOMContentLoaded',function(){if(window.gsap&&!opened)gsap.globalTimeline.pause()});
@@ -855,7 +854,10 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
   e.preventDefault();if(matchMedia('(prefers-reduced-motion: reduce)').matches){location.href=a.href;return}
   R.classList.remove('fbl-open','fbl-done');R.classList.add('fbl-pre');void R.offsetWidth;
   requestAnimationFrame(function(){R.classList.add('fbl-close');R.classList.remove('fbl-pre')});
-  setTimeout(function(){location.href=a.href},860)});
+  /* lấy bản mới nhất của trang đích trong lúc màn khép (tránh bản cũ trong bộ nhớ đệm), rồi mới chuyển */
+  var href=a.href,t1=performance.now(),gone=false;function nav(){if(gone)return;gone=true;location.href=href}
+  var f=window.fetch?fetch(href,{cache:'reload',credentials:'same-origin'}).catch(function(){}):Promise.resolve();
+  f.then(function(){setTimeout(nav,Math.max(0,860-(performance.now()-t1)))});setTimeout(nav,3000)});
 addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-close','fbl-pre','fbl-done','fbl-open');opened=false;setTimeout(open,150)}});
 })();</script>
 </head>

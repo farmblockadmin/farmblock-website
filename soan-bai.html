@@ -46,8 +46,10 @@ a{color:var(--g500)}
 /* bố cục */
 .app{display:grid;grid-template-columns:minmax(540px,40vw) 1fr;height:calc(100vh - 72px);height:calc(100dvh - 72px)}
 .demo.on~.app{height:calc(100dvh - 72px - 46px)}
-.ed{overflow:auto;background:#fff;border-right:1px solid var(--line);scrollbar-gutter:stable}
-.ed-in{padding:28px 32px 120px;display:grid;gap:26px}
+.ed{min-width:0;overflow-x:hidden;overflow-y:auto;background:#fff;border-right:1px solid var(--line);scrollbar-gutter:stable}
+.ed-in{padding:28px 32px 120px;display:grid;grid-template-columns:minmax(0,1fr);gap:26px}
+.ed-in>*{min-width:0}
+.in,.ta,.rte,.hint,.found .t{overflow-wrap:anywhere}
 .pv{position:relative;display:grid;grid-template-rows:auto 1fr;min-width:0;background:var(--paper-2)}
 .pv-bar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--paper)}
 .pv-bar h2{font-size:1rem;font-weight:700;margin-right:auto;display:flex;align-items:center;gap:10px}
@@ -71,8 +73,7 @@ a{color:var(--g500)}
 .in,.ta{width:100%;min-height:52px;padding:12px 16px;border-radius:14px;border:1.5px solid var(--line);background:#fff;font-size:1.0625rem;transition:border-color .2s,box-shadow .2s}
 .in:focus,.ta:focus{outline:none;border-color:var(--g500);box-shadow:0 0 0 4px rgba(58,128,71,.12)}
 .ta{resize:vertical;min-height:96px;line-height:1.55}
-.title-in{font-size:1.6rem;font-weight:700;letter-spacing:-.01em;border:0;padding:6px 0;min-height:auto;border-radius:0;border-bottom:2px solid var(--line)}
-.title-in:focus{box-shadow:none;border-color:var(--g500)}
+.title-in{font-size:1.35rem;font-weight:700;letter-spacing:-.01em;min-height:60px}
 .slug{display:flex;align-items:center;gap:0;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}
 .slug span{padding:0 4px 0 14px;font-size:.95rem;color:var(--muted);white-space:nowrap}
 .slug input{flex:1;min-width:0;min-height:48px;border:0;background:#fff;padding:0 12px;font-size:1rem}
@@ -101,14 +102,14 @@ a{color:var(--g500)}
 .chip em{font-style:normal;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:var(--lime);color:var(--g800)}
 
 /* soạn nội dung */
-.wr{border:1.5px solid var(--line);border-radius:20px;background:#fff}
+.wr{display:flex;flex-direction:column;min-width:0;border:1.5px solid var(--line);border-radius:20px;background:#fff;overflow:hidden}
 .wr:focus-within{border-color:var(--g500);box-shadow:0 0 0 4px rgba(58,128,71,.1)}
 .tb{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:2px;padding:8px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-radius:18px 18px 0 0}
 .tb button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:40px;min-height:44px;padding:0 8px;border-radius:10px;font-weight:700;font-size:.92rem;color:var(--g700)}
 .tb button:hover{background:var(--paper)}
 .tb button[aria-pressed="true"]{background:var(--paper-2);color:var(--g500)}
 .tb .sep{width:1px;height:26px;background:var(--line);margin:0 2px}
-.rte{min-height:460px;padding:24px 26px 40px;font-size:1.125rem;line-height:1.75;outline:none}
+.rte{height:clamp(360px,62vh,720px);min-height:240px;resize:vertical;overflow-y:auto;overflow-x:hidden;padding:24px 26px 40px;font-size:1.125rem;line-height:1.75;outline:none}
 .rte:empty::before{content:attr(data-ph);color:#98AC9C;white-space:pre-line;pointer-events:none}
 .rte>*+*{margin-top:.85em}.rte>:first-child{margin-top:0}
 .rte h2{font-size:1.45rem;line-height:1.25;margin-top:1.5em;padding-left:14px;border-left:4px solid var(--lime)}
@@ -116,7 +117,16 @@ a{color:var(--g500)}
 .rte ul,.rte ol{padding-left:1.4em}
 .rte blockquote{padding-left:16px;border-left:4px solid #B5E383;color:var(--g700)}
 .rte figure{margin:1.2em 0;padding:10px;border-radius:16px;background:var(--paper)}
-.rte figure img{display:block;width:100%;height:auto;border-radius:10px}
+.rte figure{position:relative;max-width:100%}
+.rte figure img{display:block;max-width:100%;max-height:300px;width:auto;height:auto;margin:0 auto;border-radius:10px;object-fit:contain}
+.rte figure .rm{position:absolute;top:16px;right:16px;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:rgba(12,31,16,.8);color:#fff;opacity:0;transition:opacity .2s}
+.rte figure:hover .rm,.rte figure:focus-within .rm{opacity:1}
+@media (hover:none){.rte figure .rm{opacity:1}}
+.rte *{max-width:100%}
+/* toàn màn hình khi soạn */
+.wr.full{position:fixed;inset:12px;z-index:90;border-radius:20px;box-shadow:0 0 0 100vmax rgba(12,31,16,.5)}
+.wr.full .rte{height:auto;flex:1;resize:none;padding:32px max(26px,calc(50% - 380px)) 60px}
+.tb .grow{margin-left:auto}
 .rte figcaption{padding:8px 4px 2px;font-size:.95rem;color:var(--muted);text-align:center;outline:none}
 .rte figcaption:empty::before{content:'Thêm chú thích ảnh (không bắt buộc)';color:#98AC9C}
 .rte a{color:var(--g500)}
@@ -263,8 +273,8 @@ a{color:var(--g500)}
       </section>
 
       <section class="card">
-        <label class="sr" for="title">Tiêu đề bài</label>
-        <input class="in title-in" id="title" placeholder="Tiêu đề bài viết, ví dụ: Độ pH đất là gì?" autocomplete="off">
+        <div class="lab"><label for="title">Tiêu đề bài</label><small>Đường dẫn bài tự tạo theo tiêu đề</small></div>
+        <input class="in title-in" id="title" placeholder="Gõ tiêu đề, ví dụ: Độ pH đất là gì?" autocomplete="off">
         <div class="slug"><span>…/hoc-vien-</span><input id="slug" aria-label="Đường dẫn bài" spellcheck="false" autocomplete="off"><span style="padding-right:14px">.html</span></div>
         <p class="warn-t" id="slugW" hidden></p>
       </section>
@@ -302,6 +312,7 @@ a{color:var(--g500)}
             <button type="button" data-c="image" title="Chèn ảnh minh hoạ"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></g></svg></button>
             <span class="sep"></span>
             <button type="button" data-c="removeFormat" title="Xoá định dạng"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 5h12M12 5l-3 14M4 20l16-16"/></svg></button>
+            <button type="button" class="grow" id="fullBtn" title="Mở rộng khung soạn (Esc để thu lại)"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span id="fullT">Mở rộng</span></button>
             <input class="sr" type="file" accept="image/*" id="imgIn" multiple>
           </div>
           <div class="rte" id="rte" contenteditable="true" spellcheck="true" aria-label="Nội dung bài viết" data-ph="Dán nội dung từ Word / Google Docs vào đây, hoặc gõ trực tiếp.
@@ -325,9 +336,7 @@ Tiêu đề mục: dùng nút H2 (hoặc gõ ## ở đầu dòng). Hệ thống 
         </ul></details>
       </section>
 
-      <section class="card" aria-labelledby="lChk">
-        <div class="lab"><h3 id="lChk">Trước khi xuất bản</h3></div>
-        <ul class="check" id="check"></ul>
+      <section class="card">
         <button class="danger" type="button" id="delPost" hidden><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Gỡ bài này khỏi Học viện</button>
       </section>
     </div>
@@ -409,10 +418,10 @@ function fill(){$('#title').value=S.title;$('#slug').value=S.slug;$('#ex').value
   var src=coverURL||S.cover;$('#coverImg').hidden=!src;if(src)$('#coverImg').src=src;$('#drop').classList.toggle('has',!!src);drawTopics();exCount()}
 function drawTopics(){$('#topics').innerHTML=HV.TOPICS.map(function(t){var i=S.tags.indexOf(t);return '<button type="button" class="chip" aria-pressed="'+(i>=0)+'" data-t="'+HV.esc(t)+'">'+HV.esc(t)+(i===0?'<em>chính</em>':'')+'</button>'}).join('')}
 $('#topics').addEventListener('click',function(e){var b=e.target.closest('[data-t]');if(!b)return;var t=b.dataset.t,i=S.tags.indexOf(t);if(i>=0)S.tags.splice(i,1);else S.tags.push(t);drawTopics();changed()});
-$('#title').addEventListener('input',function(){S.title=this.value;if(!S.editing&&!S.slugTouched){S.slug=HV.slug(S.title);$('#slug').value=S.slug}changed()});
-$('#slug').addEventListener('input',function(){S.slugTouched=true;S.slug=HV.slug(this.value);changed()});
+['input','change','keyup','compositionend'].forEach(function(ev){$('#title').addEventListener(ev,function(){if(S.title===this.value)return;S.title=this.value;if(!S.editing&&!S.slugTouched){S.slug=HV.slug(S.title);$('#slug').value=S.slug}changed()})});
+$('#slug').addEventListener('input',function(){S.slugTouched=!!this.value.trim();S.slug=HV.slug(this.value.replace(/^\s*hoc-vien-/i,'').replace(/\.html\s*$/i,''));if(!S.slugTouched)S.slug=HV.slug(S.title);changed()});
 $('#slug').addEventListener('blur',function(){this.value=S.slug});
-$('#ex').addEventListener('input',function(){S.excerpt=this.value.replace(/\s+/g,' ').trim();exCount();changed()});
+['input','change','compositionend'].forEach(function(ev){$('#ex').addEventListener(ev,function(){S.excerpt=this.value.replace(/\s+/g,' ').trim();exCount();changed()})});
 $('#date').addEventListener('input',function(){S.date=this.value;changed()});
 $('#author').addEventListener('input',function(){S.author=this.value.trim()||'Farmblock Admin';changed()});
 function exCount(){var n=S.excerpt.length,e=$('#exN');e.textContent=n+' / 120–220 ký tự';e.className='cnt '+(n>=120&&n<=220?'ok':n?'warn':'')}
@@ -430,7 +439,7 @@ var dp=$('#drop');['dragenter','dragover'].forEach(function(t){dp.addEventListen
 dp.addEventListener('drop',function(e){setCover(e.dataTransfer.files[0])});
 
 /* ---------- trình soạn ---------- */
-function fig(src,alt,cap){return '<figure contenteditable="false"><img src="'+HV.esc(src)+'" alt="'+HV.esc(alt||'')+'"><figcaption contenteditable="true">'+HV.esc(cap||'')+'</figcaption></figure>'}
+function fig(src,alt,cap){return '<figure contenteditable="false"><button type="button" class="rm" title="Xoá ảnh" aria-label="Xoá ảnh">✕</button><img src="'+HV.esc(src)+'" alt="'+HV.esc(alt||'')+'"><figcaption contenteditable="true">'+HV.esc(cap||'')+'</figcaption></figure>'}
 function toEditor(blocks){return blocks.map(function(b){
   if(b.t==='h2'||b.t==='h3')return '<'+b.t+'>'+HV.clean(b.x)+'</'+b.t+'>';
   if(b.t==='ul'||b.t==='ol')return '<'+b.t+'>'+b.items.map(function(i){return '<li>'+HV.clean(i)+'</li>'}).join('')+'</'+b.t+'>';
@@ -460,10 +469,15 @@ rte.addEventListener('input',function(e){var sel=getSelection();if(sel.rangeCoun
     if(m[1]==='##')document.execCommand('formatBlock',false,'<h2>');else if(m[1]==='###')document.execCommand('formatBlock',false,'<h3>');else if(m[1]==='1.')document.execCommand('insertOrderedList');else document.execCommand('insertUnorderedList')}}}
   if(!rte.textContent.trim()&&!rte.querySelector('img'))rte.innerHTML='';changed()});
 document.execCommand('defaultParagraphSeparator',false,'p');
+rte.addEventListener('click',function(e){var b=e.target.closest('.rm');if(b){b.closest('figure').remove();changed()}});
+function setFull(on){var w=$('.wr');w.classList.toggle('full',on);$('#fullT').textContent=on?'Thu lại':'Mở rộng';document.body.style.overflow=on?'hidden':'';rte.focus()}
+$('#fullBtn').addEventListener('mousedown',function(e){e.preventDefault()});
+$('#fullBtn').addEventListener('click',function(){setFull(!$('.wr').classList.contains('full'))});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('.wr').classList.contains('full'))setFull(false)});
 
 /* ---------- phân tích + xem trước ---------- */
 var COL={def:'#7EBF3A',table:'#112615',steps:'#2F8FB5',roles:'#C98A12',note:'#E3A21A'};
-function post(){return {slug:S.slug||'bai-viet',title:S.title||'Tiêu đề bài viết',excerpt:S.excerpt||'Mô tả ngắn của bài sẽ hiện ở đây.',date:S.date||today(),tags:S.tags.length?S.tags:['Cơ bản'],author:S.author,off:S.off,cover:coverURL||S.cover||'img/acad-tuoi-tieu.webp',thumb:S.thumb,blocks:blocks()}}
+function post(pub){return {slug:S.slug||'bai-viet',title:S.title||(pub?'Bài viết chưa đặt tên':'Tiêu đề bài viết'),excerpt:S.excerpt||(pub?'':'Mô tả ngắn của bài sẽ hiện ở đây.'),date:S.date||today(),tags:S.tags.length?S.tags:['Cơ bản'],author:S.author,off:S.off,cover:coverURL||S.cover||(pub?'img/og-image.jpg':'img/acad-tuoi-tieu.webp'),thumb:S.thumb,blocks:blocks()}}
 var lastR=null;
 function analyse(){var p=post(),r=HV.render(p);lastR=r;
   $('#sToc').textContent=r.toc.length;$('#sMin').textContent=r.minutes;$('#sFx').textContent=r.found.filter(function(f){return S.off.indexOf(f.id)<0}).length;
@@ -472,10 +486,7 @@ function analyse(){var p=post(),r=HV.render(p);lastR=r;
   $('#tocMini').innerHTML=r.toc.map(function(t){return '<li>'+HV.esc(t.t)+'</li>'}).join('');
   checks(r);}
 $('#found').addEventListener('click',function(e){var b=e.target.closest('.sw');if(!b)return;var id=b.dataset.id,i=S.off.indexOf(id);if(i>=0)S.off.splice(i,1);else S.off.push(id);changed()});
-function checks(r){var L=[[!!(coverBlob||S.cover),'Có ảnh bìa'],[S.title.trim().length>=6,'Có tiêu đề'],[S.excerpt.length>=60,'Có mô tả ngắn'],[S.tags.length>0,'Đã chọn chủ đề'],[r.toc.length>=2,'Có ít nhất 2 tiêu đề mục (H2) để tạo Mục lục'],[!!S.slug&&!slugClash(),'Đường dẫn hợp lệ, không trùng bài khác']];
-  $('#check').innerHTML=L.map(function(x){return '<li class="'+(x[0]?'ok':'')+'">'+x[1]+'</li>'}).join('');
-  var ok=L.every(function(x){return x[0]});$('#pub').setAttribute('aria-disabled',!ok);$('#pub').dataset.ok=ok?'1':'';
-  var w=$('#slugW');if(slugClash()){w.hidden=false;w.textContent='Đã có bài dùng đường dẫn này. Hãy đổi đường dẫn, hoặc mở bài đó trong “Bài đã đăng” để sửa.'}else w.hidden=true}
+function checks(r){var w=$('#slugW');if(slugClash()){w.hidden=false;w.textContent='Đã có bài dùng đường dẫn này. Nếu xuất bản, bài cũ sẽ bị thay thế. Hãy đổi đường dẫn, hoặc mở bài đó trong “Bài đã đăng” để sửa.'}else w.hidden=true}
 function slugClash(){return !S.editing&&INDEX.some(function(p){return p.slug===S.slug})}
 var pvT,pvBusy=false;
 function preview(){clearTimeout(pvT);$('#pvL').classList.add('on');pvT=setTimeout(function(){if(!TPL)return;var y=0;try{y=pv.contentWindow.scrollY}catch(e){}
@@ -521,10 +532,10 @@ var STEPS=['Nén và chuẩn bị ảnh','Dựng trang bài, mục lục và ph�
 function progUI(title){$('#pubBox').innerHTML='<h2 id="hPub">'+HV.esc(title)+'</h2><p class="hint">Vui lòng giữ trang này mở trong lúc xuất bản.</p><ul class="prog">'+STEPS.map(function(s){return '<li><i></i>'+s+'</li>'}).join('')+'</ul><div class="msg" id="pubMsg"></div><div class="acts" id="pubActs"></div>';open('#dPub')}
 function step(i,st){var li=$$('.prog li');li.forEach(function(l,j){if(j<i)l.className='done';else if(j===i)l.className=st||'run'})}
 $('#pub').addEventListener('click',function(){
-  if(!$('#pub').dataset.ok){toast('Bài chưa đủ thông tin: xem mục “Trước khi xuất bản”.');$('#check').scrollIntoView({behavior:'smooth',block:'center'});return}
   if(!token()){$('#openSet').click();var m=$('#setMsg');m.className='msg on bad';m.textContent='Cần kết nối một lần trước khi xuất bản.';return}
-  publish()});
-function publish(){pubRunning=true;var slug=S.slug,ts=Date.now().toString(36),files=[],p=post();progUI(S.editing?'Đang cập nhật bài…':'Đang xuất bản bài mới…');step(0);
+  if(!S.slug)S.slug=HV.slug(S.title)||('bai-viet-'+Date.now().toString(36));
+  if(slugClash())ask('Thay thế bài đã có?','Đường dẫn “hoc-vien-'+S.slug+'.html” đang thuộc một bài khác. Xuất bản sẽ thay thế bài đó.','Vẫn xuất bản').then(publish);else publish()});
+function publish(){pubRunning=true;var slug=S.slug,ts=Date.now().toString(36),files=[],p=post(true);if(!coverBlob&&!S.cover){p.cover=p.thumb='img/og-image.jpg'}progUI(S.editing?'Đang cập nhật bài…':'Đang xuất bản bài mới…');step(0);
   /* 1. ảnh */
   var jobs=[],n=0;
   if(coverBlob){var cv='img/hv/'+slug+'-'+ts+'.webp',th='img/hv/'+slug+'-'+ts+'-s.webp';

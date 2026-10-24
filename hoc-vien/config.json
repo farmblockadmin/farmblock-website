@@ -1,0 +1,15 @@
+{
+ "site": "https://trungcien0120.github.io/farmblock-landing/",
+ "repo": "trungcien0120/farmblock-landing",
+ "branch": "main",
+ "pages": [
+  "",
+  "ve-chung-toi.html",
+  "mo-hinh.html",
+  "cong-nghe.html",
+  "bang-gia.html",
+  "bang-tin.html",
+  "bai-viet-so-tay-dai-ly.html",
+  "hoc-vien.html"
+ ]
+}

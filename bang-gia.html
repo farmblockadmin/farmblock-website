@@ -369,7 +369,7 @@ p{max-width:60ch;text-wrap:pretty}
 .fcols .c3 a{font-weight:600;color:#fff}
 .fbottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;margin-top:44px;font-size:1rem}
 @media (max-width:900px){.foot-top{display:block}.foot-top .bt{justify-content:flex-start;margin-top:24px}.fcols{grid-template-columns:1fr 1fr}.fcols>*{grid-column:auto!important}.fcols .c3{grid-column:1/-1!important}}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);z-index:300;background:var(--g800);color:#fff;padding:16px 22px;border-radius:16px;font-weight:500;transition:transform .45s var(--ease);max-width:calc(100% - 32px)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,calc(100% + 60px));z-index:300;background:var(--g800);color:#fff;padding:16px 22px;border-radius:16px;font-weight:500;transition:transform .45s var(--ease);max-width:calc(100% - 32px)}
 .toast.on{transform:translate(-50%,0)}
 .js .rv{opacity:0;transform:translateY(28px)}
 /* ---- mục Bảng giá trên thanh điều hướng (dùng chung 2 trang) ---- */
@@ -791,7 +791,7 @@ addEventListener('pageshow',function(e){if(e.persisted)R.classList.remove('fb-le
           <a class="it2" href="ve-chung-toi.html" data-page><img src="img/nav-about.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Về chúng tôi</b><span>Hành trình Farmblock</span></span></a>
           <a class="it2" href="mo-hinh.html" data-page><img src="img/nav-model.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Mô hình</b><span>Mạng lưới vườn Farmblock</span></span></a>
           <a class="it2" href="bang-tin.html" data-page><img src="img/nav-news.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Bảng tin</b><span>Tin tức Farmblock</span></span></a>
-          <span class="it2 soon" role="link" aria-disabled="true" tabindex="0"><img src="img/nav-academy.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Học viện<svg aria-hidden="true"><use href="#ext"/></svg></b><span class="s1">Khoá học nông nghiệp số</span><span class="s2">Sắp ra mắt</span></span></span>
+          <a class="it2" href="hoc-vien.html" data-page><img src="img/nav-academy.webp" width="240" height="240" alt="" loading="lazy" decoding="async"><span class="t"><b>Học viện</b><span>Khoá học nông nghiệp số</span></span></a>
         </div>
       </div>
     </div>
@@ -992,7 +992,7 @@ addEventListener('pageshow',function(e){if(e.persisted)R.classList.remove('fb-le
       <div class="bt"><a class="btn btn-lime" href="#top">Lên đầu trang</a></div>
     </div>
     <div class="fcols">
-      <nav class="c1" aria-label="Truy cập nhanh"><h4>Truy cập nhanh</h4><ul><li><a href="./" data-page>Trang chủ</a></li><li><a href="ve-chung-toi.html" data-page>Về chúng tôi</a></li><li><a href="mo-hinh.html" data-page>Mô hình vận hành</a></li><li><a href="cong-nghe.html" data-page>Công nghệ &amp; thiết bị</a></li><li><a href="#goi">Bảng giá dịch vụ</a></li><li><a href="bang-tin.html" data-page>Bảng tin Farmblock</a></li></ul></nav>
+      <nav class="c1" aria-label="Truy cập nhanh"><h4>Truy cập nhanh</h4><ul><li><a href="./" data-page>Trang chủ</a></li><li><a href="ve-chung-toi.html" data-page>Về chúng tôi</a></li><li><a href="mo-hinh.html" data-page>Mô hình vận hành</a></li><li><a href="cong-nghe.html" data-page>Công nghệ &amp; thiết bị</a></li><li><a href="#goi">Bảng giá dịch vụ</a></li><li><a href="bang-tin.html" data-page>Bảng tin Farmblock</a></li><li><a href="hoc-vien.html" data-page>Học viện Farmblock</a></li></ul></nav>
       <nav class="c2" aria-label="Chính sách"><h4>Chính sách &amp; Điều khoản</h4><ul><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Chính sách bảo mật</a></li><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Điều khoản sử dụng dịch vụ</a></li><li><a href="https://farmblock.vn/" target="_blank" rel="noopener">Câu hỏi thường gặp</a></li></ul></nav>
       <div class="c3"><h4>Thông tin</h4><p>Công ty Cổ phần Công nghệ Nông nghiệp Farmblock<br>Tầng 13, Tòa nhà NIC, Ngõ 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội</p><p>Điện thoại: <a href="tel:0354060029">0354 060 029</a></p><p>Email: <a href="mailto:contact@farmblock.ai">contact@farmblock.ai</a></p></div>
     </div>

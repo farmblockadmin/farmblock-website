@@ -1,0 +1,57 @@
+
+/* ================= HỌC VIỆN: phần tự làm nổi bật + thẻ bài ================= */
+.hv-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.prose .hv-def{position:relative;margin-top:.4em;padding:24px 26px 24px 28px;border-radius:22px;background:linear-gradient(135deg,#F1F9E7,#E4F3D3);box-shadow:inset 6px 0 0 #7EBF3A}
+.hv-def .hv-chip{background:#3A8047;color:#fff;margin-bottom:10px}
+.hv-def p{font-size:1.06em;color:#173A1F}
+.prose .hv-note{padding:22px 24px 22px 28px;border-radius:20px;background:#FDF3E3;box-shadow:inset 6px 0 0 #E3A21A}
+.hv-note .hv-chip{background:#E3A21A;color:#fff;margin-bottom:10px}
+.prose .hv-tbl{margin-top:1.8em;border-radius:22px;background:var(--paper,#F2F8EA);padding:20px 20px 8px}
+.hv-tbl-t{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-weight:600;color:var(--g700,#17331C);margin-bottom:12px}
+.hv-tbl-t .hv-chip{background:#112615;color:#B5E383}
+.hv-tbl-s{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px 12px}
+.hv-tbl table{width:100%;min-width:520px;border-collapse:separate;border-spacing:0 8px;font-size:.95em;line-height:1.55}
+.hv-tbl thead th{text-align:left;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted,#3D5845);padding:0 16px 2px}
+.hv-tbl tbody th,.hv-tbl tbody td{background:#fff;padding:14px 16px;vertical-align:top}
+.hv-tbl tbody th{width:32%;border-radius:14px 0 0 14px;text-align:left;font-weight:600;box-shadow:inset 4px 0 0 #7EBF3A}
+.hv-tbl tbody tr:nth-child(4n+2) th{box-shadow:inset 4px 0 0 #2F8FB5}
+.hv-tbl tbody tr:nth-child(4n+3) th{box-shadow:inset 4px 0 0 #E3A21A}
+.hv-tbl tbody tr:nth-child(4n+4) th{box-shadow:inset 4px 0 0 #E0602B}
+.hv-tbl tbody td{border-radius:0 14px 14px 0;color:#2A4232}
+.hv-tbl tbody th a{color:var(--g700,#17331C);text-decoration:none}
+.hv-tbl tbody th a:hover{text-decoration:underline;text-underline-offset:3px}
+.prose ol.hv-steps{list-style:none;display:grid;gap:12px;padding:0;margin-top:1.2em;counter-reset:none}
+.hv-steps li{position:relative;display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;padding:20px 22px;border-radius:20px;background:var(--sb)}
+.hv-steps .hv-n{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--sc);color:#fff;font-weight:700;font-size:1.1rem;box-shadow:0 8px 18px -10px var(--sc)}
+.hv-steps p{margin:0}
+.hv-s0{--sc:#3A8047;--sb:#F1F9E7}.hv-s1{--sc:#2F8FB5;--sb:#EAF5FA}.hv-s2{--sc:#C98A12;--sb:#FDF6E3}.hv-s3{--sc:#E0602B;--sb:#FDEEE6}
+.prose .hv-roles{display:grid;gap:12px;margin-top:1.2em}
+.hv-role{padding:20px 22px 22px;border-radius:20px;background:color-mix(in srgb,var(--rc) 8%,#fff);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--rc) 22%,transparent)}
+.hv-role-h{display:flex;align-items:center;gap:12px;font-weight:700;color:var(--rc);margin-bottom:8px!important;font-size:1.02em}
+.hv-role-i{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--rc);color:#fff;flex:none}
+.hv-role-i svg{width:22px;height:22px}
+.prose .hv-fig{margin:1.6em 0}
+.hv-fig img{width:100%;height:auto;border-radius:18px}
+.hv-fig figcaption{margin-top:8px;font-size:.9rem;color:var(--muted,#3D5845);text-align:center}
+.prose blockquote{padding:4px 0 4px 22px;border-left:4px solid #B5E383;font-size:1.1em;color:var(--g700,#17331C)}
+.hv-tag{display:inline-flex;align-items:center;min-height:30px;padding:0 12px;border-radius:999px;font-size:.875rem;font-weight:600;background:rgba(181,227,131,.16);color:#D3F0AE;box-shadow:inset 0 0 0 1px rgba(181,227,131,.35)}
+.ar-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.ar-ex{margin-top:18px;font-size:var(--fs-lead,1.2rem);color:var(--on-dark,#EEF6E6);max-width:62ch}
+
+/* thẻ bài */
+.hvc{display:flex;flex-direction:column;border-radius:24px;overflow:hidden;background:#fff;text-decoration:none;color:inherit;box-shadow:inset 0 0 0 1px rgba(58,128,71,.08);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s}
+.hvc:hover{transform:translateY(-6px);box-shadow:inset 0 0 0 1px rgba(58,128,71,.14),0 28px 44px -30px rgba(12,31,16,.55)}
+.hvc-img{aspect-ratio:16/9;overflow:hidden;background:#EEF4E8}
+.hvc-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.hvc:hover .hvc-img img{transform:scale(1.05)}
+.hvc-tx{display:flex;flex-direction:column;gap:10px;padding:20px 22px 22px;flex:1}
+.hvc-d{font-size:.9375rem;color:var(--muted,#3D5845);font-variant-numeric:tabular-nums}
+.hvc b{font-size:1.25rem;font-weight:600;line-height:1.25;color:var(--g800,#112615)}
+.hvc-tags{display:flex;flex-wrap:wrap;gap:6px}
+.hvc-tags i{font-style:normal;font-size:.8125rem;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--paper,#F2F8EA);color:var(--g500,#3A8047)}
+.hvc-ex{font-size:1rem;line-height:1.55;color:var(--muted,#3D5845);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.hvc-r{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--g500,#3A8047)}
+.hvc-r svg{width:18px;height:18px;transition:transform .35s}
+.hvc:hover .hvc-r svg{transform:translateX(4px)}
+.ar-grid>*,.prose{min-width:0}
+@media (max-width:640px){.hv-tbl table{min-width:0}.hv-tbl thead{display:none}.hv-tbl tbody tr{display:block;margin-bottom:10px}.hv-tbl tbody th,.hv-tbl tbody td{display:block;width:auto}.hv-tbl tbody th{border-radius:14px 14px 0 0;padding-bottom:4px}.hv-tbl tbody td{border-radius:0 0 14px 14px;padding-top:4px}.hv-tbl table{border-spacing:0}.hv-tbl tbody tr:nth-child(4n+1) td{box-shadow:inset 4px 0 0 #7EBF3A}.hv-tbl tbody tr:nth-child(4n+2) td{box-shadow:inset 4px 0 0 #2F8FB5}.hv-tbl tbody tr:nth-child(4n+3) td{box-shadow:inset 4px 0 0 #E3A21A}.hv-tbl tbody tr:nth-child(4n+4) td{box-shadow:inset 4px 0 0 #E0602B}.hv-steps li{grid-template-columns:36px 1fr;gap:12px;padding:16px}.hv-steps .hv-n{width:36px;height:36px;border-radius:11px}.prose .hv-tbl{padding:16px 14px 6px}}

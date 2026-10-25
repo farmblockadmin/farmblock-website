@@ -1,0 +1,103 @@
+name: Don file JSON thua o thu muc goc
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  don:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xoa dung 82 file JSON bai viet nam sai cho (chi o thu muc goc)
+        run: |
+          n=0
+          for s in \
+            anh-huong-cua-do-nen-dat-den-kha-nang-hap-thu-nuoc-cua-cay-trong \
+            anh-huong-cua-he-thong-doc-canh-den-chat-luong-dat-nhu-the-nao \
+            anh-huong-cua-ph-den-kha-nang-hap-thu-dinh-duong-cua-cay-trong \
+            bon-goc-la-gi \
+            bon-phan-can-doi-la-gi \
+            cac-phuong-phap-cai-tao-dat-chua \
+            cac-phuong-phap-danh-gia-chat-luong-vat-ly-cua-dat-trong-canh-tac \
+            carbon-huu-co-trong-dat-la-gi \
+            cau-truc-dat-la-gi \
+            cay-chan-gio-co-vai-tro-gi-trong-canh-tac-cay-cong-nghiep-lau-nam \
+            cay-che-bong-co-vai-tro-gi-trong-canh-tac-cay-cong-nghiep-lau-nam \
+            cay-hang-nam-va-cay-lau-nam-khac-nhau-the-nao \
+            cay-thieu-nuoc-co-bieu-hien-gi \
+            cec-la-gi \
+            cec-va-kha-nang-giu-dinh-duong-cua-dat \
+            chat-huu-co-trong-dat-la-gi \
+            chat-luong-nong-san-duoc-danh-gia-nhu-the-nao \
+            chu-ky-cay-trong-la-gi \
+            da-dang-sinh-hoc-trong-nong-nghiep-la-gi \
+            dam-co-vai-tro-gi-doi-voi-cay-trong \
+            dat-bazan-la-gi \
+            dat-cat-dat-thit-va-dat-set-khac-nhau-nhu-the-nao \
+            dat-chua-la-gi \
+            dat-duoc-hinh-thanh-nhu-the-nao \
+            dat-la-gi \
+            diem-heo-la-gi \
+            dinh-duong-cay-trong-la-gi \
+            do-am-dat-la-gi \
+            do-am-khong-khi-la-gi \
+            do-man-cua-dat-la-gi \
+            do-nen-cua-dat-la-gi \
+            do-phi-nhieu-cua-dat-la-gi \
+            do-sau-tang-dat-anh-huong-den-cay-trong-nhu-the-nao \
+            do-toi-xop-cua-dat-la-gi \
+            doc-canh-la-gi \
+            ec-la-gi \
+            giai-phap-phuc-hoi-dat-nong-nghiep-suy-thoai \
+            giun-dat-co-vai-tro-gi-trong-canh-tac-nong-nghiep \
+            he-sinh-thai-nong-nghiep-la-gi \
+            he-vi-sinh-vat-vung-re-la-gi \
+            kali-co-vai-tro-gi-doi-voi-cay-trong \
+            kha-nang-giu-nuoc-cua-dat-la-gi \
+            kha-nang-giu-nuoc-dong-ruong-la-gi \
+            kha-nang-thoat-nuoc-cua-dat-la-gi \
+            kim-loai-nang-trong-dat-la-gi \
+            lan-co-vai-tro-gi-doi-voi-cay-trong \
+            luan-canh-la-gi \
+            moi-quan-he-giua-cau-truc-dat-va-su-phat-trien-cua-bo-re-cay-trong \
+            moi-quan-he-giua-ec-do-man-va-stress-tham-thau-o-cay-trong \
+            moi-quan-he-giua-vi-khi-hau-va-sinh-truong-cay-trong-la-gi \
+            mua-vu-la-gi \
+            mun-dat-la-gi \
+            nam-co-loi-trong-dat-la-gi \
+            nang-suat-la-gi \
+            nhung-yeu-to-quyet-dinh-nang-suat-cua-mot-vung-trong-la-gi \
+            nong-hoc-la-gi \
+            nong-nghiep-truyen-thong-va-hien-dai-khac-nhau-ra-sao \
+            npk-la-gi \
+            nuoc-co-vai-tro-gi-doi-voi-cay-trong \
+            ph-dat-la-gi \
+            phan-bon-la-la-gi \
+            phan-bon-tan-cham-la-gi \
+            phan-huu-co-la-gi \
+            phan-vi-sinh-la-gi \
+            san-luong-la-gi \
+            stress-nuoc-la-gi \
+            su-phat-trien-cua-cac-he-thong-canh-tac-hien-dai \
+            suy-thoai-dat-tai-cac-vung-canh-tac-lau-nam \
+            thanh-phan-co-gioi-cua-dat-la-gi \
+            thiet-ke-he-thong-xen-canh-cho-cay-lau-nam \
+            thieu-dinh-duong-duoc-nhan-biet-nhu-the-nao \
+            trung-luong-la-gi \
+            tu-canh-tac-dua-tren-kinh-nghiem-den-canh-tac-dua-tren-du-lieu \
+            vai-tro-cua-da-dang-sinh-hoc-trong-kha-nang-chong-chiu-cua-vung-trong \
+            vi-khi-hau-la-gi \
+            vi-luong-la-gi \
+            vi-sao-cung-mot-giong-cay-nhung-nang-suat-giua-cac-vung-khac-nhau \
+            vi-sinh-vat-dat-la-gi \
+            voi-nong-nghiep-co-tac-dung-gi \
+            vung-trong-la-gi \
+            xen-canh-la-gi \
+            xoi-mon-dat-la-gi
+          do
+            if [ -f "$s.json" ]; then git rm -q "$s.json"; n=$((n+1)); fi
+          done
+          echo "Da xoa $n file"
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git commit -m "Don file JSON thua o thu muc goc" || echo "Khong co gi de xoa"
+          git push

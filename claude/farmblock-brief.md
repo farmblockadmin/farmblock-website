@@ -171,7 +171,7 @@ Tầng 13, Tòa nhà NIC, Ngõ 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội �
 - Nguồn chuẩn là file trong bản xem thử tổng AAWnazEHVQM6rmvMDmgkg6 (đã gồm menu mới và chữ "Farmblock"). Các script `build.py`/`patch*.py` chỉ có trong phiên 23/10, phiên mới không dùng được; luồng nào cũng sửa thẳng trên file đọc từ artifact.
 - Đọc file này trước; chỉ mở Figma/PDF khi được yêu cầu, chỉ đúng phần cần.
 - Sửa nhỏ, mỗi vòng chụp kiểm tra 1920px + 430px; không viết lại cả trang khi không cần.
-- Sau mỗi vòng: build → cập nhật artifact → **gửi chủ dự án xem và hỏi ý kiến** → chỉ commit + push GitHub khi được đồng ý → cập nhật file này.
+- (Từ 28/10) Sau mỗi vòng: sửa → tự kiểm tra 1920px + 430px → commit + push thẳng repo farmblock-website (không cần hỏi) → báo link cho chủ dự án → cập nhật file này.
 - Không ghi Claude là tác giả trong commit hay bất cứ thứ gì công khai.
 
 ## Vòng 19 – Học viện (Academy) + trang Soạn bài (24/10/2026, CHƯA push, chờ duyệt)

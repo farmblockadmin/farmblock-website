@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /soan-bai.html
-Sitemap: https://trungcien0120.github.io/farmblock-landing/sitemap.xml
+Sitemap: https://farmblockadmin.github.io/Farmblock-Website/sitemap.xml

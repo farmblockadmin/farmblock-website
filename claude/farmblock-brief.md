@@ -2,9 +2,9 @@
 _Cập nhật: 28/10/2026, chuyển sang repo mới
 
 ## TỪ 28/10/2026: CHỈ DÙNG REPO MỚI
-- **Repo duy nhất:** https://github.com/farmblockadmin/Farmblock-Website (public, nhánh main). Commit đứng tên farmblockadmin <farmblockadmin@gmail.com>, **không** có dòng Co-Authored-By/Claude.
-- **Web chạy thật:** https://farmblockadmin.github.io/Farmblock-Website/ (GitHub Pages). Mọi canonical/og/sitemap/robots và `hoc-vien/config.json` (site + repo) đã đổi sang địa chỉ này.
-- Trang Soạn bài đăng bài vào repo mới (đọc `repo` trong `hoc-vien/config.json`); người viết cần fine-grained token của tài khoản farmblockadmin, chỉ repo Farmblock-Website, Contents: Read and write.
+- **Repo duy nhất:** https://github.com/farmblockadmin/farmblock-website (public, nhánh main). Commit đứng tên farmblockadmin <farmblockadmin@gmail.com>, **không** có dòng Co-Authored-By/Claude.
+- **Web chạy thật:** https://farmblockadmin.github.io/farmblock-website/ (GitHub Pages). Mọi canonical/og/sitemap/robots và `hoc-vien/config.json` (site + repo) đã đổi sang địa chỉ này.
+- Trang Soạn bài đăng bài vào repo mới (đọc `repo` trong `hoc-vien/config.json`); người viết cần fine-grained token của tài khoản farmblockadmin, chỉ repo farmblock-website, Contents: Read and write.
 - Repo cũ `trungcien0120/farmblock-landing` và web cũ trungcien0120.github.io/farmblock-landing **không dùng nữa** (để nguyên, không push vào). Mọi chỗ bên dưới nhắc repo/web cũ là lịch sử.
 - Ghi chú dự án nằm trong repo: `claude/farmblock-brief.md`, `claude/chuyen-86-bai-hoc-vien.md`. Máy làm việc: bản clone ở `D:\Source\farmblock-landing-repo`.
 - Trước khi sửa: luôn `git pull` (người viết có thể vừa đăng bài qua Soạn bài).

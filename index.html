@@ -139,7 +139,8 @@ p{max-width:60ch;text-wrap:pretty}
 .hero-copy{position:absolute;left:0;right:0;bottom:clamp(36px,8vh,88px);z-index:3;pointer-events:none}
 .hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
 .hero-grid .l{grid-column:1/8;min-width:0}
-.hero-copy h1{font-size:clamp(2.5rem,4.1vw,4.1rem)}
+.hero-copy h1{font-size:clamp(2.5rem,3.95vw,3.95rem)}
+.br-m{display:none}@media (max-width:860px){.br-m{display:inline}.br-d{display:none}}
 @media (min-width:861px){.nw-d{white-space:nowrap}}
 .hero-grid .r{grid-column:8/13;padding-left:24px}
 .hero-copy h1{color:#fff}
@@ -710,7 +711,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
     <div class="wrap hero-grid">
       <div class="l">
         <span class="hero-kick hx">Doanh nghiệp công nghệ nông nghiệp</span>
-        <h1 id="h1" class="hx"><span class="nw-d">Kiến tạo hạ tầng</span><br><span class="nw-d"><span class="grad">vận hành mới</span> cho</span><br><span class="nw-d">nông nghiệp <span class="nw">Việt Nam</span></span></h1>
+        <h1 id="h1" class="hx"><span class="nw-d">Kiến tạo hạ tầng</span><br>vận hành mới<br class="br-m"> cho<br class="br-d"> <span class="grad nw-d">nông nghiệp<br class="br-m"> Việt Nam</span></h1>
       </div>
       <div class="r">
         <p class="sub hx">Farmblock phát triển theo định hướng khoa học công nghệ: nghiên cứu, xây dựng và vận hành bộ công nghệ giúp mỗi vùng trồng làm việc có dữ liệu. Bắt đầu từ cà phê Gia Lai, khoảng 40 ha tại Mang Yang và Chư Pưh, hướng tới nhiều vùng trồng trên khắp Việt Nam.</p>

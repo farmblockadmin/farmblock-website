@@ -176,7 +176,7 @@ Hướng: 2D + 3D storytelling (Three.js r128), chuyển động mượt (GSAP 3
 - Phần mềm: Dashboard (chuyên gia & chủ đất) · Sổ rẫy (giọng nói, chụp ảnh khám lá/đất bằng AI, hồ sơ theo vườn/khu/thời gian).
 
 ## Liên hệ
-Tầng 13, Tòa nhà NIC, Ngõ 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội · 0354 060 029 · contact@farmblock.ai.
+Tầng 13, Tòa nhà NIC, Ngõ 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội · 0354 060 029 · contact@farmblock.vn.
 
 ## Quy tắc làm việc
 - 23/10 22:26: chủ dự án xóa các chat cũ (landing redesign, subpage, pricing). Các artifact cũ UrhMxa…, Xk2QS…, Fgq51… có thể không còn; mọi thứ đã nằm trong bản xem thử tổng AAWnazEHVQM6rmvMDmgkg6 (đủ 4 trang + 67 ảnh/video) và repo GitHub.
@@ -200,7 +200,7 @@ Tầng 13, Tòa nhà NIC, Ngõ 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội �
 
 ## Vòng 20 (24/10, đã push 91da726)
 - Nền hero Học viện mới (quả cầu sáng + vòng sóng lan, vệt sáng trên/dưới), khác Bảng tin.
-- Ảnh nhỏ trong menu = ảnh chụp hero từng trang (img/nav-*-h.webp, 68×50). Nút Hotline 0354 060 029 + Email contact@farmblock.ai dưới 5 mục, đáy khớp với 2 thẻ lớn; bấm = gọi/gửi thư + tự sao chép (máy tính: chỉ sao chép số).
+- Ảnh nhỏ trong menu = ảnh chụp hero từng trang (img/nav-*-h.webp, 68×50). Nút Hotline 0354 060 029 + Email contact@farmblock.vn dưới 5 mục, đáy khớp với 2 thẻ lớn; bấm = gọi/gửi thư + tự sao chép (máy tính: chỉ sao chép số).
 - Trang chinh-sach-bao-mat.html (cs_build.py từ khuôn bài Học viện + cs/text.md, chữ gốc, 15 mục). Chân trang: Chính sách bảo mật → trang mới; Điều khoản + Câu hỏi thường gặp → hover hiện "Sắp ra mắt", không đổi màu/gạch chân.
 - Script: site_patch.py (menu/chân trang cho 7 trang gốc) → hv_build.py → hv_posts.js (dựng lại cả bài người viết đăng từ hoc-vien/bai/*.json) → cs_build.py.
 - QUAN TRỌNG: người viết đăng bài thẳng lên repo qua trang Soạn bài → luôn git pull + chép hoc-vien/bai, img/hv về out/ trước khi build & push, nếu không sẽ xoá mất bài.

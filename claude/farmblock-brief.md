@@ -1,6 +1,12 @@
 # FarmBlock website – tóm tắt dự án (đọc file này thay vì đọc lại Figma/PDF)
 _Cập nhật: 28/10/2026, chuyển sang repo mới
 
+## Vòng 24 (30/10/2026) — sửa theo rà soát nội dung
+- Thống nhất tên: "Ia Ko" (bỏ "IaKo #01", "vườn mẫu IaKo" → "vườn Ia Ko"), "Sổ Rẫy", tên pháp lý chân trang "Công ty Cổ phần Công nghệ Nông nghiệp FarmBlock" (thương hiệu trong bài vẫn "Farmblock"). Menu: "Xem vườn trực tuyến". Địa chỉ giữ "Số 7".
+- Bỏ ngôn ngữ đầu tư: câu kết "Tối ưu đầu tư." → "Minh bạch từng khu trồng."; thẻ "Nhà đầu tư" (trang chủ) → "Chủ khu trồng"; Mô hình, Chính sách, Sổ tay đại lý (kèm sửa lỗi chữ, "Handbook" → "Sổ tay").
+- Học viện: sửa 32 bài (ngôn ngữ đầu tư, kiến thức sai, thiếu tiêu đề "Ý nghĩa…"). Dựng lại trang bài bằng `HV.page(_mau.html, bai/<slug>.json, site)` của `hoc-vien/hv.js` (cho kết quả giống từng ký tự với trang đang chạy) — sửa JSON/khuôn rồi dựng lại cả 86 bài.
+- Chưa sửa (chủ dự án dặn để sau): số thiết bị, đối tác quốc tế, câu Sổ Rẫy/AI, Mốc 1 2025, trang Bảng giá phần "một năm ở Ia Ko", ảnh tiêu/sầu riêng/robot. Chưa chuyển farmblock.vn.
+
 ## TỪ 28/10/2026: CHỈ DÙNG REPO MỚI
 - **Repo duy nhất:** https://github.com/farmblockadmin/farmblock-website (public, nhánh main). Commit đứng tên farmblockadmin <farmblockadmin@gmail.com>, **không** có dòng Co-Authored-By/Claude.
 - **Web chạy thật:** https://farmblockadmin.github.io/farmblock-website/ (GitHub Pages). Mọi canonical/og/sitemap/robots và `hoc-vien/config.json` (site + repo) đã đổi sang địa chỉ này.

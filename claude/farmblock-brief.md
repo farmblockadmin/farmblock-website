@@ -1,6 +1,13 @@
 # FarmBlock website – tóm tắt dự án (đọc file này thay vì đọc lại Figma/PDF)
 _Cập nhật: 28/10/2026, chuyển sang repo mới
 
+## Vòng 25 (30/10/2026) — định vị "doanh nghiệp công nghệ nông nghiệp"
+- Câu định vị (CHƯA có giấy chứng nhận DN KH&CN nên KHÔNG viết "doanh nghiệp khoa học và công nghệ"): "Doanh nghiệp công nghệ nông nghiệp, phát triển theo định hướng khoa học công nghệ". Sứ mệnh: "Đưa khoa học và dữ liệu vào từng vùng trồng, để người nông dân Việt Nam làm nhẹ hơn, ghi chép rõ hơn và nông sản Việt đi xa hơn."
+- Trang chủ: nhãn hero "Doanh nghiệp công nghệ nông nghiệp", tiêu đề "Kiến tạo hạ tầng vận hành mới cho nông nghiệp Việt Nam" (3 dòng, cỡ chữ 4.1vw/4.1rem); khối mới "Ba việc Farmblock làm, nối thành một vòng" (.pillars.loop) trước lộ trình; 3 thẻ đóng góp dựa trên bằng chứng (Sổ Rẫy miễn phí, chia sẻ kiến thức + tập huấn 04–05/11 — đổi sang thì quá khứ sau 05/11, hồ sơ vùng trồng); khối Niềm tin = ghi nhận thật + 40 ha / 22 ha.
+- Chân trang mọi trang + khuôn Học viện: dòng `.fpos` câu định vị dưới tên công ty. Giữ tên "Ia Ko" (chủ dự án không muốn "Vùng trồng 01").
+- Bảng tin: 2 bài mới (bai-viet-tap-huan-khuyen-nong-ia-ko.html, bai-viet-vuon-ia-ko.html), dựng từ khung bài Sổ tay đại lý; ảnh bìa cắt từ air-low / air-high2.
+- Sổ Rẫy hoàn toàn miễn phí (đã ghi trên trang chủ). Mốc 2028 · 200 ha tạm giữ.
+
 ## Vòng 24 (30/10/2026) — sửa theo rà soát nội dung
 - Thống nhất tên: "Ia Ko" (bỏ "IaKo #01", "vườn mẫu IaKo" → "vườn Ia Ko"), "Sổ Rẫy", tên pháp lý chân trang "Công ty Cổ phần Công nghệ Nông nghiệp FarmBlock" (thương hiệu trong bài vẫn "Farmblock"). Menu: "Xem vườn trực tuyến". Địa chỉ giữ "Số 7".
 - Bỏ ngôn ngữ đầu tư: câu kết "Tối ưu đầu tư." → "Minh bạch từng khu trồng."; thẻ "Nhà đầu tư" (trang chủ) → "Chủ khu trồng"; Mô hình, Chính sách, Sổ tay đại lý (kèm sửa lỗi chữ, "Handbook" → "Sổ tay").

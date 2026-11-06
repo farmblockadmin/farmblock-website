@@ -104,8 +104,8 @@
     return {
       lake: dirs(D.lake),
       zones: D.zones.map(z => {
-        const c = areaC(z.ring), tr = T && T.rings[z.id]; // cảnh 3D: ranh dò theo mép vùng dựng 3D trong ảnh
-        return { id: z.id, rgb: C.zones[z.id].rgb, pts: tr ? tr.map(uvd) : dirs(z.ring), c, cDir: tr ? uvd(T.centers[z.id]) : geoDir(sc, c[0], c[1]) };
+        const dry = sc.dry && z.id === 'B1' && T && T.b1Dry, c = areaC(z.ring), tr = dry ? dry.ring : T && T.rings[z.id]; // cảnh 3D: ranh dò theo mép vùng dựng 3D trong ảnh
+        return { id: z.id, rgb: C.zones[z.id].rgb, pts: tr ? tr.map(uvd) : dirs(z.ring), c, cDir: tr ? uvd(dry ? dry.center : T.centers[z.id]) : geoDir(sc, c[0], c[1]) };
       })
     };
   }
@@ -121,7 +121,7 @@
       { t: b.kicker.toUpperCase(), f: `500 30px ${FONT}`, ls: 6, h: 22, gap: 0, c: 'rgba(211,240,174,.85)' },
       { t: 'FARMBLOCK', f: `600 92px ${FONT}`, ls: 10, h: 66, gap: 24, c: '#fff' },
       { t: b.title, f: `600 66px ${FONT}`, ls: 0, h: 48, gap: 26, c: 'grad' },
-      { t: b.tag, f: `400 32px ${FONT}`, ls: 0, h: 24, gap: 26, c: 'rgba(255,255,255,.78)' }];
+      b.tag && { t: b.tag, f: `400 32px ${FONT}`, ls: 0, h: 24, gap: 26, c: 'rgba(255,255,255,.78)' }].filter(Boolean);
     const cv = document.createElement('canvas'); let g = cv.getContext('2d');
     const spc = v => { if ('letterSpacing' in g) g.letterSpacing = v + 'px'; };
     let tw = 0; L.forEach(l => { g.font = l.f; spc(l.ls); tw = Math.max(tw, g.measureText(l.t).width - l.ls); });

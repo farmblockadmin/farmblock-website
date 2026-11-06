@@ -4,7 +4,7 @@ window.FB360 = {
   // Ảnh drone thật: GPS, độ cao so với điểm cất cánh và hướng gimbal đọc trong XMP của ảnh DJI.
   // devices: có hiện điểm thiết bị không (tháng 4 chưa lắp gì). fov: góc nhìn lúc mở cảnh.
   scenes: [
-    { id: '0408', src: 'pano/0408', thumb: 'pano/thumb-0408.webp', label: 'Tháng 4', short: 'Tháng 4', date: '08/04/2026', lat: -251.9, lon: 44.3, h: 417.7, yaw: 99.1, fov: 104, tilt: [4, -2], devices: false, trace: true,
+    { id: '0408', src: 'pano/0408', thumb: 'pano/thumb-0408.webp', label: 'Tháng 4', short: 'Tháng 4', date: '08/04/2026', lat: -251.9, lon: 44.3, h: 417.7, yaw: 99.1, fov: 104, tilt: [4, -2], devices: false, trace: true, dry: true, // tháng 4 chưa đào hồ: ranh B1 không khoét chỗ hồ
       meta: 'Bay cao 418 m', sub: 'Đất mới khai hoang, chưa đào hồ, chưa trồng. Góc nhìn rộng nhất, thấy cả vùng xung quanh.' },
     { id: '0711', src: 'pano/0711', thumb: 'pano/thumb-0711.webp', label: 'Tháng 7, trên hồ', short: 'Th.7 hồ', date: '11/07/2026', lat: -118, lon: -97.8, h: 195.3, yaw: 180.5, fov: 98, tilt: [8, -4], devices: true,
       meta: 'Bay 195 m, ngay trên hồ', sub: 'Vườn vừa trồng xong, nhìn thẳng xuống hồ trữ nước và Nhà điều hành.' },
@@ -15,7 +15,7 @@ window.FB360 = {
       meta: 'Phối cảnh 3D trên ảnh drone 08/04/2026', sub: 'Vườn Ia Ko theo quy hoạch, dựng 3D trên ảnh drone thật.' }
   ],
   // biển chào mừng đặt phía bắc vườn, cạnh đường vào
-  board: { kicker: 'Chào mừng đến', title: 'Vườn cà phê Ia Ko', tag: 'Tiên phong số hoá tài sản nông nghiệp' },
+  board: { kicker: 'Chào mừng đến', title: 'Vườn cà phê Ia Ko' },
   notice: 'Hình minh hoạ quy hoạch dự kiến, không phải trạng thái thực tế của khu vườn',
   defaultScene: '0713',
 

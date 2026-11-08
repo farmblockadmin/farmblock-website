@@ -449,6 +449,7 @@ b.kw{font-weight:600;color:var(--g500)}
 .pil .pi{width:48px;height:48px;color:var(--lime);margin-bottom:16px}
 .pil h3{color:#fff;font-size:1.3rem;margin-bottom:10px}
 .pil p{font-size:1.0625rem;color:var(--on-dark)}
+.pil-a{color:var(--lime);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .fu-cta{display:flex;justify-content:center;margin-top:44px}
 @media (max-width:980px){
   .road{grid-template-columns:1fr;gap:28px;padding-left:76px}
@@ -872,7 +873,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
     <div class="fu-head rv"><h3>Farmblock đóng góp gì cho nông nghiệp Việt Nam?</h3></div>
     <div class="pillars">
       <article class="pil rv"><svg class="pi" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="15" y="5" width="18" height="38" rx="4"/><path d="M21 37h6"/><path d="M24 13v12M19 20a5 5 0 0 0 10 0"/></g></svg><h3>Sổ Rẫy miễn phí cho bà con</h3><p>Kể việc bằng giọng nói là thành nhật ký, có cả chi phí và vật tư. Nhật ký đủ thì thành hồ sơ nộp xã, sổ VietGAP. Hoàn toàn miễn phí.</p></article>
-      <article class="pil rv"><svg class="pi" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 12c-4-3-10-4-17-3v29c7-1 13 0 17 3 4-3 10-4 17-3V9c-7-1-13 0-17 3z"/><path d="M24 12v29"/></g></svg><h3>Chia sẻ kiến thức</h3><p>Học viện Farmblock mở 86 bài kiến thức nông học. Ngày 04–05/11/2026, Farmblock sẽ chia sẻ chuyên đề IoT và AI với cán bộ khuyến nông Gia Lai, trong chương trình do Trung tâm Khuyến nông Quốc gia chủ trì.</p></article>
+      <article class="pil rv"><svg class="pi" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 12c-4-3-10-4-17-3v29c7-1 13 0 17 3 4-3 10-4 17-3V9c-7-1-13 0-17 3z"/><path d="M24 12v29"/></g></svg><h3>Chia sẻ kiến thức</h3><p>Học viện Farmblock mở 86 bài kiến thức nông học. Ngày 04–05/11/2026, Farmblock đã chia sẻ tại lớp tập huấn do Trung tâm Khuyến nông Quốc gia chủ trì ở Gia Lai và đón đoàn tham quan vườn Ia Ko. <a class="pil-a" href="bai-viet-recap-tap-huan-gia-lai-04-05-11.html">Xem lại hai ngày ở Gia Lai</a></p></article>
       <article class="pil rv"><svg class="pi" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="11" rx="14" ry="5"/><path d="M10 11v13c0 2.8 6.3 5 14 5s14-2.2 14-5V11"/><path d="M10 24v13c0 2.8 6.3 5 14 5s14-2.2 14-5V24"/></g></svg><h3>Hồ sơ vùng trồng minh bạch</h3><p>Nhật ký theo từng khu, có người ghi và người duyệt, làm nền cho mã số vùng trồng, truy xuất nguồn gốc và yêu cầu EUDR của thị trường châu Âu.</p></article>
     </div>
     <div class="fu-cta rv"><a class="btn btn-lime" href="#doi-tac">Cùng Farmblock mở rộng mô hình<svg aria-hidden="true"><use href="#arr"/></svg></a></div>
@@ -1079,7 +1080,7 @@ var LAY=[
   {k:'soil',name:'Đất',col:'#A65A2B',n:9,t:'9 cảm biến đất',p:'Mỗi khu canh tác có ít nhất một cảm biến, đầu dò đặt ở vùng rễ. Đo độ ẩm, nhiệt độ, pH, EC và N, P, K để biết khi nào cần tưới, cần bón.',s:'Độ ẩm 0–100% (±3%) · pH 3–9 (±0,3) · NPK 0–1.999 mg/kg'},
   {k:'water',name:'Nước',col:'#2F8FB5',n:2,t:'2 cảm biến nước',p:'Đặt tại hồ trữ nước, theo dõi nhiệt độ, pH và EC trước khi tưới và châm phân. Khi có bất thường, kỹ sư lấy mẫu kiểm tra lại.',s:'pH 0–14 (±0,1) · EC 1–2.000 µS/cm (±1%)'},
   {k:'weather',name:'Trời',col:'#E3A21A',n:1,t:'1 trạm thời tiết',p:'Đặt tại nhà điều hành, giữa trung tâm vườn: gió, mưa, nhiệt độ, độ ẩm, áp suất, ánh sáng. Pin mặt trời cấp điện cho thiết bị ở điểm xa.',s:'Giúp chỉnh lịch tưới và chọn giờ làm việc ngoài vườn'},
-  {k:'cam',name:'Camera',col:'#5B6770',n:22,t:'22 camera quan sát',p:'Quan sát khu trồng và khu vận hành suốt ngày đêm, đối chiếu hình ảnh với số liệu cảm biến, hỗ trợ kiểm tra từ xa.',s:'Giám sát 24/7 · xoay 360° · điện mặt trời · loa cảnh báo'},
+  {k:'cam',name:'Camera',col:'#5B6770',n:22,t:'22 vị trí camera',p:'Quan sát khu trồng và khu vận hành suốt ngày đêm, đối chiếu hình ảnh với số liệu cảm biến, hỗ trợ kiểm tra từ xa.',s:'Giám sát 24/7 · xoay 360° · điện mặt trời · loa cảnh báo'},
   {k:'iot',name:'Kết nối',col:'#3A8047',n:1,t:'LoRa → Trạm IoT → Cloud',p:'Dữ liệu từ mọi thiết bị truyền không dây về trạm IoT tại nhà điều hành, rồi lên nền tảng Farmblock để kỹ sư xem trên Dashboard.',s:'Màu trạng thái cho biết khu nào cần kiểm tra trước'}
 ];
 LAY[0].t='22 ha · 138 lô · 34 thiết bị';LAY[0].p='Thôn Cây Xoài, xã Ia Ko, tỉnh Gia Lai. Xen canh cà phê Thiện Trường với cau, 2.200 gốc mỗi ha. Có nhà điều hành và hồ trữ nước.';LAY[0].s='Bấm từng nhóm bên dưới để làm nổi bật trên bản đồ';

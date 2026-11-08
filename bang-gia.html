@@ -1167,7 +1167,7 @@ var LAY=[
   {k:'soil',name:'Đất',col:'#A65A2B',n:9,t:'9 cảm biến đất',p:'Mỗi khu canh tác có ít nhất một cảm biến, đầu dò đặt ở vùng rễ. Đo độ ẩm, nhiệt độ, pH, EC và N, P, K để biết khi nào cần tưới, cần bón.',s:'Độ ẩm 0–100% (±3%) · pH 3–9 (±0,3) · NPK 0–1.999 mg/kg'},
   {k:'water',name:'Nước',col:'#2F8FB5',n:2,t:'2 cảm biến nước',p:'Đặt tại hồ trữ nước, theo dõi nhiệt độ, pH và EC trước khi tưới và châm phân. Khi có bất thường, kỹ sư lấy mẫu kiểm tra lại.',s:'pH 0–14 (±0,1) · EC 1–2.000 µS/cm (±1%)'},
   {k:'weather',name:'Trời',col:'#E3A21A',n:1,t:'1 trạm thời tiết',p:'Đặt tại nhà điều hành, giữa trung tâm vườn: gió, mưa, nhiệt độ, độ ẩm, áp suất, ánh sáng. Pin mặt trời cấp điện cho thiết bị ở điểm xa.',s:'Giúp chỉnh lịch tưới và chọn giờ làm việc ngoài vườn'},
-  {k:'cam',name:'Camera',col:'#5B6770',n:22,t:'22 camera quan sát',p:'Quan sát khu trồng và khu vận hành suốt ngày đêm, đối chiếu hình ảnh với số liệu cảm biến, hỗ trợ kiểm tra từ xa.',s:'Giám sát 24/7 · xoay 360° · điện mặt trời · loa cảnh báo'},
+  {k:'cam',name:'Camera',col:'#5B6770',n:22,t:'22 vị trí camera',p:'Quan sát khu trồng và khu vận hành suốt ngày đêm, đối chiếu hình ảnh với số liệu cảm biến, hỗ trợ kiểm tra từ xa.',s:'Giám sát 24/7 · xoay 360° · điện mặt trời · loa cảnh báo'},
   {k:'iot',name:'Kết nối',col:'#3A8047',n:1,t:'LoRa → Trạm IoT → Cloud',p:'Dữ liệu từ mọi thiết bị truyền không dây về trạm IoT tại nhà điều hành, rồi lên nền tảng Farmblock để kỹ sư xem trên Dashboard.',s:'Màu trạng thái cho biết khu nào cần kiểm tra trước'}
 ];
 LAY[0].t='22 ha · 138 lô · 34 thiết bị';LAY[0].p='Thôn Cây Xoài, xã Ia Ko, tỉnh Gia Lai. Xen canh cà phê Thiện Trường với cau, 2.200 gốc mỗi ha. Có nhà điều hành và hồ trữ nước.';LAY[0].s='Bấm từng nhóm bên dưới để làm nổi bật trên bản đồ';
@@ -1210,7 +1210,7 @@ var icCache={};function icURL(t){return icCache[t]||(icCache[t]=ic(t,96).toDataU
 
 /* ---------- dữ liệu 3 gói ---------- */
 var LEG={
-  sensor:{ic:'soil',t:'Cảm biến & trạm thời tiết'},cam:{ic:'cam',t:'22 camera'},iot:{ic:'iot',t:'Trạm IoT, điện mặt trời'},owner:{ic:'owner',t:'Bạn xem trên điện thoại'},
+  sensor:{ic:'soil',t:'Cảm biến & trạm thời tiết'},cam:{ic:'cam',t:'22 vị trí camera'},iot:{ic:'iot',t:'Trạm IoT, điện mặt trời'},owner:{ic:'owner',t:'Bạn xem trên điện thoại'},
   eng:{ic:'eng',t:'Kỹ sư kiểm tra định kỳ'},chat:{ic:'chat',t:'Tư vấn kỹ thuật'},
   team:{ic:'worker',t:'Đội vận hành thường trực'},zones:{ic:'leaf',t:'Chăm toàn khu'}
 };

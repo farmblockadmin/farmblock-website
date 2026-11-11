@@ -236,10 +236,10 @@ b.kw{font-weight:600;color:var(--g500)}
 @media (max-width:860px){.chap{display:none}}
 
 /* ---- Chương 01 ---- */
-.ch1{background:var(--g900);color:var(--on-dark);padding-block:clamp(72px,9vw,140px)}
+.ch1{background:var(--g900);color:var(--on-dark);padding-block:clamp(64px,7vw,104px)}
 .ch1 h2{color:#fff}
-.ch1-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start}
-.ch1-media{grid-column:1/7;position:sticky;top:110px}
+.ch1-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:center}
+.ch1-media{grid-column:1/7}
 .ch1-frame{position:relative;aspect-ratio:4/3.4;border-radius:var(--r-lg);overflow:hidden;background:var(--g700)}
 .ch1-img{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .9s var(--ease)}
 .ch1-img.on{opacity:1}
@@ -251,17 +251,17 @@ b.kw{font-weight:600;color:var(--g500)}
 .ch1-dots i.on{width:40px;background:var(--lime)}
 .ch1-copy{grid-column:8/13;display:flex;flex-direction:column}
 .ch1-copy h2{margin-bottom:12px}
-.say{min-height:42vh;display:flex;align-items:center}
-.say-in{font-size:clamp(1.25rem,1.6vw,1.5rem);line-height:1.55;color:#fff;max-width:none}
-.say.big .say-in{font-size:clamp(1.5rem,2.2vw,2.1rem);font-weight:500;line-height:1.4}
-.say .w{opacity:.22;transition:none}
+.say{margin-top:14px}
+.say-in{font-size:1.125rem;line-height:1.6;color:var(--on-dark);max-width:none}
+.say.big{margin-top:22px;padding-left:18px;border-left:3px solid var(--lime)}
+.say.big .say-in{font-size:clamp(1.25rem,1.6vw,1.45rem);font-weight:500;line-height:1.45;color:#fff}
 .hero-w{color:var(--lime);font-weight:600}
 @media (max-width:980px){
   .ch1-grid{display:block}
-  .ch1-media{position:sticky;top:84px;z-index:1}
+  .ch1-media{position:relative;z-index:1}
   .ch1-frame{aspect-ratio:4/3}.ch1-img img[src*="about-hero-farmer"]{object-position:50% 28%!important}.ch1-img figcaption{left:12px;bottom:12px;font-size:.875rem;padding:6px 12px}
   .ch1-copy{margin-top:8px}
-  .say{min-height:52vh;padding-top:20px}
+  .ch1-copy{margin-top:22px}
 }
 
 /* ---- Chương 02 ---- */
@@ -492,8 +492,7 @@ a.it2:hover{background:rgba(255,255,255,.1)}
 @media (max-width:980px){
   .ch1{overflow:clip}
   .ch1-media{background:var(--g900);padding-bottom:18px}
-  .ch1-media::before{content:"";position:absolute;left:-40px;right:-40px;bottom:100%;height:120vh;background:var(--g900)}
-  .ch1-media::after{content:"";position:absolute;left:-40px;right:-40px;top:100%;height:56px;background:linear-gradient(var(--g900),rgba(12,31,16,0));pointer-events:none}
+
 }
 /* ---- hết vòng 22b ---- */
 /* ---- vòng 20: menu liên hệ + chân trang ---- */
@@ -644,6 +643,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
           <a class="it2" href="mo-hinh.html" data-page><img src="img/nav-model-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Mô hình</b><span>Mạng lưới vườn Farmblock</span></span></a>
           <a class="it2" href="bang-tin.html" data-page><img src="img/nav-news-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Bảng tin</b><span>Tin tức Farmblock</span></span></a>
           <a class="it2" href="hoc-vien.html" data-page><img src="img/nav-academy-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Học viện</b><span>Kiến thức nông nghiệp</span></span></a>
+          <a class="it2" href="so-ray.html" data-page><img src="img/nav-soray-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Sổ Rẫy</b><span>Ứng dụng miễn phí cho bà con</span></span></a>
           <div class="pm-ct"><a class="ct-b" href="tel:0354060029" data-k="tel" data-v="0354060029" data-l="Hotline" aria-label="Gọi 0354 060 029"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span class="ct"><small>Hotline</small><b>0354 060 029</b></span><span class="go">Gọi ngay</span></a><a class="ct-b" href="mailto:contact@farmblock.vn" data-k="mail" data-v="contact@farmblock.vn" data-l="Email" aria-label="Gửi email contact@farmblock.vn"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></g></svg></span><span class="ct"><small>Email</small><b><span class="lg">contact@farmblock.vn</span><span class="sm">Gửi email</span></b></span><span class="go">Gửi thư</span></a></div>
         </div>
       </div>
@@ -702,7 +702,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
   </div>
 </section>
 
-<div class="chap" id="chap" aria-hidden="true"><b id="chapN">01</b><span>/ 06</span><i id="chapT">Khởi nguồn</i></div>
+<div class="chap" id="chap" aria-hidden="true"><b id="chapN">01</b><span>/ 05</span><i id="chapT">Khởi nguồn</i></div>
 
 <!-- ============ CHƯƠNG 01: ĐẤT ĐỎ ============ -->
 <section class="ch1 dark" id="khoi-nguon" data-ch="01" data-cht="Khởi nguồn" aria-labelledby="h-c1">
@@ -719,9 +719,9 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
     <div class="ch1-copy">
       <span class="tag rv">Chương 01 · Khởi nguồn</span>
       <h2 id="h-c1" class="split">Từ miền đất đỏ <span class="nw grad">bazan trù phú</span></h2>
-      <div class="say" data-i="0"><p class="say-in">Tây Nguyên là vùng đất đỏ bazan nơi những hạt cà phê đậm đà và những trái sầu riêng ngọt ngào lớn lên với khí hậu nhiệt đới gió mùa cao nguyên. Những mảnh đất trù phú ở đây là nơi chúng tôi bắt đầu, không chỉ để trồng cây, mà để gieo trồng những hạt giống của một nền nông nghiệp bền vững.</p></div>
+      <div class="say" data-i="0"><p class="say-in">Tây Nguyên là vùng đất đỏ bazan, nơi cà phê đậm đà và sầu riêng ngọt ngào lớn lên trong khí hậu cao nguyên. Chúng tôi bắt đầu ở đây, không chỉ để trồng cây, mà để gieo hạt giống cho một nền nông nghiệp bền vững.</p></div>
       <div class="say" data-i="1"><p class="say-in">Chúng tôi tin rằng nông nghiệp không chỉ là canh tác, mà là câu chuyện về con người, thiên nhiên, và tương lai.</p></div>
-      <div class="say" data-i="2"><p class="say-in">Với tâm huyết của nông dân Tây Nguyên và đội ngũ kỹ sư Farmblock, chúng tôi chăm sóc từng luống đất, minh bạch từng vụ mùa, từ đó dẫn đường để mang nông sản Việt đến bàn ăn của các gia đình trên thế giới.</p></div>
+      <div class="say" data-i="2"><p class="say-in">Cùng nông dân Tây Nguyên, đội ngũ kỹ sư FarmBlock chăm sóc từng luống đất, minh bạch từng vụ mùa, để nông sản Việt đến bàn ăn của các gia đình trên thế giới.</p></div>
       <div class="say big" data-i="3"><p class="say-in">Chúng tôi mơ về những cánh đồng thông minh, nơi thiên nhiên và công nghệ hòa quyện, nơi mỗi người nông dân là <span class="hero-w">một người anh hùng</span>.</p></div>
     </div>
   </div>
@@ -791,34 +791,11 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
   </div>
 </section>
 
-<!-- ============ CHƯƠNG 05: VÌ NÔNG DÂN ============ -->
-<section class="ch5" id="vi-nong-dan" data-ch="05" data-cht="Vì nông dân Việt Nam" aria-labelledby="h-c5">
-  <div class="wrap">
-    <div class="ch5-top">
-      <div class="ch5-head">
-        <span class="tag rv">Chương 05 · Vì nông dân Việt Nam</span>
-        <h2 id="h-c5" class="split">Công nghệ phải bắt đầu <span class="nw grad-d">từ người cầm cuốc</span></h2>
-        <p class="lead rv">Mỗi thứ Farmblock mang vào vườn đều phải trả lời được hai câu hỏi: bà con có dùng được không, và cuộc sống của bà con có tốt hơn không?</p>
-      </div>
-      <figure class="ch5-ph rv-img"><img src="img/about-tea.webp" width="1600" height="1067" alt="Hai nữ nông dân đội nón lá cười tươi bên luống chè" loading="lazy"><figcaption>Nụ cười sau mỗi mùa thu hái là thước đo của chúng tôi</figcaption></figure>
-    </div>
-    <div class="pledge">
-      <article class="pg"><svg class="pg-m" aria-hidden="true"><use href="#m-ring"/></svg><h3>Nói là ghi được</h3><p>Sổ Rẫy cho bà con bấm micro kể việc vừa làm, chụp ảnh lá để biết cây bị gì. Không cần rành điện thoại.</p><a href="https://sotay.farmblock.vn/" target="_blank" rel="noopener">Mở Sổ Rẫy<svg aria-hidden="true"><use href="#ext"/></svg></a></article>
-      <article class="pg"><svg class="pg-m" aria-hidden="true"><use href="#m-bars"/></svg><h3>Học ngay tại vườn</h3><p>Kỹ sư và chuyên gia hướng dẫn kỹ thuật trên chính luống đất. Vườn Ia Ko là lớp học mở cho nông dân trong vùng.</p></article>
-      <article class="pg"><svg class="pg-m" aria-hidden="true"><use href="#m-star"/></svg><h3>Việc làm tại quê nhà</h3><p>Mỗi vườn Farmblock cần đội canh tác và vận hành thường trực, mở thêm cơ hội việc làm ngay tại địa phương.</p></article>
-      <article class="pg"><svg class="pg-m" aria-hidden="true"><use href="#m-hour"/></svg><h3>Hồ sơ vùng trồng trong tay</h3><p>Sổ ghi đủ thì xuất được hồ sơ nộp xã, sổ VietGAP và tọa độ vườn, sẵn sàng cho yêu cầu của thị trường.</p></article>
-    </div>
-  </div>
-  <div class="vow" aria-label="Hôm nay là Gia Lai, ngày mai là Tây Nguyên, và xa hơn là nông sản Việt trên bàn ăn toàn cầu.">
-    <div class="vow-track" aria-hidden="true"><p class="vow-line">Hôm nay là <b>Gia Lai</b> · ngày mai là <b>Tây Nguyên</b> · xa hơn là <b class="grad-d">nông sản Việt</b> trên bàn ăn toàn cầu ·&nbsp;</p><p class="vow-line">Hôm nay là <b>Gia Lai</b> · ngày mai là <b>Tây Nguyên</b> · xa hơn là <b class="grad-d">nông sản Việt</b> trên bàn ăn toàn cầu ·&nbsp;</p></div>
-  </div>
-</section>
-
-<!-- ============ CHƯƠNG 06: HÀNH TRÌNH ============ -->
-<section class="ch6" id="hanh-trinh" data-ch="06" data-cht="Hành trình vươn xa" aria-labelledby="h-c6">
+<!-- ============ CHƯƠNG 05: HÀNH TRÌNH ============ -->
+<section class="ch6" id="hanh-trinh" data-ch="05" data-cht="Hành trình vươn xa" aria-labelledby="h-c6">
   <div class="wrap">
     <div class="sec-head">
-      <span class="tag rv">Chương 06 · Hành trình vươn xa</span>
+      <span class="tag rv">Chương 05 · Hành trình vươn xa</span>
       <h2 id="h-c6" class="split">Hành trình <span class="nw grad-d">vươn xa</span></h2>
     </div>
     <ol class="ms" id="ms">
@@ -873,7 +850,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
       <div class="bt"><a class="btn btn-lime" href="#top">Lên đầu trang</a></div>
     </div>
     <div class="fcols">
-      <nav class="c1" aria-label="Truy cập nhanh"><h4>Truy cập nhanh</h4><ul><li><a href="./" data-page>Trang chủ</a></li><li><a href="#top">Về chúng tôi</a></li><li><a href="mo-hinh.html" data-page>Mô hình vận hành</a></li><li><a href="cong-nghe.html" data-page>Công nghệ &amp; thiết bị</a></li><li><a href="bang-gia.html" data-page>Bảng giá dịch vụ</a></li><li><a href="bang-tin.html" data-page>Bảng tin Farmblock</a></li><li><a href="hoc-vien.html" data-page>Học viện Farmblock</a></li></ul></nav>
+      <nav class="c1" aria-label="Truy cập nhanh"><h4>Truy cập nhanh</h4><ul><li><a href="./" data-page>Trang chủ</a></li><li><a href="#top">Về chúng tôi</a></li><li><a href="mo-hinh.html" data-page>Mô hình vận hành</a></li><li><a href="cong-nghe.html" data-page>Công nghệ &amp; thiết bị</a></li><li><a href="bang-gia.html" data-page>Bảng giá dịch vụ</a></li><li><a href="bang-tin.html" data-page>Bảng tin Farmblock</a></li><li><a href="hoc-vien.html" data-page>Học viện Farmblock</a></li><li><a href="so-ray.html" data-page>Sổ Rẫy</a></li></ul></nav>
       <nav class="c2" aria-label="Chính sách"><h4>Chính sách &amp; Điều khoản</h4><ul><li><a href="chinh-sach-bao-mat.html" data-page>Chính sách bảo mật</a></li><li><span class="fsoon" tabindex="0"><span class="s1">Điều khoản sử dụng dịch vụ</span><span class="s2">Sắp ra mắt</span></span></li><li><span class="fsoon" tabindex="0"><span class="s1">Câu hỏi thường gặp</span><span class="s2">Sắp ra mắt</span></span></li></ul></nav>
       <div class="c3"><h4>Thông tin</h4><p>Công ty Cổ phần Công nghệ Nông nghiệp FarmBlock<br><span class="fpos">Doanh nghiệp công nghệ nông nghiệp, phát triển theo định hướng khoa học công nghệ</span><br>Tầng 13, Tòa nhà NIC, Số 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội</p><p>Điện thoại: <a href="tel:0354060029">0354 060 029</a></p><p>Email: <a href="mailto:contact@farmblock.vn">contact@farmblock.vn</a></p></div>
     </div>
@@ -964,13 +941,11 @@ mm.add('(prefers-reduced-motion: no-preference)',function(){
   if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',once:true}})}})});ScrollTrigger.refresh()})}
   gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}})});
 
-  /* CHƯƠNG 01: chữ sáng dần theo cuộn, ảnh đổi theo đoạn */
+  /* CHƯƠNG 01: gọn một màn hình, ảnh tự đổi */
   var imgs=gsap.utils.toArray('.ch1-img'),dots=gsap.utils.toArray('.ch1-dots i');
-  gsap.utils.toArray('.say').forEach(function(p){
-    var pin=p.querySelector('.say-in');var html=pin.innerHTML.replace(/(<[^>]+>)|([^\s<]+)/g,function(m,tag,word){return tag?tag:'<span class="w">'+word+'</span>'});pin.innerHTML=html;
-    gsap.to(p.querySelectorAll('.w'),{opacity:1,stagger:.08,ease:'none',scrollTrigger:{trigger:p,start:'top 78%',end:'bottom 52%',scrub:.4}});
-    var i=+p.dataset.i;ScrollTrigger.create({trigger:p,start:'top 60%',end:'bottom 60%',onToggle:function(st){if(!st.isActive)return;imgs.forEach(function(f,k){f.classList.toggle('on',k===i)});dots.forEach(function(d,k){d.classList.toggle('on',k===i)})}});
-  });
+  var c1=0,c1on=false;new IntersectionObserver(function(e){c1on=e[0].isIntersecting}).observe(document.querySelector('.ch1'));
+  setInterval(function(){if(!c1on||document.hidden)return;c1=(c1+1)%imgs.length;imgs.forEach(function(f,k){f.classList.toggle('on',k===c1)});dots.forEach(function(d,k){d.classList.toggle('on',k===c1)})},4200);
+  gsap.from('.say',{y:24,opacity:0,duration:.8,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.ch1-copy',start:'top 80%',once:true}});
 
   /* CHƯƠNG 02 */
   gsap.from('.lead1',{x:-60,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.duo2',start:'top 80%',once:true}});
@@ -983,10 +958,8 @@ mm.add('(prefers-reduced-motion: no-preference)',function(){
   if(!isMobile){var cards=gsap.utils.toArray('.pl2');cards.forEach(function(c,i){if(i===cards.length-1)return;gsap.to(c,{scale:.94,opacity:.55,ease:'none',scrollTrigger:{trigger:cards[i+1],start:'top 90%',end:'top 40%',scrub:true}})})}
   gsap.from('.pl2',{y:80,opacity:0,duration:1,stagger:.15,ease:'power3.out',scrollTrigger:{trigger:'.pillars2',start:'top 85%',once:true}});
 
-  /* CHƯƠNG 05 */
-  gsap.from('.pg',{y:60,opacity:0,duration:.9,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.pledge',start:'top 85%',once:true}});
 
-  /* CHƯƠNG 06: đường mốc chạy theo cuộn */
+  /* CHƯƠNG 05 (hành trình): đường mốc chạy theo cuộn */
   (function(){var ms=document.getElementById('ms'),items=gsap.utils.toArray('.mi');
     ScrollTrigger.create({trigger:ms,start:'top 70%',end:'bottom 60%',scrub:.5,onUpdate:function(s){ms.style.setProperty('--p',s.progress.toFixed(3));items.forEach(function(el,i){el.classList.toggle('lit',s.progress>=i/(items.length-1)-.03)})}});
     gsap.from(items,{y:50,opacity:0,duration:.9,stagger:.15,ease:'power3.out',scrollTrigger:{trigger:ms,start:'top 82%',once:true}})})();

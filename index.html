@@ -133,9 +133,8 @@ p{max-width:60ch;text-wrap:pretty}
 
 /* ---- HERO 3D ---- */
 .hero{position:relative;height:100svh;min-height:640px;background:#5b6c62;overflow:hidden;color:#fff}
-.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
-.hero canvas:active{cursor:grabbing}
-.hero-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,24,12,.5) 0%,rgba(8,24,12,0) 24%,rgba(8,24,12,0) 42%,rgba(8,24,12,.8) 100%)}
+.hero-v{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.hero-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(6,22,12,.55) 0%,rgba(6,24,14,.12) 26%,rgba(6,24,14,.3) 50%,rgba(6,24,14,.88) 100%)}
 .hero-copy{position:absolute;left:0;right:0;bottom:clamp(36px,8vh,88px);z-index:3;pointer-events:none}
 .hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end}
 .hero-grid .l{grid-column:1/8;min-width:0}
@@ -161,7 +160,7 @@ p{max-width:60ch;text-wrap:pretty}
   .hero-grid .r{padding-left:0}
   .hero-copy{bottom:calc(28px + env(safe-area-inset-bottom,0px))}
   .hero-copy h1{font-size:clamp(2.3rem,10.5vw,3.3rem)}
-  .hero-copy .sub{font-size:1.0625rem;margin-top:14px}
+  .hero-copy .sub{font-size:1.125rem;margin-top:14px}
   .hero-copy .acts .btn{flex:1 1 100%}
   .hint{display:none}
   .hero-tools .wrap{justify-content:flex-start}
@@ -673,6 +672,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
           <a class="it2" href="mo-hinh.html" data-page><img src="img/nav-model-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Mô hình</b><span>Mạng lưới vườn Farmblock</span></span></a>
           <a class="it2" href="bang-tin.html" data-page><img src="img/nav-news-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Bảng tin</b><span>Tin tức Farmblock</span></span></a>
           <a class="it2" href="hoc-vien.html" data-page><img src="img/nav-academy-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Học viện</b><span>Kiến thức nông nghiệp</span></span></a>
+          <a class="it2" href="so-ray.html" data-page><img src="img/nav-soray-h.webp" width="272" height="200" alt="" loading="lazy" decoding="async"><span class="t"><b>Sổ Rẫy</b><span>Ứng dụng miễn phí cho bà con</span></span></a>
           <div class="pm-ct"><a class="ct-b" href="tel:0354060029" data-k="tel" data-v="0354060029" data-l="Hotline" aria-label="Gọi 0354 060 029"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><span class="ct"><small>Hotline</small><b>0354 060 029</b></span><span class="go">Gọi ngay</span></a><a class="ct-b" href="mailto:contact@farmblock.vn" data-k="mail" data-v="contact@farmblock.vn" data-l="Email" aria-label="Gửi email contact@farmblock.vn"><span class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></g></svg></span><span class="ct"><small>Email</small><b><span class="lg">contact@farmblock.vn</span><span class="sm">Gửi email</span></b></span><span class="go">Gửi thư</span></a></div>
         </div>
       </div>
@@ -703,11 +703,8 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
 <main id="noidung">
 <!-- ============ HERO ============ -->
 <section class="hero" id="top" aria-labelledby="h1">
-  <canvas id="heroGL" aria-label="Ảnh flycam 360° vườn Farmblock Ia Ko. Kéo để xoay." role="img"></canvas>
+  <video class="hero-v" id="heroVid" muted loop playsinline preload="none" poster="img/final-poster.webp" aria-hidden="true" data-src="img/final.mp4" data-src-s="img/final-s.mp4"></video>
   <div class="hero-veil"></div>
-  <div class="hero-tools"><div class="wrap">
-    <span class="hint"><svg aria-hidden="true"><use href="#drag"/></svg>Kéo để xoay 360° vườn Ia Ko</span>
-  </div></div>
   <div class="hero-copy">
     <div class="wrap hero-grid">
       <div class="l">
@@ -715,7 +712,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
         <h1 id="h1" class="hx"><span class="nw-d">Kiến tạo hạ tầng</span><br>vận hành mới<br class="br-m"> cho<br class="br-d"> <span class="grad nw-d">nông nghiệp<br class="br-m"> Việt Nam</span></h1>
       </div>
       <div class="r">
-        <p class="sub hx">Phát triển theo định hướng khoa học công nghệ: nghiên cứu, xây dựng và vận hành bộ công nghệ giúp mỗi vùng trồng làm việc có dữ liệu, hướng tới nhiều vùng trên khắp Việt Nam.</p>
+        <p class="sub hx">Phát triển theo định hướng khoa học công nghệ, FarmBlock đưa dữ liệu vào việc chăm sóc từng vùng trồng. Bắt đầu từ Gia Lai, hướng tới nhiều vùng trồng trên khắp Việt Nam.</p>
         <div class="acts hx">
           <a class="btn btn-lime" href="#mo-hinh">Khám phá mô hình<svg aria-hidden="true"><use href="#arr"/></svg></a>
           <a class="btn btn-glass" href="tour-360/">Tour 360° vườn mẫu<svg aria-hidden="true"><use href="#arr"/></svg></a>
@@ -735,7 +732,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
       <div class="a-copy">
         <span class="tag rv">Về chúng tôi</span>
         <h2 id="h-j" class="split">Hành trình ra thế giới, <span class="nw">định hình</span> <span class="grad-d nw">nông sản Việt Nam</span></h2>
-        <p class="rv">Farmblock là doanh nghiệp công nghệ nông nghiệp, phát triển theo định hướng khoa học công nghệ. Sứ mệnh của chúng tôi: đưa khoa học và dữ liệu vào từng vùng trồng, để người nông dân Việt Nam làm nhẹ hơn, ghi chép rõ hơn và nông sản Việt đi xa hơn. Bắt đầu từ vườn Ia Ko và Mang Yang ở Gia Lai, chúng tôi xây dựng một <b class="kw">mô hình vận hành có thể nhân rộng</b>: chăm sóc cây bằng dữ liệu, minh bạch từng vụ mùa, áp dụng được cho nhiều vườn trồng, nhiều loại cây trên khắp Việt Nam.</p>
+        <p class="rv">FarmBlock là doanh nghiệp nông nghiệp công nghệ cao, chuyên triển khai vận hành nông nghiệp và công nghệ theo định hướng tiêu chuẩn quốc tế. Bắt đầu từ vườn Ia Ko ở Gia Lai, chúng tôi xây dựng một <b class="kw">mô hình vận hành có thể nhân rộng</b>: chăm sóc cây bằng dữ liệu, minh bạch từng vụ mùa, áp dụng được cho nhiều vườn trồng, nhiều loại cây trên khắp Việt Nam.</p>
         <p class="quote rv">Hôm nay là Gia Lai, ngày mai là Tây Nguyên, và xa hơn là nông sản Việt trên bàn ăn toàn cầu.</p>
         <a class="btn btn-green rv" href="ve-chung-toi.html" data-page>Khám phá hành trình<svg aria-hidden="true"><use href="#arr"/></svg></a>
       </div>
@@ -758,6 +755,21 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
       <article class="vcard rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Cộng đồng bền vững</h3><p>Chúng tôi hỗ trợ nông dân ở mỗi vùng trồng trong hoạt động canh tác, đào tạo nâng cao chuyên môn và trao cơ hội việc làm. Mỗi cây trồng là một nụ cười, mỗi vụ mùa là một câu chuyện.</p></article>
       <article class="vcard v6 rv"><svg class="gem" aria-hidden="true"><use href="#logo"/></svg><h3>Tầm nhìn toàn cầu</h3><p>Cùng các đối tác trong chuỗi giá trị nông sản, chúng tôi hướng tới đưa nông sản Việt Nam đến bữa ăn của các gia đình toàn cầu, nâng tầm giá trị nông nghiệp.</p></article>
     </div>
+  </div>
+</section>
+
+<!-- ============ CÔNG NGHỆ ============ -->
+<section class="tech" aria-labelledby="h-t">
+  <div class="wrap"><div class="sec-head"><span class="tag rv">Công nghệ của Farmblock</span><h2 id="h-t" class="split">Công nghệ định hình <span class="nw">tương lai nông nghiệp</span></h2></div></div>
+  <div class="track-wrap" id="trackWrap">
+    <div class="track" id="track">
+      <article class="tcard"><img src="img/dev-camera.webp" width="1100" height="636" alt="Camera và cảm biến trên cột giữa hàng cà phê non" loading="lazy"><span class="no">Chăm sóc</span><div class="tx"><h3>Chăm sóc thông minh</h3><p>Với hệ thống cảm biến, camera và dữ liệu vận hành theo thời gian thực, Farmblock giúp theo dõi sức khỏe cây trồng liên tục, tối ưu tưới tiêu và canh tác chính xác hơn trong từng giai đoạn phát triển.</p></div></article>
+      <article class="tcard"><img src="img/dev-solar.webp" width="896" height="1200" alt="Tấm pin mặt trời cấp điện cho thiết bị ngoài vườn" loading="lazy" style="object-position:50% 40%"><span class="no">Bền vững</span><div class="tx"><h3>Bền vững từ thiên nhiên</h3><p>Với hệ thống pin mặt trời và mạng lưới tưới tiêu tự động, tuân thủ các tiêu chí bảo vệ thiên nhiên chuẩn quốc tế, chúng tôi gìn giữ thiên nhiên cho thế hệ mai sau.</p></div></article>
+      <article class="tcard"><img src="img/app-map.webp" width="1400" height="788" alt="Ứng dụng Farmblock hiển thị bản đồ vệ tinh các vườn" loading="lazy"><span class="no">Kết nối</span><div class="tx"><h3>Kết nối từ bất kỳ đâu</h3><p>Ứng dụng di động đưa cánh đồng đến với bạn mọi lúc, mọi nơi: tiến độ phát triển, thông số kỹ thuật, tất cả nằm trong tầm tay bạn.</p></div></article>
+      <article class="tcard"><img src="img/coffee-cherries.webp" width="1400" height="784" alt="Chùm cà phê chín đỏ trên cành" loading="lazy"><span class="no">Minh bạch</span><div class="tx"><h3>Minh bạch từ gốc</h3><p>Mỗi hạt cà phê, mỗi trái sầu riêng kể câu chuyện của mình qua các mã QR. Hồ sơ canh tác số lưu giữ niềm tin, từ đất đỏ Tây Nguyên đến tận tay khách hàng.</p></div></article>
+    </div>
+    <div class="tdots" id="tdots" role="group" aria-label="Chọn thẻ công nghệ"></div>
+    <div class="tech-more rv"><a class="btn btn-green" href="cong-nghe.html" data-page>Xem đầy đủ công nghệ &amp; thiết bị<svg aria-hidden="true"><use href="#arr"/></svg></a></div>
   </div>
 </section>
 
@@ -784,21 +796,6 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
   </div>
 </section>
 
-<!-- ============ CÔNG NGHỆ ============ -->
-<section class="tech" aria-labelledby="h-t">
-  <div class="wrap"><div class="sec-head"><span class="tag rv">Công nghệ của Farmblock</span><h2 id="h-t" class="split">Công nghệ định hình <span class="nw">tương lai nông nghiệp</span></h2></div></div>
-  <div class="track-wrap" id="trackWrap">
-    <div class="track" id="track">
-      <article class="tcard"><img src="img/dev-camera.webp" width="1100" height="636" alt="Camera và cảm biến trên cột giữa hàng cà phê non" loading="lazy"><span class="no">Chăm sóc</span><div class="tx"><h3>Chăm sóc thông minh</h3><p>Với hệ thống cảm biến, camera và dữ liệu vận hành theo thời gian thực, Farmblock giúp theo dõi sức khỏe cây trồng liên tục, tối ưu tưới tiêu và canh tác chính xác hơn trong từng giai đoạn phát triển.</p></div></article>
-      <article class="tcard"><img src="img/dev-solar.webp" width="896" height="1200" alt="Tấm pin mặt trời cấp điện cho thiết bị ngoài vườn" loading="lazy" style="object-position:50% 40%"><span class="no">Bền vững</span><div class="tx"><h3>Bền vững từ thiên nhiên</h3><p>Với hệ thống pin mặt trời và mạng lưới tưới tiêu tự động, tuân thủ các tiêu chí bảo vệ thiên nhiên chuẩn quốc tế, chúng tôi gìn giữ thiên nhiên cho thế hệ mai sau.</p></div></article>
-      <article class="tcard"><img src="img/app-map.webp" width="1400" height="788" alt="Ứng dụng Farmblock hiển thị bản đồ vệ tinh các vườn" loading="lazy"><span class="no">Kết nối</span><div class="tx"><h3>Kết nối từ bất kỳ đâu</h3><p>Ứng dụng di động đưa cánh đồng đến với bạn mọi lúc, mọi nơi: tiến độ phát triển, thông số kỹ thuật, tất cả nằm trong tầm tay bạn.</p></div></article>
-      <article class="tcard"><img src="img/coffee-cherries.webp" width="1400" height="784" alt="Chùm cà phê chín đỏ trên cành" loading="lazy"><span class="no">Minh bạch</span><div class="tx"><h3>Minh bạch từ gốc</h3><p>Mỗi hạt cà phê, mỗi trái sầu riêng kể câu chuyện của mình qua các mã QR. Hồ sơ canh tác số lưu giữ niềm tin, từ đất đỏ Tây Nguyên đến tận tay khách hàng.</p></div></article>
-    </div>
-    <div class="tdots" id="tdots" role="group" aria-label="Chọn thẻ công nghệ"></div>
-    <div class="tech-more rv"><a class="btn btn-green" href="cong-nghe.html" data-page>Xem đầy đủ công nghệ &amp; thiết bị<svg aria-hidden="true"><use href="#arr"/></svg></a></div>
-  </div>
-</section>
-
 <!-- ============ 3 LỚP VẬN HÀNH ============ -->
 <section class="layers" aria-labelledby="h-l">
   <div class="wrap lay-grid">
@@ -816,38 +813,6 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
   </div>
 </section>
 
-<!-- ============ ỨNG DỤNG ============ -->
-<section class="apps" id="tai-ung-dung" aria-labelledby="h-a">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 id="h-a" class="split"><span class="nw">Sổ Rẫy cho bà con,</span> <span class="nw">Dashboard cho quản lý</span></h2>
-      <p class="rv">Hai ứng dụng trên cùng một nền tảng dữ liệu, mỗi người thấy đúng phần việc của mình.</p>
-    </div>
-    <div class="sotay">
-      <div class="intro">
-        <span class="tag">Ứng dụng cho nông dân</span>
-        <h3><span class="grad">Sổ Rẫy</span></h3>
-        <p>Ứng dụng Farmblock làm cho nông dân, <b>hoàn toàn miễn phí</b>: ghi chép và theo dõi chăm sóc trên chính khu vườn của mình. Qua công cụ gần gũi với công việc hằng ngày, Farmblock đưa công nghệ đến cộng đồng nông dân.</p>
-        <div><a class="btn btn-lime" href="https://sotay.farmblock.vn/" target="_blank" rel="noopener">Mở Sổ Rẫy<svg aria-hidden="true"><use href="#ext"/></svg></a></div>
-      </div>
-      <div class="phones">
-        <div class="phone"><div class="scr"><img src="img/sotay-1.webp" width="588" height="915" alt="Màn hình ghi việc bằng lời nói trong Sổ Rẫy" loading="lazy"></div><b>Ghi việc bằng lời nói</b><span>Bấm micro, kể việc vừa làm; app ghi vào sổ, có cả tiền chi.</span></div>
-        <div class="phone"><div class="scr"><img src="img/sotay-2.webp" width="656" height="1020" alt="Màn hình khám lá, khám đất trong Sổ Rẫy" loading="lazy"></div><b>Khám lá, khám đất</b><span>Chụp ba tấm ảnh, app cho biết cây bị gì, đất ra sao và việc nên làm.</span></div>
-        <div class="phone"><div class="scr"><img src="img/sotay-3.webp" width="532" height="840" alt="Màn hình hồ sơ vùng trồng trong Sổ Rẫy" loading="lazy"></div><b>Hồ sơ vùng trồng</b><span>Sổ ghi đủ thì xuất được hồ sơ nộp xã, sổ VietGAP và tọa độ vườn.</span></div>
-      </div>
-    </div>
-    <div class="dash">
-      <div class="pic"><img src="img/dash-map.webp" width="760" height="402" alt="Dashboard: bản đồ vườn, điểm đo và cảnh báo theo khu" loading="lazy"><img src="img/dash-log.webp" width="1590" height="815" alt="Dashboard: nhật ký canh tác kèm ảnh" loading="lazy"></div>
-      <div class="tx">
-        <span class="tag">Dành cho chuyên gia &amp; chủ đất</span>
-        <h3 class="dash-h"><span class="grad-d">Dashboard quản lý</span></h3>
-        <ul><li>Chi tiết từng khu: độ ẩm, nhiệt độ, pH, EC, kèm vị trí và giờ cập nhật</li><li>Màu trạng thái và cảnh báo để ưu tiên khu cần kiểm tra</li><li>Xem công việc, ảnh và nhật ký ở một nơi</li></ul>
-        <div><a class="btn btn-ink" href="https://dashboard.farmblock.vn/" target="_blank" rel="noopener">Mở Dashboard<svg aria-hidden="true"><use href="#ext"/></svg></a></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ TƯƠNG LAI ============ -->
 <section class="future dark" id="tuong-lai" aria-labelledby="h-fu">
   <div class="fu-bg" aria-hidden="true"><img src="img/eco-network.webp" width="1600" height="1067" alt="" loading="lazy"></div>
@@ -857,13 +822,6 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
       <h2 id="h-fu" class="split"><span class="nw">Từ một vườn mẫu</span> <span class="nw">đến nền nông nghiệp</span> <span class="nw grad">công nghệ cao Việt Nam</span></h2>
       <p class="rv">Vườn Ia Ko là bước đầu tiên. Mục tiêu của Farmblock là chuẩn hoá mô hình công nghệ này để nhiều vườn trồng có thể áp dụng, góp phần phát triển nền nông nghiệp công nghệ cao tại Việt Nam.</p>
     </div>
-    <div class="fu-head rv"><h3>Ba việc Farmblock làm, nối thành một vòng</h3></div>
-    <div class="pillars loop">
-      <article class="pil rv"><svg class="pi" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5h10M21 5v13L10 38a3 3 0 0 0 2.6 4.5h22.8A3 3 0 0 0 38 38L27 18V5"/><path d="M15 30h18"/></g></svg><h3>1 · Nghiên cứu</h3><p>Đội kỹ thuật, dữ liệu và AI nghiên cứu thiết bị đo, cách đọc số liệu và quy trình canh tác cà phê, luôn có chuyên gia nông nghiệp xác nhận.</p></article>
-      <article class="pil rv"><svg class="pi" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 42V22"/><path d="M24 26c-8 0-12-6-12-12 8 0 12 6 12 12zM24 22c0-7 4-12 12-12 0 7-4 12-12 12z"/><path d="M8 42h32"/></g></svg><h3>2 · Vận hành vùng trồng</h3><p>Lắp thiết bị, vận hành theo quy trình ba lớp người, quản lý bằng Dashboard. Đang triển khai tại vườn Ia Ko và Mang Yang, khoảng 40 ha ở Gia Lai.</p></article>
-      <article class="pil rv"><svg class="pi" viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="15" y="5" width="18" height="38" rx="4"/><path d="M21 37h6"/><path d="M24 13v12M19 20a5 5 0 0 0 10 0"/></g></svg><h3>3 · Mở rộng cho bà con</h3><p>Đưa công cụ đến trang trại, hợp tác xã và nông hộ, bắt đầu từ Sổ Rẫy miễn phí cho bà con trồng cà phê.</p></article>
-    </div>
-    <p class="loop-note rv">Dữ liệu từ vườn quay về nghiên cứu, rồi thành quy trình cho vùng trồng tiếp theo.</p>
     <ol class="road" id="road">
       <li class="rs now"><span class="rn" aria-hidden="true"><svg><use href="#logo"/></svg></span><em>Bước 1 · <i>Đang vận hành</i></em><h3>Kiểm chứng</h3><p>Vườn Ia Ko tại Gia Lai: thiết bị, quy trình ba lớp, Sổ Rẫy và Dashboard chạy trên vườn thật.</p></li>
       <li class="rs"><span class="rn" aria-hidden="true"><svg><use href="#logo"/></svg></span><em>Bước 2 · <i>Định hướng</i></em><h3>Chuẩn hoá</h3><p>Đóng gói thành mô-đun Farmblock: bộ thiết bị, quy trình vận hành và mẫu dữ liệu, lắp đặt nhanh cho vườn mới.</p></li>
@@ -911,21 +869,6 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
   </div>
 </section>
 
-<!-- ============ KẾT THÚC ============ -->
-<section class="final" id="lien-he" aria-labelledby="h-f">
-  <video class="bg" id="finalVid" muted loop playsinline preload="none" poster="img/final-poster.webp" aria-hidden="true" data-src="img/final.mp4" data-src-s="img/final-s.mp4"></video>
-  <div class="wrap">
-    <div class="final-card">
-      <div class="f-brand" translate="no" aria-hidden="true"><svg class="mk"><use href="#logo"/></svg><svg class="wm" viewBox="0 0 603 70" aria-hidden="true" focusable="false"><path d="M0 68.2207V1.17285H48.1721V12.0217H12.7026V30.0054H44.6545V40.8542H12.7026V68.2207H0Z"/><path d="M47.2622 68.2207L73.3514 1.17285H89.3762L115.563 68.2207H101.786L96.4114 53.951H65.7298L60.3556 68.2207H47.2622ZM69.736 43.1999H92.3075L85.5654 25.0208C85.3048 24.3692 84.9791 23.5547 84.5883 22.5773C84.2626 21.5348 83.9043 20.4271 83.5134 19.2543C83.1226 18.0163 82.7317 16.7782 82.3409 15.5402C81.95 14.3022 81.5917 13.1945 81.266 12.2172H80.7775C80.3866 13.5203 79.8981 15.019 79.3118 16.7131C78.7907 18.4072 78.2695 20.0036 77.7484 21.5022C77.2273 23.0009 76.8039 24.1737 76.4781 25.0208L69.736 43.1999Z"/><path d="M123.476 68.2207V1.17285H158.75C163.701 1.17285 167.805 2.0199 171.062 3.71402C174.319 5.40814 176.762 7.81899 178.39 10.9466C180.019 14.0742 180.833 17.7556 180.833 21.9909C180.833 26.3565 179.856 30.2334 177.902 33.6217C175.948 36.9447 173.081 39.4533 169.303 41.1474L183.178 68.2207H169.303L156.991 43.2977H136.179V68.2207H123.476ZM136.179 32.6443H157.773C161.03 32.6443 163.538 31.6995 165.297 29.8099C167.056 27.9203 167.935 25.314 167.935 21.9909C167.935 19.8407 167.544 18.0488 166.763 16.6154C165.981 15.1167 164.841 13.9764 163.343 13.1945C161.845 12.4126 159.988 12.0217 157.773 12.0217H136.179V32.6443Z"/><path d="M193.516 68.2207V1.17285H213.547L224.1 38.5085C224.491 39.8117 224.882 41.2778 225.272 42.9067C225.663 44.5357 226.022 46.0995 226.347 47.5981C226.738 49.0967 227.031 50.3999 227.227 51.5076H228.008C228.139 50.5302 228.334 49.3248 228.595 47.8913C228.855 46.4578 229.148 44.9266 229.474 43.2977C229.865 41.6035 230.288 39.9746 230.744 38.4108L241.297 1.17285H261.133V68.2207H248.43V34.3058C248.43 31.3085 248.463 28.3113 248.528 25.314C248.593 22.3167 248.658 19.743 248.723 17.5927C248.854 15.4425 248.919 14.1719 248.919 13.781H248.137C248.007 14.3674 247.681 15.638 247.16 17.5927C246.639 19.5475 246.085 21.6651 245.499 23.9457C244.913 26.2262 244.392 28.1809 243.936 29.8099L232.894 68.2207H221.169L210.127 29.9076C209.736 28.5393 209.28 26.9104 208.759 25.0208C208.303 23.066 207.815 21.0787 207.293 19.0588C206.837 17.0389 206.414 15.2796 206.023 13.781H205.241C205.307 15.5402 205.372 17.6579 205.437 20.1339C205.502 22.5448 205.567 25.0208 205.632 27.5619C205.697 30.038 205.73 32.2859 205.73 34.3058V68.2207H193.516Z"/><path d="M275.961 68.2207V1.17285H312.505C316.088 1.17285 319.28 1.85701 322.081 3.22533C324.947 4.59365 327.195 6.51582 328.823 8.99184C330.452 11.4679 331.266 14.3674 331.266 17.6905C331.266 20.2316 330.777 22.5448 329.8 24.6298C328.823 26.7149 327.488 28.4742 325.794 29.9076C324.165 31.276 322.309 32.3185 320.224 33.0352V33.4262C322.7 33.9475 324.915 34.9574 326.869 36.456C328.823 37.8895 330.354 39.7465 331.461 42.0271C332.569 44.2425 333.122 46.8162 333.122 49.7483C333.122 53.9185 332.178 57.3718 330.289 60.1085C328.465 62.8451 325.989 64.8976 322.863 66.2659C319.801 67.5691 316.348 68.2207 312.505 68.2207H275.961ZM288.663 57.3718H310.844C313.515 57.3718 315.697 56.6551 317.391 55.2216C319.15 53.723 320.029 51.4099 320.029 48.2823C320.029 46.4578 319.671 44.8615 318.954 43.4931C318.238 42.1248 317.13 41.0823 315.632 40.3655C314.199 39.5836 312.342 39.1927 310.062 39.1927H288.663V57.3718ZM288.663 28.5393H309.183C311.137 28.5393 312.766 28.1809 314.068 27.4642C315.436 26.7475 316.446 25.7701 317.098 24.5321C317.814 23.2941 318.172 21.9258 318.172 20.4271C318.172 17.5601 317.391 15.4425 315.827 14.0742C314.329 12.7059 312.342 12.0217 309.867 12.0217H288.663V28.5393Z"/><path d="M344.951 68.2207V1.17285H357.653V57.1764H391.267V68.2207H344.951Z"/><path d="M428.499 69.3935C421.529 69.3935 415.503 68.1555 410.422 65.6795C405.341 63.1383 401.432 59.294 398.696 54.1465C396.026 48.999 394.69 42.5158 394.69 34.6968C394.69 26.8126 396.026 20.3294 398.696 15.247C401.432 10.0995 405.341 6.28777 410.422 3.81176C415.503 1.27059 421.529 0 428.499 0C435.534 0 441.56 1.27059 446.575 3.81176C451.656 6.28777 455.532 10.0995 458.203 15.247C460.939 20.3294 462.307 26.8126 462.307 34.6968C462.307 42.5158 460.939 48.999 458.203 54.1465C455.532 59.294 451.656 63.1383 446.575 65.6795C441.56 68.1555 435.534 69.3935 428.499 69.3935ZM428.499 58.6424C431.886 58.6424 434.85 58.1537 437.391 57.1764C439.996 56.199 442.178 54.7655 443.937 52.8759C445.696 50.9212 447.031 48.5429 447.943 45.7411C448.855 42.8741 449.311 39.5836 449.311 35.8696V33.7194C449.311 29.9402 448.855 26.6171 447.943 23.7502C447.031 20.8832 445.696 18.5049 443.937 16.6154C442.178 14.6606 439.996 13.1945 437.391 12.2172C434.85 11.2398 431.886 10.7511 428.499 10.7511C425.111 10.7511 422.115 11.2398 419.509 12.2172C416.969 13.1945 414.819 14.6606 413.06 16.6154C411.301 18.5049 409.966 20.8832 409.054 23.7502C408.207 26.6171 407.784 29.9402 407.784 33.7194V35.8696C407.784 39.5836 408.207 42.8741 409.054 45.7411C409.966 48.5429 411.301 50.9212 413.06 52.8759C414.819 54.7655 416.969 56.199 419.509 57.1764C422.115 58.1537 425.111 58.6424 428.499 58.6424Z"/><path d="M503.662 69.3935C496.822 69.3935 490.959 68.1881 486.073 65.7773C481.253 63.3664 477.54 59.6198 474.934 54.5375C472.394 49.39 471.123 42.7764 471.123 34.6968C471.123 22.9031 473.99 14.1719 479.722 8.50315C485.454 2.83438 493.434 0 503.662 0C509.199 0 514.182 0.944794 518.612 2.83438C523.106 4.72397 526.657 7.59093 529.262 11.4353C531.933 15.2145 533.268 20.0362 533.268 25.9004H520.273C520.273 22.6425 519.556 19.9058 518.123 17.6905C516.755 15.4099 514.833 13.6832 512.358 12.5104C509.883 11.3375 507.049 10.7511 503.857 10.7511C499.427 10.7511 495.747 11.6307 492.815 13.39C489.884 15.0841 487.702 17.6253 486.269 21.0135C484.901 24.4018 484.217 28.6045 484.217 33.6217V35.7719C484.217 40.8542 484.901 45.0895 486.269 48.4777C487.702 51.866 489.852 54.4071 492.718 56.1013C495.649 57.7954 499.362 58.6424 503.857 58.6424C507.244 58.6424 510.208 58.0886 512.749 56.9809C515.289 55.808 517.244 54.1139 518.612 51.8985C520.045 49.618 520.761 46.8488 520.761 43.5909H533.268C533.268 49.4551 531.966 54.3094 529.36 58.1537C526.754 61.9329 523.204 64.7673 518.709 66.6569C514.28 68.4813 509.264 69.3935 503.662 69.3935Z"/><path d="M544.574 68.2207V1.17285H557.277V32.2533L586.981 1.17285H602.517L576.526 28.3438L603.006 68.2207H587.958L567.927 37.2379L557.277 46.6207V68.2207H544.574Z"/></svg></div>
-      <h2 id="h-f">Thấy tận mắt.<br>Tin tận tâm.</h2>
-      <p class="rv">Ghé vườn mẫu trực tuyến hoặc mở Dashboard để xem vườn mỗi ngày.</p>
-      <div class="acts rv">
-        <a class="btn btn-lime" href="https://vuonmau.farmblock.vn/ca-phe-mang-yang-1" target="_blank" rel="noopener">Truy cập vườn mẫu<svg aria-hidden="true"><use href="#ext"/></svg></a>
-        <a class="btn btn-glass" href="https://dashboard.farmblock.vn/" target="_blank" rel="noopener">Mở Dashboard<svg aria-hidden="true"><use href="#ext"/></svg></a>
-      </div>
-    </div>
-  </div>
-</section>
 </main>
 
 <footer class="foot dark">
@@ -938,7 +881,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
       <div class="bt"><a class="btn btn-lime" href="#top">Lên đầu trang</a></div>
     </div>
     <div class="fcols">
-      <nav class="c1" aria-label="Truy cập nhanh"><h4>Truy cập nhanh</h4><ul><li><a href="#top">Trang chủ</a></li><li><a href="ve-chung-toi.html" data-page>Về chúng tôi</a></li><li><a href="mo-hinh.html" data-page>Mô hình vận hành</a></li><li><a href="cong-nghe.html" data-page>Công nghệ &amp; thiết bị</a></li><li><a href="bang-gia.html" data-page>Bảng giá dịch vụ</a></li><li><a href="bang-tin.html" data-page>Bảng tin Farmblock</a></li><li><a href="hoc-vien.html" data-page>Học viện Farmblock</a></li></ul></nav>
+      <nav class="c1" aria-label="Truy cập nhanh"><h4>Truy cập nhanh</h4><ul><li><a href="#top">Trang chủ</a></li><li><a href="ve-chung-toi.html" data-page>Về chúng tôi</a></li><li><a href="mo-hinh.html" data-page>Mô hình vận hành</a></li><li><a href="cong-nghe.html" data-page>Công nghệ &amp; thiết bị</a></li><li><a href="bang-gia.html" data-page>Bảng giá dịch vụ</a></li><li><a href="bang-tin.html" data-page>Bảng tin Farmblock</a></li><li><a href="hoc-vien.html" data-page>Học viện Farmblock</a></li><li><a href="so-ray.html" data-page>Sổ Rẫy</a></li></ul></nav>
       <nav class="c2" aria-label="Chính sách"><h4>Chính sách &amp; Điều khoản</h4><ul><li><a href="chinh-sach-bao-mat.html" data-page>Chính sách bảo mật</a></li><li><span class="fsoon" tabindex="0"><span class="s1">Điều khoản sử dụng dịch vụ</span><span class="s2">Sắp ra mắt</span></span></li><li><span class="fsoon" tabindex="0"><span class="s1">Câu hỏi thường gặp</span><span class="s2">Sắp ra mắt</span></span></li></ul></nav>
       <div class="c3"><h4>Thông tin</h4><p>Công ty Cổ phần Công nghệ Nông nghiệp FarmBlock<br><span class="fpos">Doanh nghiệp công nghệ nông nghiệp, phát triển theo định hướng khoa học công nghệ</span><br>Tầng 13, Tòa nhà NIC, Số 7 Tôn Thất Thuyết, Cầu Giấy, Hà Nội</p><p>Điện thoại: <a href="tel:0354060029">0354 060 029</a></p><p>Email: <a href="mailto:contact@farmblock.vn">contact@farmblock.vn</a></p></div>
     </div>
@@ -979,79 +922,12 @@ document.querySelectorAll('.acc button').forEach(function(b){b.addEventListener(
 var nav=document.getElementById('nav'),lastY=0;
 function onScrollNav(y){nav.classList.toggle('solid',y>40);if(!menu.classList.contains('open')){if(y>lastY+8&&y>innerHeight*.9)nav.classList.add('hide');else if(y<lastY-8)nav.classList.remove('hide')}lastY=y}
 
-/* ---------- HERO: ảnh 360° + logo 3D ---------- */
-var heroCanvas=document.getElementById('heroGL');
-var H={};
-(function initHero(){
-  if(!window.THREE){return}
-  var r=new THREE.WebGLRenderer({canvas:heroCanvas,antialias:devicePixelRatio<1.5,alpha:false,powerPreference:'high-performance',stencil:false});
-  r.setPixelRatio(Math.min(devicePixelRatio,1.5));
-  r.outputEncoding=THREE.sRGBEncoding;
-  var scene=new THREE.Scene();
-  var cam=new THREE.PerspectiveCamera(isMobile?78:64,1,.1,200);
-  var loader=new THREE.TextureLoader();
-  var sfx=isMobile?'-s':'';
-  var sphereGeo=new THREE.SphereGeometry(60,48,32);sphereGeo.scale(-1,1,1);
-  var matA=new THREE.MeshBasicMaterial({depthWrite:false});
-  var matB=new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false});
-  var sA=new THREE.Mesh(sphereGeo,matA),sB=new THREE.Mesh(sphereGeo,matB);sB.renderOrder=1;
-  scene.add(sA,sB);
-  function tex(url,m,cb){loader.load(url,function(t){t.encoding=THREE.sRGBEncoding;t.anisotropy=Math.min(4,r.capabilities.getMaxAnisotropy());t.generateMipmaps=false;t.minFilter=THREE.LinearFilter;m.map=t;m.needsUpdate=true;cb&&cb()})}
-  var pmrem=new THREE.PMREMGenerator(r);
-  tex('img/pano-rain'+sfx+'.webp',matA,function(){heroCanvas.classList.add('ready');try{scene.environment=pmrem.fromEquirectangular(matA.map).texture;pmrem.dispose()}catch(e){}});
-  /* logo 3D: tấm nền + 6 cánh */
-  var logo=new THREE.Group();scene.add(logo);
-  var S=1/120;
-  function shapeFrom(pts){var sh=new THREE.Shape();pts.forEach(function(p,i){var x=(p[0]-180)*S,y=-(p[1]-180)*S;if(i)sh.lineTo(x,y);else sh.moveTo(x,y)});sh.closePath();return sh}
-  var petals=[[[64,180],[120,150.4],[170.4,180],[120,209.6]],[[296,180],[240,150.4],[189.6,180],[240,209.6]],[[118.4,72.8],[173.6,104],[173.6,162.4],[118.4,132.8]],[[241.6,72.8],[186.4,104],[186.4,162.4],[241.6,132.8]],[[118.4,287.2],[173.6,256],[173.6,197.6],[118.4,227.2]],[[241.6,287.2],[186.4,256],[186.4,197.6],[241.6,227.2]]];
-  var cream=new THREE.MeshPhysicalMaterial({color:0xF7FBF2,roughness:.3,metalness:0,transmission:.72,ior:1.46,clearcoat:1,clearcoatRoughness:.12,envMapIntensity:1.1});
-  var petalMeshes=petals.map(function(p){
-    var g=new THREE.ExtrudeGeometry(shapeFrom(p),{depth:.22,bevelEnabled:true,bevelThickness:.04,bevelSize:.03,bevelSegments:3});
-    g.computeBoundingBox();var c=new THREE.Vector3();g.boundingBox.getCenter(c);g.translate(-c.x,-c.y,-c.z);
-    var m=new THREE.Mesh(g,cream);m.position.copy(c);m.position.z=.18;m.userData.home=c.clone();m.userData.dir=new THREE.Vector3(c.x,c.y,0).normalize();logo.add(m);return m});
-  // tấm nền kim cương bo góc
-  var plate=new THREE.Shape(),s2=1.06,rr=.26;
-  (function(){var pts=[[0,s2*1.42],[s2*1.42,0],[0,-s2*1.42],[-s2*1.42,0]];for(var i=0;i<4;i++){var a=pts[i],b=pts[(i+1)%4],pv=pts[(i+3)%4];var d1=new THREE.Vector2(pv[0]-a[0],pv[1]-a[1]).normalize(),d2=new THREE.Vector2(b[0]-a[0],b[1]-a[1]).normalize();var p1=[a[0]+d1.x*rr,a[1]+d1.y*rr],p2=[a[0]+d2.x*rr,a[1]+d2.y*rr];if(i===0)plate.moveTo(p1[0],p1[1]);else plate.lineTo(p1[0],p1[1]);plate.quadraticCurveTo(a[0],a[1],p2[0],p2[1])}plate.closePath()})();
-  var pg=new THREE.ExtrudeGeometry(plate,{depth:.16,bevelEnabled:true,bevelThickness:.05,bevelSize:.05,bevelSegments:4});pg.translate(0,0,-.1);
-  var cv=document.createElement('canvas');cv.width=cv.height=256;var cx=cv.getContext('2d');var gr=cx.createLinearGradient(0,0,256,256);gr.addColorStop(0,'#2f7a40');gr.addColorStop(1,'#8cc84b');cx.fillStyle=gr;cx.fillRect(0,0,256,256);
-  var pt=new THREE.CanvasTexture(cv);pt.encoding=THREE.sRGBEncoding;
-  // ánh xạ UV phẳng
-  var pos=pg.attributes.position,uv=new Float32Array(pos.count*2);for(var i=0;i<pos.count;i++){uv[i*2]=(pos.getX(i)+1.6)/3.2;uv[i*2+1]=(pos.getY(i)+1.6)/3.2}pg.setAttribute('uv',new THREE.BufferAttribute(uv,2));
-  var plateMat=new THREE.MeshPhysicalMaterial({map:pt,color:0xffffff,roughness:.1,metalness:0,transmission:.9,ior:1.5,clearcoat:1,clearcoatRoughness:.05,envMapIntensity:1.3,transparent:true,side:THREE.DoubleSide});
-  var plateMesh=new THREE.Mesh(pg,plateMat);logo.add(plateMesh);
-  var rim=new THREE.Mesh(new THREE.TorusGeometry(1,.02,8,4),new THREE.MeshStandardMaterial({color:0xF5E4A1,roughness:.4,metalness:.4}));rim.visible=false;
-  scene.add(new THREE.HemisphereLight(0xeef6e6,0x23401f,1.05));
-  var dl=new THREE.DirectionalLight(0xffffff,1.1);dl.position.set(2,3,4);scene.add(dl);
-  var dl2=new THREE.DirectionalLight(0xc9f29a,.5);dl2.position.set(-3,-1,2);scene.add(dl2);
-  /* điều khiển */
-  scene.add(cam);scene.remove(logo);cam.add(logo);
-  var yaw=-.6,pitch=-.22,vy=0,drag=false,px=0,mx=0,my=0;
-  heroCanvas.addEventListener('pointerdown',function(e){drag=true;px=e.clientX;heroCanvas.setPointerCapture(e.pointerId)});
-  heroCanvas.addEventListener('pointermove',function(e){mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5);if(!drag)return;var dx=e.clientX-px;px=e.clientX;vy=-dx*.0045;yaw+=vy});
-  ['pointerup','pointercancel','pointerleave'].forEach(function(t){heroCanvas.addEventListener(t,function(){drag=false})});
-  H.prog=0;var home={x:0,y:0,s:1};
-  var sizeT;function size(){var w=heroCanvas.clientWidth,h=heroCanvas.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();var narrow=w<860;home={x:narrow?.95:1.75,y:narrow?1.75:.78,s:narrow?.42:.66}}
-  size();var lw=innerWidth;addEventListener('resize',function(){if(isMobile&&innerWidth===lw)return;lw=innerWidth;clearTimeout(sizeT);sizeT=setTimeout(size,120)});
-  var visible=true,raf=0,t=0,last=0,smx=0,smy=0;
-  function start(){if(!raf&&visible&&!document.hidden){last=performance.now();raf=requestAnimationFrame(loop)}}
-  function stop(){if(raf){cancelAnimationFrame(raf);raf=0}}
-  new IntersectionObserver(function(en){visible=en[0].isIntersecting;visible?start():stop()}).observe(heroCanvas);
-  document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
-  function loop(now){
-    raf=requestAnimationFrame(loop);
-    var dt=Math.min(.05,(now-last)/1000);last=now;t+=dt;var p=H.prog;
-    if(!drag){vy*=.94;yaw+=vy+(reduce?0:.0004)}
-    smx+=(mx-smx)*.06;smy+=(my-smy)*.06;
-    cam.rotation.order='YXZ';cam.rotation.y=yaw;cam.rotation.x=pitch-p*.7;
-    logo.position.set(home.x,home.y+p*.9,-4.6+p*1.2);logo.scale.setScalar(home.s);
-    logo.rotation.set((reduce?0:Math.cos(t*.5)*.08)+smy*.25-p*.6,(reduce?0:Math.sin(t*.6)*.22)+smx*.45+p*1.2,0);
-    petalMeshes.forEach(function(m,i){var d=m.userData.dir,h=m.userData.home,k=p*3.2;m.position.set(h.x+d.x*k,h.y+d.y*k,.18+p*(i%2?1.4:-.8));m.rotation.set(p*(i%2?2.2:-2),p*1.6,p*(i<2?1.2:-1.2))});
-    plateMesh.scale.setScalar(Math.max(.01,1-p*.8));plateMat.opacity=Math.max(0,1-p*1.6);plateMesh.visible=plateMat.opacity>0.01;
-    r.render(scene,cam);
-  }
-  start();
-})();
-
+/* ---------- HERO: video vườn cà phê ---------- */
+(function(){var v=document.getElementById('heroVid');if(!v)return;if(reduce)return;
+  v.src=matchMedia('(max-width:860px)').matches?v.dataset.srcS:v.dataset.src;
+  function play(){var p=v.play();if(p&&p.catch)p.catch(function(){})}play();
+  var on=true;new IntersectionObserver(function(e){on=e[0].isIntersecting;on?play():v.pause()}).observe(v);
+  document.addEventListener('visibilitychange',function(){if(document.hidden)v.pause();else if(on)play()})})();
 
 /* ---------- MÔ HÌNH 3D VƯỜN ---------- */
 var Z={"A":{"area":67246,"lots":53,"note":"Khu lớn nhất, nằm sát mương suối phía tây, có nhà điều hành ở góc đông bắc.","polys":[[[55,640],[200,580],[440,535],[445,660],[430,720],[380,900],[360,1000],[255,1048],[145,1105],[75,1140],[65,1000],[55,900],[55,760]]]},"B1":{"area":24420,"lots":7,"note":"Ôm lấy hồ trữ nước, nơi đặt cảm biến chất lượng nước và trạm bơm.","polys":[[[435,672],[625,718],[622,940],[475,1005],[370,995],[410,800]]]},"B2":{"area":9807,"lots":9,"note":"Khu nhỏ nhất ở trung tâm vườn, giữa hai tuyến đường đất 5 m.","polys":[[[628,718],[750,718],[758,895],[690,893],[628,925]]]},"C1":{"area":24398,"lots":12,"note":"Phía tây bắc, dọc đường dân sinh dẫn vào cổng chính.","polys":[[[80,237],[280,270],[300,300],[330,370],[430,400],[440,470],[420,520],[275,555]]]},"C2":{"area":19672,"lots":18,"note":"Dãy lô đều nhau ở phía đông nam, giáp đường đất 5 m.","polys":[[[757,720],[1060,742],[1022,898],[757,893]]]},"C3":{"area":14564,"lots":12,"note":"Nằm giữa khu C4 và C2, bao quanh bởi đường đất 5 m.","polys":[[[730,590],[940,505],[960,738],[750,715]]]},"C4":{"area":45873,"lots":26,"note":"Khu rộng thứ hai, trải dài theo đường dân sinh phía bắc.","polys":[[[710,210],[975,240],[1005,290],[1220,243],[1270,250],[1280,325],[1000,382],[960,435],[940,500],[855,515],[725,588],[712,400]],[[642,408],[712,430],[720,585]]]},"C5":{"area":2151,"lots":1,"note":"Lô cuối phía đông, cạnh suối.","polys":[[[1270,245],[1335,262],[1340,360],[1290,360],[1275,330]]]}};
@@ -1340,10 +1216,6 @@ if('IntersectionObserver' in window){var gio=new IntersectionObserver(function(e
   var st;tr.addEventListener('scroll',function(){cancelAnimationFrame(st);st=requestAnimationFrame(function(){var mid=tr.scrollLeft+tr.clientWidth/2,best=0,bd=1e9;cards.forEach(function(c,i){var d=Math.abs(c.offsetLeft+c.offsetWidth/2-mid);if(d<bd){bd=d;best=i}});setOn(best)})},{passive:true});
   setOn(0);
 })();
-/* video phần kết: tải khi gần tới, tạm dừng khi ra khỏi màn hình */
-(function(){var v=document.getElementById('finalVid');if(!v)return;var loaded=false;
-  new IntersectionObserver(function(en){var e=en[0];if(e.isIntersecting){if(!loaded){v.src=matchMedia('(max-width:860px)').matches?v.dataset.srcS:v.dataset.src;loaded=true}if(!reduce){var p=v.play();if(p&&p.catch)p.catch(function(){})}}else if(loaded)v.pause()},{rootMargin:'300px'}).observe(v);
-  document.addEventListener('visibilitychange',function(){if(document.hidden)v.pause();else if(loaded&&!reduce){var b=v.getBoundingClientRect();if(b.bottom>0&&b.top<innerHeight){var p=v.play();if(p&&p.catch)p.catch(function(){})}}})})();
 /* ---------- CHUYỂN ĐỘNG ---------- */
 if(!window.gsap){root.classList.remove('js');return}
 gsap.registerPlugin(ScrollTrigger);ScrollTrigger.config({ignoreMobileResize:true});
@@ -1352,39 +1224,23 @@ var lenis=null;
 if(!reduce&&window.Lenis){lenis=new Lenis({lerp:.1,wheelMultiplier:.9,smoothWheel:true,syncTouch:false});window.lenis=lenis;lenis.on('scroll',function(e){ScrollTrigger.update();onScrollNav(e.scroll)});gsap.ticker.add(function(t){lenis.raf(t*1000)});gsap.ticker.lagSmoothing(500,33);
   document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');var el=id==='#top'?0:document.querySelector(id);if(el===null)return;e.preventDefault();lenis.scrollTo(el,{offset:-20,duration:1.4})})});
 }else{addEventListener('scroll',function(){onScrollNav(scrollY)},{passive:true})}
-ScrollTrigger.create({trigger:'.hero',start:'top top',end:'bottom top',scrub:true,onUpdate:function(s){H.prog=s.progress}});
 var mm=gsap.matchMedia();
 mm.add('(prefers-reduced-motion: no-preference)',function(){
-  gsap.timeline({delay:.15}).from('#heroGL',{opacity:0,duration:1.2,ease:'power2.out'}).from('.hero .hx',{y:36,opacity:0,duration:1,stagger:.12,ease:'power3.out'},.3).from('.hero-tools .wrap > *',{y:-14,opacity:0,duration:.7,stagger:.08,ease:'power3.out'},.6).from('.bar',{y:-30,opacity:0,duration:.9,ease:'power3.out'},.2);
+  gsap.timeline({delay:.15}).from('.hero-v',{opacity:0,scale:1.08,duration:1.6,ease:'power2.out'},0).from('.hero .hx',{y:36,opacity:0,duration:1,stagger:.12,ease:'power3.out'},.3).from('.bar',{y:-30,opacity:0,duration:.9,ease:'power3.out'},.2);
   gsap.to('.hero-copy',{yPercent:-25,opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'70% top',scrub:true}});
   if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){var st=SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',once:true}})}})});ScrollTrigger.refresh()})}
   gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}})});
   gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img');gsap.timeline({scrollTrigger:{trigger:f,start:'top 88%',once:true}}).fromTo(f,{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath'}).fromTo(img,{scale:1.15},{scale:1,duration:1.6,ease:'power3.out',clearProps:'transform'},0)});
   gsap.fromTo('.rv-stage',{clipPath:'inset(8% 5% 8% 5% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath',scrollTrigger:{trigger:'.rv-stage',start:'top 85%',once:true}});
-  if(!isMobile)gsap.fromTo('.final .bg',{yPercent:-14},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'bottom bottom',scrub:true}});
-  gsap.from('.final h2',{y:50,opacity:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'.final',start:'top 70%',once:true}});
   /* lộ trình Tương lai: đường chạy theo cuộn, nút sáng dần */
   (function(){var road=document.getElementById('road');if(!road)return;var steps=[].slice.call(road.querySelectorAll('.rs'));
     ScrollTrigger.create({trigger:road,start:'top 78%',end:'bottom 55%',scrub:.6,onUpdate:function(s){var p=s.progress;road.style.setProperty('--p',p.toFixed(3));steps.forEach(function(el,i){el.classList.toggle('lit',p>=i/(steps.length-1)-.02)})}});
     gsap.from(steps,{y:40,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:road,start:'top 85%',once:true}})})();
   gsap.utils.toArray('.layer').forEach(function(l){gsap.from(l,{rotateX:isMobile?0:-22,y:70,opacity:0,scale:.95,ease:'power3.out',duration:1,clearProps:'transform',scrollTrigger:{trigger:l,start:'top 92%',once:true}})});
-  gsap.from('.phone .scr',{y:60,rotate:function(i){return [-6,0,6][i]},opacity:0,duration:1,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.phones',start:'top 88%',once:true}});
-  gsap.from('.dash .pic img',{y:40,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.dash',start:'top 85%',once:true}});
   gsap.from('.acc',{x:-30,opacity:0,duration:.7,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.eco-list',start:'top 82%',once:true}});
   gsap.from('.tagline span',{y:30,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.foot',start:'top 85%',once:true}});
 });
 addEventListener('load',function(){ScrollTrigger.refresh()});
-/* phần video kết: cuộn tới thì khóa trọn màn hình (chỉ máy tính) */
-mm.add('(min-width: 861px) and (hover: hover) and (prefers-reduced-motion: no-preference)',function(){
-  if(!lenis)return;var fin=document.querySelector('.final'),busy=false;
-  function go(y){if(busy)return;busy=true;lenis.scrollTo(Math.max(0,Math.min(y,document.documentElement.scrollHeight-innerHeight)),{duration:1.05,lock:true,force:true,easing:function(x){return 1-Math.pow(1-x,3)},onComplete:function(){setTimeout(function(){busy=false},120)}})}
-  function top(){return fin.getBoundingClientRect().top+lenis.scroll}
-  var a=ScrollTrigger.create({trigger:fin,start:'top 82%',end:'bottom 18%',
-    onEnter:function(){go(top())}});
-  var b=ScrollTrigger.create({trigger:fin,start:'top 18%',end:'bottom 82%',
-    onLeave:function(){go(top()+fin.offsetHeight)}});
-  return function(){a.kill();b.kill()};
-});
 })();
 </script>
 <script>/* vòng 20: nút liên hệ trong menu */

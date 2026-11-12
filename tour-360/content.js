@@ -1,5 +1,5 @@
 // Nội dung popup cho trang 360 vườn Ia Ko. Nội dung tĩnh, không cập nhật thời gian thực.
-// Vị trí thiết bị: Dashboard Farmblock (đọc 06/11/2026). Diện tích khu: marketing/ban-do-ia-ko/README.md.
+// Vị trí thiết bị: Dashboard FarmBlock (đọc 06/11/2026). Diện tích khu: marketing/ban-do-ia-ko/README.md.
 window.FB360 = {
   // Ảnh drone thật: GPS, độ cao so với điểm cất cánh và hướng gimbal đọc trong XMP của ảnh DJI.
   // devices: có hiện điểm thiết bị không (tháng 4 chưa lắp gì). fov: góc nhìn lúc mở cảnh.

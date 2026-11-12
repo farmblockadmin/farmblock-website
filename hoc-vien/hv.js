@@ -1,4 +1,4 @@
-/* Học viện Farmblock: bộ đọc nội dung + tự làm nổi bật.
+/* Học viện FarmBlock: bộ đọc nội dung + tự làm nổi bật.
    Dùng chung cho: trang danh sách, trang bài, trang soạn bài, và script dựng sẵn (node). */
 (function (root) {
   'use strict';
@@ -242,10 +242,10 @@
   HV.page = function (tpl, post, site) {
     var r = HV.render(post), url = (site || '') + 'hoc-vien-' + post.slug + '.html';
     var tocH = r.toc.map(function (t) { return '<li><a href="#' + t.id + '">' + esc(t.t) + '</a></li>'; }).join('\n');
-    var ld = { '@context': 'https://schema.org', '@type': 'Article', headline: post.title, description: post.excerpt, datePublished: post.date, image: (site || '') + post.cover, author: { '@type': 'Organization', name: 'Farmblock' }, publisher: { '@type': 'Organization', name: 'Farmblock' }, mainEntityOfPage: url };
+    var ld = { '@context': 'https://schema.org', '@type': 'Article', headline: post.title, description: post.excerpt, datePublished: post.date, image: (site || '') + post.cover, author: { '@type': 'Organization', name: 'FarmBlock' }, publisher: { '@type': 'Organization', name: 'FarmBlock' }, mainEntityOfPage: url };
     var map = {
       TITLE: esc(post.title), DESC: esc(post.excerpt), URL: esc(url), OGIMG: esc((site || '') + post.cover), SLUG: esc(post.slug),
-      COVER: esc(post.cover), ART: HV.art ? HV.art(post, true) : '<img src="' + esc(post.cover) + '" width="1672" height="941" alt="Ảnh minh hoạ: ' + esc(post.title) + '" fetchpriority="high">', DATE_ISO: esc(post.date), DATE: esc(HV.dateLong(post.date)), MINS: r.minutes, AUTHOR: esc(post.author || 'Farmblock Admin'),
+      COVER: esc(post.cover), ART: HV.art ? HV.art(post, true) : '<img src="' + esc(post.cover) + '" width="1672" height="941" alt="Ảnh minh hoạ: ' + esc(post.title) + '" fetchpriority="high">', DATE_ISO: esc(post.date), DATE: esc(HV.dateLong(post.date)), MINS: r.minutes, AUTHOR: esc(post.author || 'FarmBlock Admin'),
       CAT: esc((post.tags || [])[0] || 'Học viện'), TAGS: (post.tags || []).map(function (t) { return '<span class="hv-tag">' + esc(t) + '</span>'; }).join(''),
       TOC: tocH, BODY: r.html, JSONLD: JSON.stringify(ld).replace(/</g, '\\u003c')
     };

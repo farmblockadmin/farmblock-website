@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Soạn bài · Học viện Farmblock</title>
+<title>Soạn bài · Học viện FarmBlock</title>
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
@@ -291,7 +291,7 @@ a{color:var(--g500)}
 
       <section class="row2">
         <div class="card"><label class="lab" for="date"><b>Ngày đăng</b></label><input class="in" type="date" id="date"></div>
-        <div class="card"><label class="lab" for="author"><b>Tác giả</b></label><input class="in" id="author" value="Farmblock Admin"></div>
+        <div class="card"><label class="lab" for="author"><b>Tác giả</b></label><input class="in" id="author" value="FarmBlock Admin"></div>
       </section>
 
       <section class="card">
@@ -392,7 +392,7 @@ Tiêu đề mục: dùng nút H2 (hoặc gõ ## ở đầu dòng). Hệ thống 
 (function(){'use strict';
 var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
 var CFG={site:'',repo:'',branch:'main',pages:[]},TPL='',INDEX=[];
-var S={slug:'',title:'',excerpt:'',date:'',tags:[],author:'Farmblock Admin',off:[],cover:'',thumb:'',editing:null,slugTouched:false};
+var S={slug:'',title:'',excerpt:'',date:'',tags:[],author:'FarmBlock Admin',off:[],cover:'',thumb:'',editing:null,slugTouched:false};
 var coverBlob=null,coverURL='';            /* ảnh bìa mới chọn (chưa đăng) */
 var IMGS={};                               /* blob:url -> {k, blob} ảnh trong bài chưa đăng */
 var rte=$('#rte'),pv=$('#pv');
@@ -414,7 +414,7 @@ function saveDraft(){clearTimeout(saveT);$('#save').classList.add('busy');$('#sa
 function restoreHTML(html,imgs){Object.keys(imgs||{}).forEach(function(k){var u=URL.createObjectURL(imgs[k]);IMGS[u]={k:k,blob:imgs[k]};html=html.split('hvimg:'+k).join(u)});return html}
 
 /* ---------- trường thông tin ---------- */
-function fill(){$('#title').value=S.title;$('#slug').value=S.slug;$('#ex').value=S.excerpt;$('#date').value=S.date||today();$('#author').value=S.author||'Farmblock Admin';
+function fill(){$('#title').value=S.title;$('#slug').value=S.slug;$('#ex').value=S.excerpt;$('#date').value=S.date||today();$('#author').value=S.author||'FarmBlock Admin';
   $('#slug').readOnly=!!S.editing;$('#mode').hidden=!S.editing;$('#modeT').textContent=S.editing?S.title:'';$('#delPost').hidden=!S.editing;
   var src=coverURL||S.cover;$('#coverImg').hidden=!src;if(src)$('#coverImg').src=src;$('#drop').classList.toggle('has',!!src);drawTopics();exCount()}
 function drawTopics(){$('#topics').innerHTML=HV.TOPICS.map(function(t){var i=S.tags.indexOf(t);return '<button type="button" class="chip" aria-pressed="'+(i>=0)+'" data-t="'+HV.esc(t)+'">'+HV.esc(t)+(i===0?'<em>chính</em>':'')+'</button>'}).join('')}
@@ -424,7 +424,7 @@ $('#slug').addEventListener('input',function(){S.slugTouched=!!this.value.trim()
 $('#slug').addEventListener('blur',function(){this.value=S.slug});
 ['input','change','compositionend'].forEach(function(ev){$('#ex').addEventListener(ev,function(){S.excerpt=this.value.replace(/\s+/g,' ').trim();exCount();changed()})});
 $('#date').addEventListener('input',function(){S.date=this.value;changed()});
-$('#author').addEventListener('input',function(){S.author=this.value.trim()||'Farmblock Admin';changed()});
+$('#author').addEventListener('input',function(){S.author=this.value.trim()||'FarmBlock Admin';changed()});
 function exCount(){var n=S.excerpt.length,e=$('#exN');e.textContent=n+' / 120–220 ký tự';e.className='cnt '+(n>=120&&n<=220?'ok':n?'warn':'')}
 
 /* ---------- ảnh: nén WebP ---------- */
@@ -566,7 +566,7 @@ function loadIndex(){return readJSON('hoc-vien/index.json').then(function(d){IND
 $('#openList').addEventListener('click',function(){open('#dList');$('#plist').innerHTML='<li>Đang tải…</li>';loadIndex().then(function(d){
   $('#plist').innerHTML=d.length?d.map(function(p){return '<li><img src="'+HV.esc(p.thumb||p.cover)+'" alt=""><div><b>'+HV.esc(p.title)+'</b><span>'+HV.dateShort(p.date)+' · '+HV.esc((p.tags||[]).join(', '))+'</span></div><div class="acts2"><button class="btn" type="button" data-edit="'+HV.esc(p.slug)+'">Sửa</button></div></li>'}).join(''):'<li>Chưa có bài nào.</li>'})});
 $('#plist').addEventListener('click',function(e){var b=e.target.closest('[data-edit]');if(!b)return;var slug=b.dataset.edit;
-  var go=function(){readJSON('hoc-vien/bai/'+slug+'.json').then(function(p){S={slug:p.slug,title:p.title,excerpt:p.excerpt,date:p.date,tags:p.tags||[],author:p.author||'Farmblock Admin',off:p.off||[],cover:p.cover,thumb:p.thumb,editing:p.slug,slugTouched:true};
+  var go=function(){readJSON('hoc-vien/bai/'+slug+'.json').then(function(p){S={slug:p.slug,title:p.title,excerpt:p.excerpt,date:p.date,tags:p.tags||[],author:p.author||'FarmBlock Admin',off:p.off||[],cover:p.cover,thumb:p.thumb,editing:p.slug,slugTouched:true};
     coverBlob=null;coverURL='';IMGS={};rte.innerHTML=toEditor(p.blocks||[]);fill();changed();close($('#dList'));$('#ed').scrollTo(0,0);toast('Đã mở bài để sửa')}).catch(function(){toast('Không mở được bài này')})};
   if(S.title||rte.textContent.trim())ask('Mở bài khác để sửa?','Nội dung đang soạn sẽ được thay bằng bài “'+b.closest('li').querySelector('b').textContent+'”.','Mở bài').then(go);else go()});
 $('#delPost').addEventListener('click',function(){var slug=S.editing;if(!slug)return;if(!token()){$('#openSet').click();return}
@@ -575,7 +575,7 @@ $('#delPost').addEventListener('click',function(){var slug=S.editing;if(!slug)re
       return commit([{path:'hoc-vien-'+slug+'.html',del:true},{path:'hoc-vien/bai/'+slug+'.json',del:true},{path:'hoc-vien/index.json',content:JSON.stringify(idx)},{path:'sitemap.xml',content:sitemap(idx)}],'Học viện: gỡ bài “'+S.title+'”')})
     .then(function(){pubRunning=false;step(4);S.editing=null;S.slugTouched=false;fill();changed();$('#pubBox').innerHTML='<h2 id="hPub">Đã gỡ bài</h2><p class="hint">Bài đã được gỡ khỏi Học viện. Nội dung vẫn còn ở đây nếu bạn muốn đăng lại.</p><div class="acts"><button class="btn" type="button" data-close>Đóng</button></div>'})
     .catch(function(e){pubRunning=false;var m=$('#pubMsg');m.className='msg on bad';m.textContent=errText(e);$('#pubActs').innerHTML='<button class="btn ghost" type="button" data-close>Đóng</button>'})})});
-function reset(){S={slug:'',title:'',excerpt:'',date:today(),tags:[],author:'Farmblock Admin',off:[],cover:'',thumb:'',editing:null,slugTouched:false};coverBlob=null;coverURL='';IMGS={};rte.innerHTML='';fill();changed();$('#ed').scrollTo(0,0);$('#title').focus()}
+function reset(){S={slug:'',title:'',excerpt:'',date:today(),tags:[],author:'FarmBlock Admin',off:[],cover:'',thumb:'',editing:null,slugTouched:false};coverBlob=null;coverURL='';IMGS={};rte.innerHTML='';fill();changed();$('#ed').scrollTo(0,0);$('#title').focus()}
 $('#newPost').addEventListener('click',function(){ask('Viết bài mới?','Bài đang sửa sẽ được đóng lại (các thay đổi chưa xuất bản sẽ mất).','Viết bài mới').then(reset)});
 
 /* ---------- khởi động ---------- */

@@ -118,7 +118,7 @@
     st.textContent = '.fb-lang{display:inline-flex;align-items:center;gap:2px;height:52px;padding:0 6px;margin-right:8px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(17,38,21,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;text-decoration:none;font:600 15px/1 Archivo,system-ui,sans-serif;letter-spacing:.04em;flex:none;transition:border-color .2s}'
       + '.fb-lang span{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;border-radius:999px;opacity:.7;transition:background .2s,color .2s,opacity .2s}'
       + '.fb-lang span.on{background:#B5E383;color:#112615;opacity:1}.fb-lang:hover{border-color:#B5E383}.fb-lang:hover span:not(.on){opacity:1}'
-      + '@media (max-width:600px){.fb-lang{height:44px;padding:0 4px;margin-right:6px;font-size:14px}.fb-lang span{min-width:32px;height:34px}}';
+      + '@media (max-width:600px){.fb-lang{height:40px;padding:0 3px;margin-right:4px;font-size:12px;gap:0}.fb-lang span{min-width:26px;height:32px}.bar:has(.nav-back) .nav-pg{display:none}}';
     d.head.appendChild(st);
     if (before) host.insertBefore(a, before); else host.appendChild(a);
   }

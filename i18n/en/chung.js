@@ -96,5 +96,15 @@ FBI18N.add({
 ],
 "Farmblock – về trang chủ":"FarmBlock – home",
 "Trang chủ Farmblock: đồi cà phê Tây Nguyên và logo Farmblock":"FarmBlock home page: a Central Highlands coffee hill and the FarmBlock logo",
-"Đọc bài viết":"Read the article"
+"Đọc bài viết":"Read the article",
+"Câu chuyện vườn":"Garden stories",
+"Truyền hình Gia Lai đưa tin: mô hình cà phê số hoá đầu tiên của Gia Lai tại vườn Ia Ko":"Gia Lai Television reports on Gia Lai's first digitised coffee model at the Ia Ko garden",
+"Phóng sự của Báo và Phát thanh, Truyền hình Gia Lai về buổi tham quan vườn Ia Ko sáng 05/11/2026":"A report by Gia Lai Newspaper, Radio and Television on the visit to the Ia Ko garden on the morning of 5 November 2026",
+"Nhìn lại hai ngày ở Gia Lai: từ hội trường tập huấn ra đến vườn Ia Ko":"Looking back at two days in Gia Lai: from the training hall to the Ia Ko garden",
+"Video và hình ảnh ngày 04 và 05/11/2026, chương trình do Trung tâm Khuyến nông Quốc gia chủ trì":"Video and photos from 4 and 5 November 2026, a programme led by the National Agricultural Extension Centre",
+"Farmblock chia sẻ về IoT và AI với cán bộ khuyến nông, đón đoàn tham quan vườn Ia Ko":"FarmBlock talks IoT and AI with extension officers and welcomes visitors to the Ia Ko garden",
+"Chiều 04/11 tại Pleiku và sáng 05/11/2026 tại vườn Ia Ko, Gia Lai":"The afternoon of 4 November in Pleiku and the morning of 5 November 2026 at the Ia Ko garden, Gia Lai",
+"Vùng trồng đầu tiên Farmblock đưa bộ công nghệ vào vận hành đầy đủ":"The first growing area where FarmBlock put its full technology suite into operation",
+"SỔ TAY ĐẠI LÝ FARMBLOCK":"FARMBLOCK DEALER HANDBOOK",
+"QUY ĐỊNH TRUYỀN THÔNG & ỨNG XỬ CHUYÊN NGHIỆP":"COMMUNICATION RULES & PROFESSIONAL CONDUCT"
 });

@@ -586,6 +586,107 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
   f.then(function(){setTimeout(nav,Math.max(0,860-(performance.now()-t1)))});setTimeout(nav,3000)});
 addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-close','fbl-pre','fbl-done','fbl-open');opened=false;setTimeout(open,150)}});
 })();</script>
+<link rel="stylesheet" href="hoc-vien/hv-art.css">
+<style>
+/* ---- vòng 30: trang Học viện theo lộ trình (bắt đầu, chủ đề, thư viện) ---- */
+.hv-hero h1{max-width:14ch}
+.hv-search{display:flex;align-items:center;max-width:680px}
+.hv-search input{padding-right:120px}
+.hv-search button{position:absolute;right:7px;top:7px;bottom:7px;padding:0 26px;border-radius:999px;background:var(--lime);color:var(--g800);font-weight:600;font-size:1.0625rem;transition:background-color .2s,transform .2s var(--ease)}
+.hv-search button:hover{background:var(--lime-2)}.hv-search button:active{transform:scale(.96)}
+.hv-quick{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:18px;font-size:1rem;color:var(--on-dark-2)}
+.hv-quick span{margin-right:4px}
+.hv-quick button{min-height:44px;padding:0 16px;border-radius:999px;color:#fff;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);font-size:1rem;transition:background-color .2s}
+.hv-quick button:hover{background:rgba(181,227,131,.2)}
+.hv-sec{padding-block:clamp(64px,8vw,112px)}
+.hv-start{background:var(--paper)}
+.hv-topics{background:#fff}
+.hv-lib{background:var(--paper);padding-bottom:var(--sec)}
+.hv-h{display:flex;align-items:flex-end;justify-content:space-between;gap:24px 48px;flex-wrap:wrap;margin-bottom:clamp(28px,3.4vw,44px)}
+.hv-h h2{font-size:clamp(1.9rem,3.4vw,3rem);color:var(--g800);max-width:18ch}
+.hv-ey{display:inline-flex;align-items:center;gap:10px;margin-bottom:12px;font-size:.9375rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--g500)}
+.hv-ey::before{content:"";width:22px;height:2px;border-radius:2px;background:linear-gradient(90deg,#7ED839,#51ADCA)}
+.hv-hs{max-width:46ch;color:var(--muted);font-size:1.0625rem}
+.hv-n{font-size:.9375rem;font-weight:600;color:var(--g500);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+/* bắt đầu */
+.hv-st{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:repeat(3,auto);gap:16px}
+.hv-s1{grid-row:1/4;display:flex;flex-direction:column;border-radius:var(--r-lg);overflow:hidden;background:#fff;text-decoration:none;color:inherit;box-shadow:0 30px 60px -44px rgba(12,31,16,.5);transition:transform .5s var(--ease),box-shadow .5s}
+.hv-s1:hover{transform:translateY(-4px);box-shadow:0 40px 70px -44px rgba(12,31,16,.6)}
+.hv-s1-tx{display:flex;flex-direction:column;gap:10px;padding:clamp(22px,2.6vw,34px)}
+.hv-s1 b{font-size:clamp(1.5rem,2.3vw,2rem);font-weight:600;line-height:1.15;color:var(--g800);font-stretch:108%}
+.hv-s1-ex{color:var(--muted);font-size:1.0625rem}
+.hv-go{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:6px;min-height:52px;padding:0 24px;border-radius:999px;background:var(--g800);color:var(--lime);font-weight:600}
+.hv-go svg,.hv-s2>svg,.hv-tp-c svg{width:18px;height:18px;flex:none;transition:transform .35s var(--ease)}
+.hv-s1:hover .hv-go svg,.hv-s2:hover>svg,.hv-tp:hover .hv-tp-c svg{transform:translateX(4px)}
+.hv-s2{display:grid;grid-template-columns:clamp(150px,15vw,200px) minmax(0,1fr) 20px;align-items:center;gap:20px;padding:12px 22px 12px 12px;border-radius:24px;background:#fff;text-decoration:none;color:var(--g700);box-shadow:inset 0 0 0 1px rgba(58,128,71,.08);transition:transform .4s var(--ease),box-shadow .4s}
+.hv-s2:hover{transform:translateX(4px);box-shadow:inset 0 0 0 1px rgba(58,128,71,.2),0 20px 40px -32px rgba(12,31,16,.5)}
+.hv-s2-img{border-radius:16px;overflow:hidden}
+.hv-s2-tx{display:flex;flex-direction:column;gap:4px;min-width:0}
+.hv-s2 b{font-size:1.2rem;font-weight:600;line-height:1.25;color:var(--g800)}
+.hv-s2-m{font-size:.9375rem;color:var(--muted)}
+/* chủ đề */
+.hv-tp-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.hv-tp{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:100%;padding:22px 22px 20px;border-radius:26px;background:var(--tbg,var(--paper));text-align:left;color:var(--g800);transition:transform .45s var(--ease),box-shadow .45s}
+.hv-tp:hover{transform:translateY(-4px);box-shadow:0 28px 50px -36px rgba(12,31,16,.55)}
+.hv-tp:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.hv-tp-top{display:flex;width:100%;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.hv-tp .hv-tp-n{font-size:.9375rem;font-weight:600;color:var(--acc);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.hv-ic{position:relative;display:block;width:96px;height:96px;margin:-6px -6px 0 0}
+.hv-ic i{position:absolute;inset:8%;border-radius:50%;background:var(--disc)}
+.hv-ic svg{position:relative;width:100%;height:100%}
+.hv-tp b{font-size:1.3rem;font-weight:600;line-height:1.2;font-stretch:106%}
+.hv-tp-d{font-size:1rem;line-height:1.5;color:var(--muted)}
+.hv-tp-c{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:6px;font-weight:600;color:var(--acc)}
+.hv-tp-all{background:var(--g800);color:#fff}
+.hv-tp-all .hv-tp-n{font-size:clamp(3rem,4.6vw,4.2rem);line-height:1;color:var(--lime);font-weight:600;font-stretch:110%;letter-spacing:-.03em}
+.hv-tp-all .hv-tp-d{color:var(--on-dark-2)}
+.hv-tp-all .hv-tp-c{color:var(--lime)}
+/* thư viện */
+.hv-lib-g{display:grid;grid-template-columns:268px minmax(0,1fr);gap:clamp(24px,3vw,40px);align-items:start}
+.hv-side{position:sticky;top:104px;display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:26px;background:#fff;box-shadow:inset 0 0 0 1px rgba(58,128,71,.08)}
+.hv-side-t{font-size:.875rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 6px}
+.hv-side-t+div{margin-bottom:10px}
+.hv-tl{display:flex;flex-direction:column;gap:2px}
+.hv-tl button{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px;padding:8px 12px;border-radius:14px;text-align:left;font-size:1rem;line-height:1.3;color:var(--g700);transition:background-color .2s,color .2s}
+.hv-tl button::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--acc,var(--g500));opacity:.55;order:-1}
+.hv-tl button span{flex:1}
+.hv-tl button small{font-size:.875rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.hv-lv{font-style:normal}
+.hv-tl button:hover{background:var(--paper)}
+.hv-tl button[aria-pressed="true"]{background:var(--g800);color:#fff}
+.hv-tl button[aria-pressed="true"] small{color:var(--lime)}
+.hv-tl button[aria-pressed="true"]::before{background:var(--lime);opacity:1}
+.hv-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:16px;background:var(--paper)}
+.hv-seg button{min-height:44px;border-radius:12px;font-size:.9375rem;font-weight:500;color:var(--g700);transition:background-color .2s,color .2s}
+.hv-seg button[aria-pressed="true"]{background:#fff;color:var(--g800);font-weight:600;box-shadow:0 4px 12px -6px rgba(12,31,16,.35)}
+.hv-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.hv-qbar[hidden],.hv-morebtn[hidden]{display:none}
+.hv-qbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:12px 12px 12px 20px;border-radius:18px;background:#fff;color:var(--g700)}
+.hv-qbar button{min-height:44px;padding:0 16px;border-radius:999px;background:var(--paper);font-weight:600;color:var(--g700)}
+.hv-more-w{display:flex;justify-content:center;margin-top:32px}
+.hv-morebtn{min-height:56px;padding:0 30px;border-radius:999px;background:#fff;color:var(--g800);font-weight:600;font-size:1.0625rem;box-shadow:inset 0 0 0 1.5px var(--paper-3);transition:background-color .2s,transform .2s var(--ease)}
+.hv-morebtn:hover{background:var(--g800);color:var(--lime);box-shadow:none}.hv-morebtn:active{transform:scale(.96)}
+@media (max-width:1180px){.hv-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hv-tp-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:980px){
+  .hv-st{grid-template-columns:1fr}.hv-s1{grid-row:auto}
+  .hv-lib-g{grid-template-columns:minmax(0,1fr)}.hv-side{min-width:0}
+  .hv-side{position:static;padding:0;background:none;box-shadow:none;gap:8px}
+  .hv-side-t{display:none}
+  .hv-tl{flex-direction:row;overflow-x:auto;gap:8px;margin:0 calc(-1 * var(--gut)) 4px;padding:2px var(--gut) 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .hv-tl::-webkit-scrollbar{display:none}
+  .hv-tl button{flex:none;white-space:nowrap;background:#fff;box-shadow:inset 0 0 0 1px var(--paper-3);border-radius:999px;padding:8px 16px}
+  .hv-seg{max-width:420px;background:#fff}
+  .hv-seg button[aria-pressed="true"]{background:var(--g800);color:var(--lime)}
+}
+@media (max-width:620px){
+  .hv-search input{padding-right:20px}.hv-search button{display:none}
+  .hv-s2{grid-template-columns:118px minmax(0,1fr);gap:14px;padding:10px 14px 10px 10px}.hv-s2>svg{display:none}.hv-s2 b{font-size:1.0625rem}
+  .hv-tp-g{gap:10px}.hv-tp{padding:16px 16px 14px;gap:6px;border-radius:22px}.hv-tp-d{display:none}.hv-ic{width:64px;height:64px}.hv-tp b{font-size:1.0625rem}.hv-tp-all{grid-column:1/-1}.hv-tp-all .hv-tp-n{font-size:2.4rem}
+  .hv-grid{grid-template-columns:1fr}
+  .hv-h{gap:12px}
+}
+/* ---- hết vòng 30 ---- */
+</style>
 </head>
 <body>
 <div class="fbl" aria-hidden="true"><div class="fbl-s bk"></div><div class="fbl-s fr"><i class="gl"></i><div class="fbl-c"><div class="fbl-m"><b></b><b></b><svg class="mk"><use href="#logo"/></svg></div><svg class="wm" viewBox="0 0 603 70" focusable="false"><path d="M0 68.2207V1.17285H48.1721V12.0217H12.7026V30.0054H44.6545V40.8542H12.7026V68.2207H0Z"/><path d="M47.2622 68.2207L73.3514 1.17285H89.3762L115.563 68.2207H101.786L96.4114 53.951H65.7298L60.3556 68.2207H47.2622ZM69.736 43.1999H92.3075L85.5654 25.0208C85.3048 24.3692 84.9791 23.5547 84.5883 22.5773C84.2626 21.5348 83.9043 20.4271 83.5134 19.2543C83.1226 18.0163 82.7317 16.7782 82.3409 15.5402C81.95 14.3022 81.5917 13.1945 81.266 12.2172H80.7775C80.3866 13.5203 79.8981 15.019 79.3118 16.7131C78.7907 18.4072 78.2695 20.0036 77.7484 21.5022C77.2273 23.0009 76.8039 24.1737 76.4781 25.0208L69.736 43.1999Z"/><path d="M123.476 68.2207V1.17285H158.75C163.701 1.17285 167.805 2.0199 171.062 3.71402C174.319 5.40814 176.762 7.81899 178.39 10.9466C180.019 14.0742 180.833 17.7556 180.833 21.9909C180.833 26.3565 179.856 30.2334 177.902 33.6217C175.948 36.9447 173.081 39.4533 169.303 41.1474L183.178 68.2207H169.303L156.991 43.2977H136.179V68.2207H123.476ZM136.179 32.6443H157.773C161.03 32.6443 163.538 31.6995 165.297 29.8099C167.056 27.9203 167.935 25.314 167.935 21.9909C167.935 19.8407 167.544 18.0488 166.763 16.6154C165.981 15.1167 164.841 13.9764 163.343 13.1945C161.845 12.4126 159.988 12.0217 157.773 12.0217H136.179V32.6443Z"/><path d="M193.516 68.2207V1.17285H213.547L224.1 38.5085C224.491 39.8117 224.882 41.2778 225.272 42.9067C225.663 44.5357 226.022 46.0995 226.347 47.5981C226.738 49.0967 227.031 50.3999 227.227 51.5076H228.008C228.139 50.5302 228.334 49.3248 228.595 47.8913C228.855 46.4578 229.148 44.9266 229.474 43.2977C229.865 41.6035 230.288 39.9746 230.744 38.4108L241.297 1.17285H261.133V68.2207H248.43V34.3058C248.43 31.3085 248.463 28.3113 248.528 25.314C248.593 22.3167 248.658 19.743 248.723 17.5927C248.854 15.4425 248.919 14.1719 248.919 13.781H248.137C248.007 14.3674 247.681 15.638 247.16 17.5927C246.639 19.5475 246.085 21.6651 245.499 23.9457C244.913 26.2262 244.392 28.1809 243.936 29.8099L232.894 68.2207H221.169L210.127 29.9076C209.736 28.5393 209.28 26.9104 208.759 25.0208C208.303 23.066 207.815 21.0787 207.293 19.0588C206.837 17.0389 206.414 15.2796 206.023 13.781H205.241C205.307 15.5402 205.372 17.6579 205.437 20.1339C205.502 22.5448 205.567 25.0208 205.632 27.5619C205.697 30.038 205.73 32.2859 205.73 34.3058V68.2207H193.516Z"/><path d="M275.961 68.2207V1.17285H312.505C316.088 1.17285 319.28 1.85701 322.081 3.22533C324.947 4.59365 327.195 6.51582 328.823 8.99184C330.452 11.4679 331.266 14.3674 331.266 17.6905C331.266 20.2316 330.777 22.5448 329.8 24.6298C328.823 26.7149 327.488 28.4742 325.794 29.9076C324.165 31.276 322.309 32.3185 320.224 33.0352V33.4262C322.7 33.9475 324.915 34.9574 326.869 36.456C328.823 37.8895 330.354 39.7465 331.461 42.0271C332.569 44.2425 333.122 46.8162 333.122 49.7483C333.122 53.9185 332.178 57.3718 330.289 60.1085C328.465 62.8451 325.989 64.8976 322.863 66.2659C319.801 67.5691 316.348 68.2207 312.505 68.2207H275.961ZM288.663 57.3718H310.844C313.515 57.3718 315.697 56.6551 317.391 55.2216C319.15 53.723 320.029 51.4099 320.029 48.2823C320.029 46.4578 319.671 44.8615 318.954 43.4931C318.238 42.1248 317.13 41.0823 315.632 40.3655C314.199 39.5836 312.342 39.1927 310.062 39.1927H288.663V57.3718ZM288.663 28.5393H309.183C311.137 28.5393 312.766 28.1809 314.068 27.4642C315.436 26.7475 316.446 25.7701 317.098 24.5321C317.814 23.2941 318.172 21.9258 318.172 20.4271C318.172 17.5601 317.391 15.4425 315.827 14.0742C314.329 12.7059 312.342 12.0217 309.867 12.0217H288.663V28.5393Z"/><path d="M344.951 68.2207V1.17285H357.653V57.1764H391.267V68.2207H344.951Z"/><path d="M428.499 69.3935C421.529 69.3935 415.503 68.1555 410.422 65.6795C405.341 63.1383 401.432 59.294 398.696 54.1465C396.026 48.999 394.69 42.5158 394.69 34.6968C394.69 26.8126 396.026 20.3294 398.696 15.247C401.432 10.0995 405.341 6.28777 410.422 3.81176C415.503 1.27059 421.529 0 428.499 0C435.534 0 441.56 1.27059 446.575 3.81176C451.656 6.28777 455.532 10.0995 458.203 15.247C460.939 20.3294 462.307 26.8126 462.307 34.6968C462.307 42.5158 460.939 48.999 458.203 54.1465C455.532 59.294 451.656 63.1383 446.575 65.6795C441.56 68.1555 435.534 69.3935 428.499 69.3935ZM428.499 58.6424C431.886 58.6424 434.85 58.1537 437.391 57.1764C439.996 56.199 442.178 54.7655 443.937 52.8759C445.696 50.9212 447.031 48.5429 447.943 45.7411C448.855 42.8741 449.311 39.5836 449.311 35.8696V33.7194C449.311 29.9402 448.855 26.6171 447.943 23.7502C447.031 20.8832 445.696 18.5049 443.937 16.6154C442.178 14.6606 439.996 13.1945 437.391 12.2172C434.85 11.2398 431.886 10.7511 428.499 10.7511C425.111 10.7511 422.115 11.2398 419.509 12.2172C416.969 13.1945 414.819 14.6606 413.06 16.6154C411.301 18.5049 409.966 20.8832 409.054 23.7502C408.207 26.6171 407.784 29.9402 407.784 33.7194V35.8696C407.784 39.5836 408.207 42.8741 409.054 45.7411C409.966 48.5429 411.301 50.9212 413.06 52.8759C414.819 54.7655 416.969 56.199 419.509 57.1764C422.115 58.1537 425.111 58.6424 428.499 58.6424Z"/><path d="M503.662 69.3935C496.822 69.3935 490.959 68.1881 486.073 65.7773C481.253 63.3664 477.54 59.6198 474.934 54.5375C472.394 49.39 471.123 42.7764 471.123 34.6968C471.123 22.9031 473.99 14.1719 479.722 8.50315C485.454 2.83438 493.434 0 503.662 0C509.199 0 514.182 0.944794 518.612 2.83438C523.106 4.72397 526.657 7.59093 529.262 11.4353C531.933 15.2145 533.268 20.0362 533.268 25.9004H520.273C520.273 22.6425 519.556 19.9058 518.123 17.6905C516.755 15.4099 514.833 13.6832 512.358 12.5104C509.883 11.3375 507.049 10.7511 503.857 10.7511C499.427 10.7511 495.747 11.6307 492.815 13.39C489.884 15.0841 487.702 17.6253 486.269 21.0135C484.901 24.4018 484.217 28.6045 484.217 33.6217V35.7719C484.217 40.8542 484.901 45.0895 486.269 48.4777C487.702 51.866 489.852 54.4071 492.718 56.1013C495.649 57.7954 499.362 58.6424 503.857 58.6424C507.244 58.6424 510.208 58.0886 512.749 56.9809C515.289 55.808 517.244 54.1139 518.612 51.8985C520.045 49.618 520.761 46.8488 520.761 43.5909H533.268C533.268 49.4551 531.966 54.3094 529.36 58.1537C526.754 61.9329 523.204 64.7673 518.709 66.6569C514.28 68.4813 509.264 69.3935 503.662 69.3935Z"/><path d="M544.574 68.2207V1.17285H557.277V32.2533L586.981 1.17285H602.517L576.526 28.3438L603.006 68.2207H587.958L567.927 37.2379L557.277 46.6207V68.2207H544.574Z"/></svg><span class="fbl-pg"></span></div></div></div><!--/fbl-->
@@ -654,21 +755,44 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
 <header class="bl-hero hv-hero" id="top">
   <div class="hv-orb" aria-hidden="true"><i></i><i></i><i></i><b><svg><use href="#logo"/></svg></b></div>
   <div class="wrap">
-    <span class="tag bl-x">Học viện Farmblock</span>
+    <span class="tag bl-x">Học viện FarmBlock</span>
     <h1 class="bl-x">Một nơi để hiểu thêm về <span class="grad">nông nghiệp</span></h1>
     <p class="bl-x">Những kiến thức giúp bạn hiểu rõ hơn về đất, cây trồng và cách một vùng canh tác được vận hành.</p>
-    <label class="hv-search bl-x"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></g></svg><input type="search" id="q" placeholder="Tìm theo tiêu đề hoặc mô tả ngắn..." aria-label="Tìm theo tiêu đề hoặc mô tả ngắn" autocomplete="off"></label>
-    <p class="hv-stats bl-x"><b id="nAll">0</b> bài kiến thức · <b id="nTop">0</b> chủ đề</p>
+    <form class="hv-search bl-x" role="search" id="qf"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></g></svg><input type="search" id="q" placeholder="Bạn muốn tìm hiểu gì? Ví dụ: pH đất, NPK, tưới" aria-label="Tìm bài kiến thức" autocomplete="off"><button type="submit">Tìm</button></form>
+    <div class="hv-quick bl-x"><span>Tìm nhiều:</span><button type="button" data-q="pH">pH đất</button><button type="button" data-q="NPK">NPK</button><button type="button" data-q="đất bazan">Đất bazan</button><button type="button" data-q="tưới">Tưới</button><button type="button" data-q="vi sinh">Vi sinh</button></div>
   </div>
 </header>
-<section class="bl-list" aria-label="Danh sách bài kiến thức">
+
+<section class="hv-sec hv-start" id="bat-dau" aria-labelledby="hStart">
   <div class="wrap">
-    <p class="hv-fl">Lọc theo chủ đề</p>
-    <div class="bl-chips hv-chips" role="group" aria-label="Lọc theo chủ đề" id="chips"></div>
-    <div id="featWrap"></div>
-    <div class="grid-h"><h3 id="gridT">Tất cả bài viết</h3><span id="gridN"></span></div>
-    <div class="pgrid" id="pgrid"></div>
-    <nav class="hv-pg" id="pg" aria-label="Phân trang"></nav>
+    <div class="hv-h"><div><p class="hv-ey">Bắt đầu từ đây</p><h2 id="hStart">Bốn bài nên đọc trước</h2></div><p class="hv-hs">Mới đến Học viện? Đọc theo thứ tự này để nắm những khái niệm dùng nhiều nhất ở vườn.</p></div>
+    <div class="hv-st" id="startG"></div>
+  </div>
+</section>
+
+<section class="hv-sec hv-topics" id="chu-de" aria-labelledby="hTop">
+  <div class="wrap">
+    <div class="hv-h"><div><p class="hv-ey">Học theo chủ đề</p><h2 id="hTop">Đi từ hạt đất đến cả vùng trồng</h2></div><p class="hv-hs">Bảy chủ đề xếp theo lộ trình. Bấm vào một chủ đề để xem các bài trong đó.</p></div>
+    <div class="hv-tp-g" id="topicG"></div>
+  </div>
+</section>
+
+<section class="hv-sec hv-lib" id="thu-vien" aria-labelledby="libT">
+  <div class="wrap">
+    <div class="hv-h"><div><p class="hv-ey">Thư viện bài viết</p><h2 id="libT">Tất cả bài viết</h2></div><p class="hv-hs" id="libN" aria-live="polite"></p></div>
+    <div class="hv-lib-g">
+      <aside class="hv-side" aria-label="Bộ lọc bài viết">
+        <p class="hv-side-t">Chủ đề</p>
+        <div class="hv-tl" id="topicL" role="group" aria-label="Chọn chủ đề"></div>
+        <p class="hv-side-t">Trình độ</p>
+        <div class="hv-seg" id="lvS" role="group" aria-label="Chọn trình độ"><button type="button" data-l="" aria-pressed="true">Tất cả</button><button type="button" data-l="Cơ bản" aria-pressed="false">Cơ bản</button><button type="button" data-l="Nâng cao" aria-pressed="false">Nâng cao</button></div>
+      </aside>
+      <div class="hv-res">
+        <div class="hv-qbar" id="qbar" hidden></div>
+        <div class="pgrid hv-grid" id="pgrid"></div>
+        <div class="hv-more-w"><button type="button" class="hv-morebtn" id="moreB" hidden></button></div>
+      </div>
+    </div>
   </div>
 </section>
 </main>
@@ -693,6 +817,7 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="hoc-vien/hv.js"></script>
+<script src="hoc-vien/hv-art.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
@@ -724,34 +849,49 @@ document.querySelectorAll('.acc button').forEach(function(b){b.addEventListener(
 var nav=document.getElementById('nav'),lastY=0;
 function onScrollNav(y){nav.classList.toggle('solid',y>40);if(!menu.classList.contains('open')){if(y>lastY+8&&y>innerHeight*.9)nav.classList.add('hide');else if(y<lastY-8)nav.classList.remove('hide')}lastY=y}
 
-/* ---------- Học viện: đọc hoc-vien/index.json ---------- */
-(function(){var L=[],cur='Tất cả',q='',page=1,PER=12,showAll=false,esc=HV.esc;
-  var chips=document.getElementById('chips'),fw=document.getElementById('featWrap'),g=document.getElementById('pgrid'),pg=document.getElementById('pg');
+/* ---------- Học viện: đọc hoc-vien/index.json (vòng 30: lộ trình + chủ đề + thư viện) ---------- */
+(function(){var L=[],G=HV.GROUPS,cur='',lv='',q='',shown=12,PER=12,esc=HV.esc,START=['dat-la-gi','ph-dat-la-gi','npk-la-gi','tuoi-tieu-la-gi'];
+  var $=function(id){return document.getElementById(id)};
   var ARW='<svg aria-hidden="true"><use href="#arr"/></svg>';
   function norm(s){s=String(s||'').toLowerCase().replace(/đ/g,'d');return s.normalize?s.normalize('NFD').replace(/[̀-ͯ]/g,''):s}
-  function count(t){return L.filter(function(p){return (p.tags||[]).indexOf(t)>=0}).length}
-  function drawChips(){var used=HV.TOPICS.filter(function(t){return count(t)}),rest=HV.TOPICS.filter(function(t){return !count(t)});
-    var list=['Tất cả'].concat(used).concat(showAll?rest:[]);
-    chips.innerHTML=list.map(function(t){var n=t==='Tất cả'?L.length:count(t);return '<button type="button" class="chip2'+(n?'':' zero')+'" aria-pressed="'+(t===cur)+'" data-t="'+esc(t)+'">'+esc(t)+'<small>'+n+'</small></button>'}).join('')+(rest.length?'<button type="button" class="chip2 hv-more" id="hvMore">'+(showAll?'Thu gọn':'+ '+rest.length+' chủ đề khác')+'</button>':'');
-    chips.querySelectorAll('[data-t]').forEach(function(b){b.addEventListener('click',function(){cur=b.dataset.t;page=1;drawChips();draw(true)})});
-    var m=document.getElementById('hvMore');m&&m.addEventListener('click',function(){showAll=!showAll;drawChips()})}
-  function feat(p){return '<a class="feat" href="hoc-vien-'+p.slug+'.html" data-page><span class="feat-img"><img src="'+p.cover+'" width="1672" height="941" alt="Ảnh minh hoạ: '+esc(p.title)+'"><span class="feat-badge">Bài mới nhất</span></span><span class="feat-tx"><p class="meta"><span class="cat">'+esc((p.tags||[])[0]||'')+'</span><i></i><time>'+esc(HV.dateShort(p.date))+'</time></p><h2>'+esc(p.title)+'</h2><span class="hvc-tags">'+(p.tags||[]).map(function(t){return '<i>'+esc(t)+'</i>'}).join('')+'</span><p class="ex">'+esc(p.excerpt)+'</p><span class="read">Đọc bài'+ARW+'</span></span></a>'}
-  function draw(anim){var nq=norm(q);
-    var list=L.filter(function(p){return (cur==='Tất cả'||(p.tags||[]).indexOf(cur)>=0)&&(!nq||norm(p.title+' '+p.excerpt).indexOf(nq)>=0)});
-    var plain=cur==='Tất cả'&&!nq&&page===1&&list.length>0;
-    fw.innerHTML=plain?feat(list[0]):'';
-    var rest=plain?list.slice(1):list,pages=Math.max(1,Math.ceil(rest.length/PER));if(page>pages)page=pages;
-    var slice=rest.slice((page-1)*PER,page*PER);
-    document.getElementById('gridT').textContent=nq?'Kết quả cho “'+q+'”':(cur==='Tất cả'?'Tất cả bài viết':cur);
-    document.getElementById('gridN').textContent=list.length+' bài viết';
-    g.innerHTML=slice.length?slice.map(function(p){return HV.card(p)}).join(''):(plain?'':'<div class="hv-empty"><b>Chưa có bài phù hợp</b>Thử từ khoá khác hoặc chọn chủ đề "Tất cả".</div>');
-    pg.innerHTML=pages>1?'<button type="button" data-p="'+(page-1)+'"'+(page<2?' disabled':'')+'>Trước</button>'+Array.from({length:pages},function(_,i){return '<button type="button" data-p="'+(i+1)+'" aria-current="'+(i+1===page)+'">'+(i+1)+'</button>'}).join('')+'<button type="button" data-p="'+(page+1)+'"'+(page>=pages?' disabled':'')+'>Sau</button>':'';
-    pg.querySelectorAll('button[data-p]').forEach(function(b){b.addEventListener('click',function(){page=+b.dataset.p;draw(true);var y=document.getElementById('chips').getBoundingClientRect().top+scrollY-120;window.lenis?lenis.scrollTo(y):scrollTo({top:y,behavior:'smooth'})})});
-    if(anim&&window.gsap&&!reduce)gsap.from(g.children,{y:30,opacity:0,duration:.6,stagger:.05,ease:'power3.out'})}
-  var t;document.getElementById('q').addEventListener('input',function(e){clearTimeout(t);t=setTimeout(function(){q=e.target.value.trim();page=1;draw(true)},180)});
+  function inG(p,g){return (p.tags||[]).some(function(t){return g.tags.indexOf(t)>=0})}
+  function gOf(id){return G.filter(function(g){return g.id===id})[0]}
+  function cnt(g){return L.filter(function(p){return inG(p,g)}).length}
+  function scrollTo2(id){var el=$(id);if(!el)return;var y=el.getBoundingClientRect().top+scrollY-90;window.lenis?lenis.scrollTo(y,{duration:1.1}):scrollTo({top:y,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
+  function icon(g){return '<span class="hv-ic" style="--disc:'+g.disc+'"><i></i>'+HV.artSVG(g.m,{})+'</span>'}
+  function drawStart(){var ps=START.map(function(s){return L.filter(function(p){return p.slug===s})[0]}).filter(Boolean);
+    $('startG').innerHTML=ps.map(function(p,i){var g=HV.group(p);
+      if(!i)return '<a class="hv-s1" href="hoc-vien-'+p.slug+'.html" data-page><span class="hv-s1-img">'+HV.art(p)+'</span><span class="hv-s1-tx"><span class="hv-n">01</span><b>'+esc(p.title)+'</b><span class="hv-s1-ex">'+esc(p.excerpt)+'</span><span class="hvc-m"><i class="hv-lv">'+esc(HV.level(p))+'</i><span>'+p.minutes+' phút đọc</span></span><span class="hv-go">Đọc bài đầu tiên'+ARW+'</span></span></a>';
+      return '<a class="hv-s2" href="hoc-vien-'+p.slug+'.html" data-page><span class="hv-s2-img">'+HV.art(p)+'</span><span class="hv-s2-tx"><span class="hv-n">0'+(i+1)+'</span><b>'+esc(p.title)+'</b><span class="hv-s2-m">'+esc(g.name)+' · '+p.minutes+' phút</span></span>'+ARW+'</a>'}).join('')}
+  function drawTopics(){
+    $('topicG').innerHTML=G.map(function(g,i){var n=cnt(g);return '<button type="button" class="hv-tp" data-g="'+g.id+'" style="--acc:'+g.acc+';--tbg:'+g.bg+'"'+(n?'':' disabled')+'><span class="hv-tp-top"><span class="hv-tp-n">0'+(i+1)+'</span>'+icon(g)+'</span><b>'+esc(g.name)+'</b><span class="hv-tp-d">'+esc(g.ds)+'</span><span class="hv-tp-c">'+n+' bài'+ARW+'</span></button>'}).join('')+
+      '<button type="button" class="hv-tp hv-tp-all" data-g=""><span class="hv-tp-top"><span class="hv-tp-n">'+L.length+'</span></span><b>Xem tất cả bài viết</b><span class="hv-tp-d">Toàn bộ thư viện, bài mới nhất đứng đầu.</span><span class="hv-tp-c">Mở thư viện'+ARW+'</span></button>';
+    $('topicG').querySelectorAll('[data-g]').forEach(function(b){b.addEventListener('click',function(){setG(b.dataset.g);scrollTo2('thu-vien')})})}
+  function drawSide(){
+    $('topicL').innerHTML=['' ].concat(G.map(function(g){return g.id})).map(function(id){var g=gOf(id),n=g?cnt(g):L.length;return '<button type="button" data-g="'+id+'" aria-pressed="'+(id===cur)+'"'+(g?' style="--acc:'+g.acc+'"':'')+'><span>'+(g?esc(g.name):'Tất cả chủ đề')+'</span><small>'+n+'</small></button>'}).join('');
+    $('topicL').querySelectorAll('[data-g]').forEach(function(b){b.addEventListener('click',function(){setG(b.dataset.g)})});
+    $('lvS').querySelectorAll('[data-l]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.l===lv))})}
+  function setG(id){cur=id||'';shown=PER;drawSide();draw(true);try{var u=new URL(location.href);if(cur)u.searchParams.set('chu-de',cur);else u.searchParams.delete('chu-de');history.replaceState(null,'',u)}catch(e){}}
+  function list(){var nq=norm(q),g=gOf(cur);
+    var r=L.filter(function(p){return (!g||inG(p,g))&&(!lv||HV.level(p)===lv)&&(!nq||norm(p.title+' '+p.excerpt+' '+(p.tags||[]).join(' ')).indexOf(nq)>=0)});
+    if(g&&!nq)r.sort(function(a,b){var la=HV.level(a)==='Nâng cao',lb=HV.level(b)==='Nâng cao';return la!==lb?(la?1:-1):(a.date<b.date?1:-1)});
+    return r}
+  function draw(anim){var r=list(),g=gOf(cur),slice=r.slice(0,shown);
+    $('libT').textContent=g?g.name:'Tất cả bài viết';
+    $('libN').textContent=r.length+' bài'+(lv?' · '+lv:'')+(g&&!q?' · bài cơ bản đứng trước':'');
+    var qb=$('qbar');if(q){qb.hidden=false;qb.innerHTML='<span>Kết quả cho “<b>'+esc(q)+'</b>”</span><button type="button" id="qx">Xoá tìm kiếm</button>';$('qx').addEventListener('click',function(){q='';$('q').value='';shown=PER;draw(true)})}else qb.hidden=true;
+    $('pgrid').innerHTML=slice.length?slice.map(function(p){return HV.card(p)}).join(''):'<div class="hv-empty"><b>Chưa có bài phù hợp</b>Thử từ khoá khác, hoặc chọn "Tất cả chủ đề".</div>';
+    var left=r.length-slice.length,mb=$('moreB');mb.hidden=left<=0;mb.textContent='Xem thêm '+Math.min(PER,left)+' bài (còn '+left+')';
+    if(anim&&window.gsap&&!reduce)gsap.from($('pgrid').children,{y:24,opacity:0,duration:.5,stagger:.04,ease:'power3.out',clearProps:'all'})}
+  $('moreB').addEventListener('click',function(){var from=shown;shown+=PER;draw(false);var c=$('pgrid').children;if(window.gsap&&!reduce)gsap.from([].slice.call(c,from),{y:24,opacity:0,duration:.5,stagger:.04,ease:'power3.out',clearProps:'all'});var a=c[from];a&&a.focus&&a.focus({preventScroll:true})});
+  $('lvS').querySelectorAll('[data-l]').forEach(function(b){b.addEventListener('click',function(){lv=b.dataset.l;shown=PER;drawSide();draw(true)})});
+  var t;$('q').addEventListener('input',function(e){clearTimeout(t);t=setTimeout(function(){q=e.target.value.trim();shown=PER;draw(true)},180)});
+  $('qf').addEventListener('submit',function(e){e.preventDefault();q=$('q').value.trim();shown=PER;draw(true);scrollTo2('thu-vien')});
+  document.querySelectorAll('.hv-quick [data-q]').forEach(function(b){b.addEventListener('click',function(){$('q').value=b.dataset.q;q=b.dataset.q;cur='';lv='';shown=PER;drawSide();draw(true);scrollTo2('thu-vien')})});
   fetch('hoc-vien/index.json?v='+Date.now()).then(function(r){return r.json()}).then(function(d){L=d.sort(function(a,b){return a.date<b.date?1:-1});
-    document.getElementById('nAll').textContent=L.length;document.getElementById('nTop').textContent=HV.TOPICS.length;drawChips();draw(false)})
-  .catch(function(){g.innerHTML='<div class="hv-empty"><b>Chưa tải được danh sách bài</b>Vui lòng tải lại trang.</div>'});
+    try{var c=new URL(location.href).searchParams.get('chu-de');if(c&&gOf(c))cur=c}catch(e){}
+    drawStart();drawTopics();drawSide();draw(false);if(cur)setTimeout(function(){scrollTo2('thu-vien')},400)})
+  .catch(function(){$('pgrid').innerHTML='<div class="hv-empty"><b>Chưa tải được danh sách bài</b>Vui lòng tải lại trang.</div>'});
 })();
 /* ---------- CHUYỂN ĐỘNG ---------- */
 if(!window.gsap){root.classList.remove('js');return}

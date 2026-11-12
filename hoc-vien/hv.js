@@ -232,8 +232,11 @@
   /* ---------- 5. thẻ bài cho danh sách ---------- */
   HV.card = function (p, base) {
     base = base || '';
-    return '<a class="hvc" href="' + base + 'hoc-vien-' + p.slug + '.html" data-page><span class="hvc-img"><img src="' + base + (p.thumb || p.cover) + '" width="800" height="450" alt="" loading="lazy"></span><span class="hvc-tx"><span class="hvc-d">' + esc(HV.dateShort(p.date)) + '</span><b>' + esc(p.title) + '</b><span class="hvc-tags">' + (p.tags || []).map(function (t) { return '<i>' + esc(t) + '</i>'; }).join('') + '</span><span class="hvc-ex">' + esc(p.excerpt) + '</span><span class="hvc-r">Đọc bài<svg aria-hidden="true"><use href="#arr"/></svg></span></span></a>';
+    var lv = HV.level ? HV.level(p) : ((p.tags || [])[0] || '');
+    var img = HV.art ? HV.art(p) : '<img src="' + base + (p.thumb || p.cover) + '" width="800" height="450" alt="" loading="lazy">';
+    return '<a class="hvc" href="' + base + 'hoc-vien-' + p.slug + '.html" data-page><span class="hvc-img">' + img + '</span><span class="hvc-tx"><span class="hvc-m"><i class="hv-lv' + (lv === 'Nâng cao' ? ' adv' : '') + '">' + esc(lv) + '</i><span>' + (p.minutes || 5) + ' phút đọc</span></span><b>' + esc(p.title) + '</b><span class="hvc-ex">' + esc(p.excerpt) + '</span><span class="hvc-r">Đọc bài<svg aria-hidden="true"><use href="#arr"/></svg></span></span></a>';
   };
+
 
   /* ---------- 6. trang bài hoàn chỉnh từ khuôn mẫu ---------- */
   HV.page = function (tpl, post, site) {
@@ -242,7 +245,7 @@
     var ld = { '@context': 'https://schema.org', '@type': 'Article', headline: post.title, description: post.excerpt, datePublished: post.date, image: (site || '') + post.cover, author: { '@type': 'Organization', name: 'Farmblock' }, publisher: { '@type': 'Organization', name: 'Farmblock' }, mainEntityOfPage: url };
     var map = {
       TITLE: esc(post.title), DESC: esc(post.excerpt), URL: esc(url), OGIMG: esc((site || '') + post.cover), SLUG: esc(post.slug),
-      COVER: esc(post.cover), DATE_ISO: esc(post.date), DATE: esc(HV.dateLong(post.date)), MINS: r.minutes, AUTHOR: esc(post.author || 'Farmblock Admin'),
+      COVER: esc(post.cover), ART: HV.art ? HV.art(post, true) : '<img src="' + esc(post.cover) + '" width="1672" height="941" alt="Ảnh minh hoạ: ' + esc(post.title) + '" fetchpriority="high">', DATE_ISO: esc(post.date), DATE: esc(HV.dateLong(post.date)), MINS: r.minutes, AUTHOR: esc(post.author || 'Farmblock Admin'),
       CAT: esc((post.tags || [])[0] || 'Học viện'), TAGS: (post.tags || []).map(function (t) { return '<span class="hv-tag">' + esc(t) + '</span>'; }).join(''),
       TOC: tocH, BODY: r.html, JSONLD: JSON.stringify(ld).replace(/</g, '\\u003c')
     };

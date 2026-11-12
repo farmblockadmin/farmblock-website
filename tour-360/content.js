@@ -6,7 +6,9 @@ window.FB360 = {
   scenes: [
     { id: '0408', src: 'pano/0408', thumb: 'pano/thumb-0408.webp', label: 'Tháng 4', short: 'Tháng 4', date: '08/04/2026', lat: -251.9, lon: 44.3, h: 417.7, yaw: 99.1, fov: 104, tilt: [4, -2], devices: false, trace: true, dry: true, // tháng 4 chưa đào hồ: ranh B1 không khoét chỗ hồ
       meta: 'Bay cao 418 m', sub: 'Đất mới khai hoang, chưa đào hồ, chưa trồng. Góc nhìn rộng nhất, thấy cả vùng xung quanh.' },
-    { id: '0713', src: 'pano/0713', thumb: 'pano/thumb-0713.webp', label: 'Tháng 7', short: 'Tháng 7', date: '13/07/2026', lat: -138.8, lon: 13, h: 126.2, yaw: 14.6, fov: 98, tilt: [14, -6], devices: true,
+    { id: '0711', src: 'pano/0711', thumb: 'pano/thumb-0711.webp', label: 'Tháng 7', short: 'Tháng 7', date: '11/07/2026', lat: -118, lon: -97.8, h: 195.3, yaw: 180.5, fov: 98, tilt: [8, -4], devices: true,
+      meta: 'Bay 195 m, ngay trên hồ', sub: 'Vườn vừa trồng xong, nhìn thẳng xuống hồ trữ nước và Nhà điều hành.' },
+    { id: '0713', src: 'pano/0713', thumb: 'pano/thumb-0713.webp', label: 'Tháng 9', short: 'Tháng 9', date: '09/2026', lat: -138.8, lon: 13, h: 126.2, yaw: 14.6, fov: 98, tilt: [14, -6], devices: true,
       meta: 'Bay thấp 126 m', sub: 'Nhìn rõ từng hàng cà phê con và các điểm thiết bị đang chạy.' },
     // Ảnh 08/04 phủ hàng cà phê dựng 3D theo quy hoạch (lấy từ tour Panoee "360 flycam"). Luôn ghi minh hoạ.
     { id: '3d', src: 'pano/3d', thumb: 'pano/thumb-3d.webp', label: '3D', short: '3D', date: 'Quy hoạch', illus: true, trace: true, lat: -251.9, lon: 44.3, h: 417.7, yaw: 99.1, fov: 104, tilt: [4, -2], devices: false,
@@ -70,7 +72,7 @@ window.FB360 = {
     }
   },
 
-  // Điểm dừng cho chế độ tự xem (cảnh 13/07)
+  // Điểm dừng cho chế độ tự xem (cảnh tháng 9, ảnh DJI_0071)
   tour: [
     { target: 'nha-dieu-hanh', text: 'Nhà điều hành: mái pin mặt trời chạy bơm tưới cho cả vườn.' },
     { target: 'ho', text: 'Hồ trữ nước khoảng 1.800 m², dự trữ cho mùa khô.' },

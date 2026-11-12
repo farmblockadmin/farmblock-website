@@ -41,6 +41,7 @@
 
   if (lang !== 'vi') {
     var src = ['chung', page];
+    if (hv || page === 'hoc-vien') src.push('hv-ds');
     if (hv) src.push('hv/' + hv[1]);
     if (lang === 'en') for (var i = 0; i < src.length; i++) d.write('<script src="' + base + 'i18n/en/' + src[i] + '.js"><\/script>');
 

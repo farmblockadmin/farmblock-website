@@ -4,9 +4,9 @@ FBI18N.add({
  ["^(\\d+) bài$","$1 articles"],
  ["^(\\d+) bài · (.+) · bài cơ bản đứng trước$","$1 articles · $2 · basics first"],
  ["^(\\d+) bài · bài cơ bản đứng trước$","$1 articles · basics first"],
- ["^(\\d+) bài · (.+)$","$1 articles · $2"],
+ ["^(\\d+) bài · (.+)$",function(m,a,b){return a+" articles · "+FBI18N.t(b);}],
  ["^Xem thêm (\\d+) bài \\(còn (\\d+)\\)$","Show $1 more ($2 left)"],
- ["^(.+) · (\\d+) phút$","$1 · $2 min"],
+ ["^(.+) · (\\d+) phút$",function(m,a,b){return FBI18N.t(a)+" · "+b+" min";}],
  ["^(\\d+) phút$","$1 min"],
  ["^Minh hoạ: (.+)$","Illustration: $1"]
 ],

@@ -81,6 +81,8 @@ FBI18N.add({
 "Đã sao chép":"Copied",
 "Đã sao chép liên kết":"Link copied",
 "Đã sao chép số điện thoại":"Phone number copied",
+"Đã sao chép số":"Number copied",
+"Đã sao chép email":"Email copied",
 "Đã sao chép email":"Email copied",
 "Đang tải":"Loading",
 "Đang tải…":"Loading…",

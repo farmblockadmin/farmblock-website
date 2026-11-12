@@ -40,9 +40,8 @@
   root.classList.add('lang-' + root.lang);
 
   if (lang !== 'vi') {
-    var src = ['chung', page];
-    if (hv || page === 'hoc-vien') src.push('hv-ds');
-    if (hv) src.push('hv/' + hv[1]);
+    var src = hv ? ['chung', 'hv-ds', 'hv-bai', 'hv/' + hv[1]] : ['chung', page];
+    if (page === 'hoc-vien') src.push('hv-ds');
     if (lang === 'en') for (var i = 0; i < src.length; i++) d.write('<script src="' + base + 'i18n/en/' + src[i] + '.js"><\/script>');
 
     var ATTR = ['placeholder', 'title', 'aria-label', 'alt', 'data-cht', 'data-lab', 'data-tip', 'data-l'];

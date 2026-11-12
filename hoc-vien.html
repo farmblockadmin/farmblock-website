@@ -367,6 +367,7 @@ a.it2:hover{background:rgba(255,255,255,.1)}
 .gi{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:rgba(181,227,131,.14);color:var(--lime)}
 .gi svg{width:24px;height:24px}.gi.g1 svg{width:30px;height:30px}
 .gi.g2{background:rgba(81,173,202,.16);color:#8fd3ea}.gi.g3{background:rgba(245,228,161,.14);color:var(--cream)}
+.gi{--fb-ic-accent:color-mix(in srgb,currentColor 34%,transparent);--fb-ic-accent-line:currentColor}
 @media (max-width:860px){.go-m{position:static}.go-p{left:0;right:0;width:auto;transform-origin:top center}}
 @media (max-width:620px){
   .panel-m.pm2{grid-template-columns:1fr;max-height:calc(100svh - 110px);overflow:auto}
@@ -733,8 +734,8 @@ addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-
       <button class="btn btn-lime cta-vm" type="button" id="goBtn" aria-expanded="false" aria-controls="goP"><span class="l">Truy cập</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
       <div class="go-p" id="goP">
         <a href="https://vuonmau.farmblock.vn/ca-phe-mang-yang-1" target="_blank" rel="noopener"><i class="gi g1" aria-hidden="true"><svg><use href="#logo"/></svg></i><span><b>Truy cập vườn mẫu</b><span>Xem vườn trực tuyến</span></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
-        <a href="https://dashboard.farmblock.vn/" target="_blank" rel="noopener"><i class="gi g2" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2.5"/><path d="M7 14l3-3 3 2 4-5M8 21h8"/></g></svg></i><span><b>Truy cập Dashboard</b><span>Cho chuyên gia &amp; chủ đất</span></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
-        <a href="https://sotay.farmblock.vn/" target="_blank" rel="noopener"><i class="gi g3" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4M12 7v5M9.5 10a2.5 2.5 0 0 0 5 0"/></g></svg></i><span><b>Truy cập Sổ Rẫy</b><span>Ứng dụng cho bà con</span></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
+        <a href="https://dashboard.farmblock.vn/" target="_blank" rel="noopener"><i class="gi g2" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect fill="var(--fb-ic-accent, #B5E383)" stroke="none" x="15.2" y="6" width="3.2" height="11" rx=".8"/><path d="M4 4v16h16"/><rect x="7.2" y="12" width="3.2" height="5" rx=".8"/><rect x="11.2" y="9" width="3.2" height="8" rx=".8"/><rect x="15.2" y="6" width="3.2" height="11" rx=".8"/></g></svg></i><span><b>Truy cập Dashboard</b><span>Cho chuyên gia &amp; chủ đất</span></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
+        <a href="https://sotay.farmblock.vn/" target="_blank" rel="noopener"><i class="gi g3" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path fill="var(--fb-ic-accent, #B5E383)" stroke="none" d="M12.2 17.6c0-2 1.4-3.4 3.4-3.4 0 2-1.4 3.4-3.4 3.4z"/><path d="M6 3h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6z"/><path d="M9.2 3v18"/><path d="M12.4 7.5h3.6M12.4 10.8h3.6"/></g></svg></i><span><b>Truy cập Sổ Rẫy</b><span>Ứng dụng cho bà con</span></span><svg aria-hidden="true"><use href="#ext"/></svg></a>
       </div>
     </div>
   </div>

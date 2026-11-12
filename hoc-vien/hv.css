@@ -30,6 +30,7 @@
 .hv-role-h{display:flex;align-items:center;gap:12px;font-weight:700;color:var(--rc);margin-bottom:8px!important;font-size:1.02em}
 .hv-role-i{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--rc);color:#fff;flex:none}
 .hv-role-i svg{width:22px;height:22px}
+.hv-role-i{--fb-ic-accent:rgba(255,255,255,.34);--fb-ic-accent-line:#fff}
 .prose .hv-fig{margin:1.6em 0}
 .hv-fig img{width:100%;height:auto;border-radius:18px}
 .hv-fig figcaption{margin-top:8px;font-size:.9rem;color:var(--muted,#3D5845);text-align:center}

@@ -175,12 +175,14 @@
   };
 
   var ROLE_C = ['#3A8047', '#2F8FB5', '#C98A12', '#B3121F', '#7EBF3A'];
+  /* Icon đối tượng đọc: lấy từ bộ icon FarmBlock (claude-farmblock brand-kit/icons). */
   var ROLE_I = {
-    'chủ đất': '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
-    'cơ quan quản lý': '<path d="M3 21h18M4 10h16M12 3l9 5H3z"/><path d="M6 10v8M10 10v8M14 10v8M18 10v8"/>',
-    'đối tác kỹ thuật': '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>'
+    'chủ đất': '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path fill="var(--fb-ic-accent, #B5E383)" stroke="none" d="M12 3l4.5 2.5L12 8 7.5 5.5z"/><path d="M12 3l9 5-9 5-9-5z"/><path d="M7.5 5.5l9 5M16.5 5.5l-9 5"/><path d="M3 12l9 5 9-5M3 16l9 5 9-5"/></g>',
+    'cơ quan quản lý': '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path fill="var(--fb-ic-accent, #B5E383)" stroke="none" d="M12 3.5l7.6 4.6H4.4z"/><path d="M12 3.5l7.6 4.6H4.4z"/><path d="M7 10.6v6.4M10.3 10.6v6.4M13.7 10.6v6.4M17 10.6v6.4"/><path d="M4.4 19.4h15.2M3 21.2h18"/></g>',
+    'đối tác kỹ thuật': '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle fill="var(--fb-ic-accent, #B5E383)" stroke="none" cx="5.2" cy="18.8" r="1.1"/><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3.6 17.4a2 2 0 0 0 2.9 2.9l5.7-5.7a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></g>'
   };
-  function roleIcon(r) { var k = Object.keys(ROLE_I).filter(function (x) { return r.toLowerCase().indexOf(x) >= 0; })[0]; return '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (k ? ROLE_I[k] : '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 5-7 8-7s7 2 8 7"/>') + '</g></svg>'; }
+  var ROLE_MAC_DINH = '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path fill="var(--fb-ic-accent, #B5E383)" stroke="none" d="M12 3.6L20.6 10c-3.4 1.4-13.8 1.4-17.2 0z"/><path d="M12 3.6L20.6 10c-3.4 1.4-13.8 1.4-17.2 0z"/><path d="M8.6 12a3.4 3.4 0 0 0 6.8 0"/><path d="M4.8 21c.6-3 3.6-5 7.2-5s6.6 2 7.2 5"/></g>';
+  function roleIcon(r) { var k = Object.keys(ROLE_I).filter(function (x) { return r.toLowerCase().indexOf(x) >= 0; })[0]; return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (k ? ROLE_I[k] : ROLE_MAC_DINH) + '</svg>'; }
 
   function block(b) {
     if (b.t === 'p') return '<p>' + clean(b.x) + '</p>';

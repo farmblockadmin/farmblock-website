@@ -268,30 +268,39 @@
   }
 
   // thẻ nhãn: ưu tiên điểm chính, thẻ nào chồng lên thẻ đã đặt thì thu về chỉ còn biểu tượng
-  let labelRects = [];
+  let labelRects = [], uiRects = [], uiAt = 0;
   const overlaps = (r, list) => list.some(q => r[0] < q[2] && r[2] > q[0] && r[1] < q[3] && r[3] > q[1]);
+  const inside = (x, y, list) => list.some(q => x > q[0] && x < q[2] && y > q[1] && y < q[3]);
+  // vùng của thanh chọn cảnh, nút phóng to, sơ đồ, tiêu đề: thẻ và nhãn khu né ra, điểm nằm dưới thì ẩn
+  function measureUI(now) {
+    if (now - uiAt < 400) return; uiAt = now;
+    const vr = view.getBoundingClientRect();
+    uiRects = ['.sbar', '.ctrl', '#mini', '.top h1'].map(q => document.querySelector(q)).filter(e => e && e.offsetParent !== null)
+      .map(e => { const b = e.getBoundingClientRect(); return [b.left - vr.left - 8, b.top - vr.top - 8, b.right - vr.left + 8, b.bottom - vr.top + 8]; });
+  }
   function placePins() {
     const on = S.sc && S.sc.devices && (reduce || (performance.now() - S.introAt) / 1000 > 0.9);
     const vis = [];
     items.forEach(it => {
       let ok = on && it.dir, x = 0, y = 0;
       if (ok) { toCam(it.dir, tmpB); ok = tmpB.z < NEAR; }
-      if (ok) { [x, y] = toScreen(tmpB); ok = x > -30 && y > 60 && x < W + 30 && y < H + 30; }
+      if (ok) { [x, y] = toScreen(tmpB); ok = x > -30 && y > 60 && x < W + 30 && y < H + 30 && !inside(x, y, uiRects); }
       it.sx = ok ? x : null; it.sy = y;
       if (!ok) { if (!it.el.classList.contains('off')) { it.el.classList.add('off'); it.btn.tabIndex = -1; } return; }
       if (it.el.classList.contains('off')) { it.el.classList.remove('off'); it.btn.tabIndex = 0; }
       it.el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
       vis.push(it);
     });
-    const mob = small(); labelRects = [];
+    const mob = small(); labelRects = uiRects.slice();
     vis.sort((a, b) => (b.key - a.key) || (b.sy - a.sy));
     vis.forEach(it => {
       const st = it.key ? (mob ? 46 : 66) : (mob ? 30 : 44), h = it.key ? 44 : 38, w = mob ? it.w * 0.82 : it.w;
       const r = [it.sx - w / 2, it.sy - 7 - st - h, it.sx + w / 2, it.sy - 7 - st];
       const sel = it.el.classList.contains('sel');
       // cảm biến, camera: chỉ biểu tượng, rê chuột mới hiện tên và ảnh; Nhà điều hành, Hồ giữ thẻ chữ
-      let tight = !sel && (!it.key || overlaps([r[0] - 6, r[1] - 4, r[2] + 6, r[3] + 4], labelRects)), dot = false;
-      if (tight) { const tr = [it.sx - 18, it.sy - 7 - 26 - 34, it.sx + 18, it.sy - 33]; dot = overlaps(tr, labelRects); if (!dot) labelRects.push(tr); }
+      let tight = !sel && (!it.key || r[0] < 6 || r[2] > W - 6 || overlaps([r[0] - 6, r[1] - 4, r[2] + 6, r[3] + 4], labelRects)), dot = false;
+      // điện thoại: biểu tượng nhỏ, thân ngắn, chừa khoảng rộng hơn để các điểm gần nhau thu về chấm sáng
+      if (tight) { const tr = mob ? [it.sx - 17, it.sy - 7 - 16 - 30, it.sx + 17, it.sy - 19] : [it.sx - 18, it.sy - 7 - 26 - 34, it.sx + 18, it.sy - 33]; dot = overlaps(tr, labelRects); if (!dot) labelRects.push(tr); }
       else labelRects.push(r);
       it.el.classList.toggle('tight', tight); it.el.classList.toggle('dotonly', dot);
       it.el.style.zIndex = sel ? 5 : dot ? 1 : tight ? 2 : it.key ? 4 : 3;
@@ -352,7 +361,7 @@
     if (pop.classList.contains('on') && !S.anim && (++skip % 4)) return;
     fadeSigns(now);
     renderer.render(scene3, cam);
-    placePins(); placeZones(); drawFX(now); drawFan(); drawCompass();
+    measureUI(now); placePins(); placeZones(); drawFX(now); drawFan(); drawCompass();
   }
   let skip = 0;
   function resize() {

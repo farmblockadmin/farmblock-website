@@ -81,7 +81,7 @@ button:focus-visible,.plot:focus-visible,.zone:focus-visible,tr:focus-visible,.r
 .vx{fill:var(--bg);stroke:var(--acc);pointer-events:none}
 .kl rect{fill:rgba(8,19,13,.86);stroke:rgba(230,239,230,.5)}
 .kl text{fill:var(--ink);text-anchor:middle;dominant-baseline:central;font-weight:500;letter-spacing:.06em}
-.pl{fill:rgba(230,239,230,.6);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.pl{fill:#FFFFFF;font-weight:600;paint-order:stroke;stroke:rgba(8,19,13,.85);stroke-linejoin:round;text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .hl{fill:var(--water);text-anchor:middle;dominant-baseline:central;pointer-events:none;letter-spacing:.06em}
 .dimL{font-weight:500;fill:#FFFFFF;text-anchor:middle;dominant-baseline:central;pointer-events:none;paint-order:stroke;stroke:rgba(8,19,13,.85);stroke-linejoin:round;font-variant-numeric:tabular-nums}
 .rul{fill:rgba(12,26,18,.94)}
@@ -623,7 +623,7 @@ el('path',{d:D.ho.d,class:'ho','vector-effect':'non-scaling-stroke'});
 el('path',{d:D.outer,class:'outer','vector-effect':'non-scaling-stroke'});
 const selPath=el('path',{class:'sel',d:'','vector-effect':'non-scaling-stroke'});
 const gVx=el('g',{});
-const gPl=el('g',{});D.plots.forEach(p=>{const t=el('text',{x:p.c[0],y:p.c[1],class:'pl'},gPl);t.textContent=p.id.replace(/^[A-C]\d?-/,'');p.lab=t});
+const gPl=el('g',{});D.plots.forEach(p=>{const t=el('text',{x:p.c[0],y:p.c[1],class:'pl'},gPl);t.textContent=p.big?p.id:p.id.replace(/^[A-C]\d?-/,'');p.lab=t});
 const gK=el('g',{});const kls=KHU.map(k=>{const g=el('g',{class:'kl'},gK);const r=el('rect',{'vector-effect':'non-scaling-stroke'},g);const t=el('text',{},g);return {k,r,t,c:D.khu[k].c}});
 const hoT=el('text',{class:'hl'});hoT.textContent='HỒ TRỮ NƯỚC';
 /* số đo cạnh: gộp các đoạn gần thẳng hàng thành một cạnh, cạnh chung giữa hai ô chỉ ghi một lần */
@@ -637,21 +637,32 @@ const gDim=el('g',{});const EDGES=[];
    const a=P[ci],b=P[cj],kk=key(a,b);if(seen.has(kk)||L<1)return;seen.add(kk);
    let half=L/2,m=seg[0],ang=0;for(let q=1;q<seg.length;q++){const d=Math.hypot(seg[q][0]-seg[q-1][0],seg[q][1]-seg[q-1][1]);if(half<=d){const t=d?half/d:0;m=[seg[q-1][0]+(seg[q][0]-seg[q-1][0])*t,seg[q-1][1]+(seg[q][1]-seg[q-1][1])*t];ang=Math.atan2(seg[q][1]-seg[q-1][1],seg[q][0]-seg[q-1][0])*180/Math.PI;break}half-=d}
    if(ang>90)ang-=180;if(ang<-90)ang+=180;
-   const t=el('text',{class:'dimL',x:m[0],y:m[1],transform:`rotate(${ang.toFixed(1)} ${m[0].toFixed(2)} ${m[1].toFixed(2)})`},gDim);t.textContent=fmt1(L);EDGES.push({t,L,m})})})}
+   const ar=ang*Math.PI/180;let nx=-Math.sin(ar),ny=Math.cos(ar);const cx=p.c?p.c[0]:m[0],cy=p.c?p.c[1]:m[1];if(nx*(cx-m[0])+ny*(cy-m[1])<0){nx=-nx;ny=-ny}
+   const t=el('text',{class:'dimL'},gDim);t.textContent=fmt1(L);EDGES.push({t,L,m,n:[nx,ny],ang})})})}
 function fmt1(v){return v.toFixed(1).replace('.',',')}
-function drawDims(){const on=S>fitS*1.35;gDim.style.display=on?'':'none';if(!on)return;const f=11/S,sw=2.6/S;
-  const x0=vb.x,y0=vb.y,x1=vb.x+vb.w,y1=vb.y+vb.h;
-  EDGES.forEach(e=>{const w=(e.t.textContent.length*6.6+14);const vis=e.L*S>=w&&e.m[0]>x0&&e.m[0]<x1&&e.m[1]>y0&&e.m[1]<y1;e.t.style.display=vis?'':'none';if(vis){e.t.style.fontSize=f+'px';e.t.style.strokeWidth=sw+'px'}})}
+function drawDims(){const on=S>fitS*1.35;gDim.style.display=on?'':'none';if(!on)return;const f=13/S,sw=3/S;
+  const x0=vb.x,y0=vb.y,x1=vb.x+vb.w,y1=vb.y+vb.h,B=[];
+  const hit=(cx,cy,hx,hy)=>B.some(b=>Math.abs(b[0]-cx)<b[2]+hx&&Math.abs(b[1]-cy)<b[3]+hy);
+  /* chừa chỗ cho nhãn khu và tên ô (đơn vị px màn hình) */
+  kls.forEach(o=>{const w=+o.r.getAttribute('width')*S,h=+o.r.getAttribute('height')*S;B.push([o.c[0]*S,o.c[1]*S,w/2+4,h/2+4])});
+  if(gPl.style.display!=='none')D.plots.forEach(p=>{if(p.lab.style.display==='none')return;B.push([p.c[0]*S,p.c[1]*S,p.lab.textContent.length*4.3+6,12])});
+  EDGES.sort((a,b)=>b.L-a.L).forEach(e=>{const w=e.t.textContent.length*7.8+16;
+    const o=12/S,x=e.m[0]+e.n[0]*o,y=e.m[1]+e.n[1]*o;
+    let vis=e.L*S>=w&&x>x0&&x<x1&&y>y0&&y<y1;
+    if(vis){const a=e.ang*Math.PI/180,c=Math.abs(Math.cos(a)),sn=Math.abs(Math.sin(a)),tw=w-10,th=15;
+      const hx=c*tw/2+sn*th/2,hy=sn*tw/2+c*th/2;if(hit(x*S,y*S,hx,hy))vis=false;else B.push([x*S,y*S,hx,hy])}
+    e.t.style.display=vis?'':'none';
+    if(vis){e.t.setAttribute('x',x);e.t.setAttribute('y',y);e.t.setAttribute('transform',`rotate(${e.ang.toFixed(1)} ${x} ${y})`);e.t.style.fontSize=f+'px';e.t.style.strokeWidth=sw+'px'}})}
 
 let S=1;
 function setVB(v){vb=v;svg.setAttribute('viewBox',`${v.x} ${v.y} ${v.w} ${v.h}`);
   S=Math.min(svg.clientWidth/v.w,svg.clientHeight/v.h)||1;
   const small=svg.clientWidth<500;
-  kls.forEach(o=>{o.t.textContent=(small?'':'KHU ')+o.k;const f=small?10:11,fs=f/S,w=(o.t.textContent.length*f*.68+14)/S,h=(f+9)/S;
+  kls.forEach(o=>{o.t.textContent=(small?'':'KHU ')+o.k;const f=small?11:13,fs=f/S,w=(o.t.textContent.length*f*.68+16)/S,h=(f+10)/S;
     o.t.setAttribute('x',o.c[0]);o.t.setAttribute('y',o.c[1]);o.t.style.fontSize=fs+'px';
     o.r.setAttribute('x',o.c[0]-w/2);o.r.setAttribute('y',o.c[1]-h/2);o.r.setAttribute('width',w);o.r.setAttribute('height',h)});
   hoT.setAttribute('x',D.ho.c[0]);hoT.setAttribute('y',D.ho.c[1]+20/S);hoT.style.fontSize=(9/S)+'px';hoT.style.display=S>1.4?'':'none';
-  gPl.style.display=S>1.8?'':'none';if(S>1.8)D.plots.forEach(p=>{if(!p.bb)p.bb=p.el.getBBox();const t=p.lab;t.style.fontSize=(9.5/S)+'px';const w=t.textContent.length*5.8+6;t.style.display=(p.bb.width*S>=w&&p.bb.height*S>=14)?'':'none'});
+  gPl.style.display=S>1.8?'':'none';if(S>1.8)D.plots.forEach(p=>{if(!p.bb)p.bb=p.el.getBBox();const t=p.lab;t.style.fontSize=(14/S)+'px';t.style.strokeWidth=(3/S)+'px';const w=t.textContent.length*8.6+8;t.style.display=(p.bb.width*S>=w&&p.bb.height*S>=20)?'':'none'});
   drawDims();drawVx();drawOv();
 }
 function toSvg(cx,cy,s=svg){const p=s.createSVGPoint();p.x=cx;p.y=cy;return p.matrixTransform(s.getScreenCTM().inverse())}

@@ -15,6 +15,8 @@ FBI18N.add({
 "Farmblock – Kiến tạo hạ tầng vận hành mới cho nông nghiệp Việt Nam":"FarmBlock – Building new operating infrastructure for Vietnamese agriculture",
 "Doanh nghiệp công nghệ nông nghiệp, phát triển theo định hướng khoa học công nghệ. Bộ công nghệ vận hành vùng trồng, kiểm chứng tại vườn Ia Ko, Gia Lai, hướng tới nhiều vùng trồng Việt Nam.":"An agricultural technology company growing in a science and technology direction. A technology suite for running growing areas, proven at the Ia Ko garden in Gia Lai and aiming for many growing regions across Vietnam.",
 "Doanh nghiệp công nghệ nông nghiệp":"Agricultural technology company",
+"Doanh nghiệp nông nghiệp công nghệ cao":"High-tech agriculture company",
+"FarmBlock nghiên cứu, xây dựng và vận hành vùng trồng bằng khoa học và dữ liệu. Khởi đầu từ Gia Lai, hướng tới nhiều vùng trồng trên khắp Việt Nam.":"FarmBlock researches, builds and operates growing areas with science and data. Starting in Gia Lai, reaching growing areas across Vietnam.",
 "Phát triển theo định hướng khoa học công nghệ, FarmBlock đưa dữ liệu vào việc chăm sóc từng vùng trồng. Bắt đầu từ Gia Lai, hướng tới nhiều vùng trồng trên khắp Việt Nam.":"Growing in a science and technology direction, FarmBlock brings data into the care of every growing area. Starting in Gia Lai, aiming for many growing regions across Vietnam.",
 "Khám phá mô hình":"Explore the model",
 "Tour 360° vườn mẫu":"360° tour of the model garden",

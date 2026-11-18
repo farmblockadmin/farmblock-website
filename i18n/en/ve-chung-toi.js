@@ -87,6 +87,7 @@ FBI18N.add({
 "Nông sản toàn cầu":"Produce for the world",
 "Mang cà phê và sầu riêng chất lượng cao của Việt Nam đến bữa ăn mọi gia đình trên thế giới, chúng tôi viết tiếp câu chuyện về miền đất đỏ và những con người nơi đây.":"Bringing Vietnam's high-quality coffee and durian to family tables around the world, we continue the story of the red-soil land and its people.",
 "Xem lộ trình nhân rộng mô hình":"See the roadmap for scaling the model",
+"Xem mô hình vận hành":"See the operating model",
 "Xem tất cả":"See all",
 "Bìa Sổ tay đại lý Farmblock":"Cover of the FarmBlock Dealer Handbook",
 "Sổ tay đại lý Farmblock":"FarmBlock Dealer Handbook",

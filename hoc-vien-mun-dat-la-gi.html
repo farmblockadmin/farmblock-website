@@ -445,17 +445,17 @@ a.it2:hover{background:rgba(255,255,255,.1)}
 @keyframes fblRun{0%{transform:translateX(-110%)}100%{transform:translateX(230%)}}
 /* mở: lớp kem nhấc lên trước, lớp xanh theo sau */
 html.fbl-open .fbl{pointer-events:none}
-html.fbl-open .fbl-s{transition:transform 1s cubic-bezier(.76,0,.24,1)}
+html.fbl-open .fbl-s{transition:transform .8s cubic-bezier(.76,0,.24,1)}
 html.fbl-open .fbl-s.fr{transform:translate3d(0,-122vh,0)}
-html.fbl-open .fbl-s.bk{transform:translate3d(0,-122vh,0);transition-delay:.11s}
+html.fbl-open .fbl-s.bk{transform:translate3d(0,-122vh,0);transition-delay:.08s}
 html.fbl-open .fbl-c{opacity:0;transform:translate(-50%,calc(-50% - 40px))}
 html.fbl-done .fbl{visibility:hidden}
 /* rời trang: lớp xanh trồi lên trước, lớp kem phủ theo */
 html.fbl-pre .fbl-s{transform:translate3d(0,122vh,0);transition:none}
 html.fbl-pre .fbl-c{opacity:0;transform:translate(-50%,calc(-50% + 30px));transition:none}
-html.fbl-close .fbl-s{transition:transform .7s cubic-bezier(.76,0,.24,1)}
-html.fbl-close .fbl-s.fr{transition-delay:.08s}
-html.fbl-close .fbl-c{transition:opacity .4s ease .45s,transform .6s cubic-bezier(.16,1,.3,1) .4s}
+html.fbl-close .fbl-s{transition:transform .5s cubic-bezier(.76,0,.24,1)}
+html.fbl-close .fbl-s.fr{transition-delay:.06s}
+html.fbl-close .fbl-c{transition:opacity .3s ease .3s,transform .5s cubic-bezier(.16,1,.3,1) .28s}
 html.fbl-close .fbl-m .mk{animation:none}
 @media (prefers-reduced-motion:reduce){.fbl-s{transition:none!important}html.fbl-open .fbl{opacity:0;transition:opacity .3s}.fbl-m .mk,.fbl-m b,.fbl-c .fbl-pg::after{animation:none}}
 /* ---- hết vòng 23 ---- */
@@ -528,13 +528,13 @@ html.fbl-close .fbl-m .mk{animation:none}
 /* ---- hết vòng 21 ---- */
 </style>
 <script>/* vòng 23: màn chờ */
-(function(){var R=document.documentElement,t0=performance.now(),opened=false,MIN=700,MAX=4500;
+(function(){var R=document.documentElement,t0=performance.now(),opened=false,MIN=350,MAX=2200;
 document.addEventListener('DOMContentLoaded',function(){if(window.gsap&&!opened)gsap.globalTimeline.pause()});
 function open(){if(opened)return;opened=true;R.classList.remove('fbl-close','fbl-pre');R.classList.add('fbl-open');
   setTimeout(function(){if(window.gsap)gsap.globalTimeline.resume()},180);
-  setTimeout(function(){R.classList.add('fbl-done')},1250)}
-function ready(){var wait=Math.max(0,MIN-(performance.now()-t0));setTimeout(function(){(document.fonts&&document.fonts.ready||Promise.resolve()).then(function(){requestAnimationFrame(function(){requestAnimationFrame(open)})})},wait)}
-function go(){if(document.readyState==='complete')ready();else addEventListener('load',ready);setTimeout(open,MAX)}
+  setTimeout(function(){R.classList.add('fbl-done')},1000)}
+function ready(){var wait=Math.max(0,MIN-(performance.now()-t0));setTimeout(function(){Promise.race([document.fonts&&document.fonts.ready||Promise.resolve(),new Promise(function(r){setTimeout(r,400)})]).then(function(){requestAnimationFrame(function(){requestAnimationFrame(open)})})},wait)}
+function go(){if(document.readyState!=='loading')ready();else document.addEventListener('DOMContentLoaded',ready);setTimeout(open,MAX)}
 if(document.prerendering){document.addEventListener('prerenderingchange',function(){t0=performance.now()-300;go()},{once:true})}else go();
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-page]');if(!a||e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.target==='_blank'||a.getAttribute('aria-current')==='page')return;
   var u=new URL(a.href,location.href);if(u.origin!==location.origin||(u.pathname===location.pathname&&u.hash))return;
@@ -543,8 +543,8 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
   requestAnimationFrame(function(){R.classList.add('fbl-close');R.classList.remove('fbl-pre')});
   /* lấy bản mới nhất của trang đích trong lúc màn khép (tránh bản cũ trong bộ nhớ đệm), rồi mới chuyển */
   var href=a.href,t1=performance.now(),gone=false;function nav(){if(gone)return;gone=true;location.href=href}
-  var f=window.fetch?fetch(href,{cache:'reload',credentials:'same-origin'}).catch(function(){}):Promise.resolve();
-  f.then(function(){setTimeout(nav,Math.max(0,860-(performance.now()-t1)))});setTimeout(nav,3000)});
+  var f=window.fetch?fetch(href,{credentials:'same-origin'}).catch(function(){}):Promise.resolve();
+  f.then(function(){setTimeout(nav,Math.max(0,560-(performance.now()-t1)))});setTimeout(nav,1200)});
 addEventListener('pageshow',function(e){if(e.persisted){R.classList.remove('fbl-close','fbl-pre','fbl-done','fbl-open');opened=false;setTimeout(open,150)}});
 })();</script>
 <link rel="stylesheet" href="hoc-vien/hv-art.css">

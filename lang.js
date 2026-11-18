@@ -118,9 +118,26 @@
     st.textContent = '.fb-lang{display:inline-flex;align-items:center;gap:2px;height:52px;padding:0 6px;margin-right:8px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(17,38,21,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;text-decoration:none;font:600 15px/1 Archivo,system-ui,sans-serif;letter-spacing:.04em;flex:none;transition:border-color .2s}'
       + '.fb-lang span{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;border-radius:999px;opacity:.7;transition:background .2s,color .2s,opacity .2s}'
       + '.fb-lang span.on{background:#B5E383;color:#112615;opacity:1}.fb-lang:hover{border-color:#B5E383}.fb-lang:hover span:not(.on){opacity:1}'
-      + '@media (max-width:600px){.fb-lang{height:40px;padding:0 3px;margin-right:4px;font-size:12px;gap:0}.fb-lang span{min-width:26px;height:32px}.bar:has(.nav-back) .nav-pg{display:none}}';
+      /* điện thoại: thanh menu chỉ còn logo, Menu, Truy cập; VI/EN chuyển vào trong hộp Menu (18/11) */
+      + '.pm-lang{display:none}'
+      + '@media (max-width:600px){.nav .bar .nav-pg{display:none}.pm-lang{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 14px;border-radius:18px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.75);font:600 14px/1.2 Archivo,system-ui,sans-serif}'
+      + '.pm-lang .fb-lang{height:44px;margin:0;padding:0 4px;font-size:14px}.pm-lang .fb-lang span{min-width:44px;height:36px}}'
+      /* chỗ trống còn lại: hiện chữ FARMBLOCK cạnh logo và chữ "Truy cập" */
+      + '@media (min-width:375px) and (max-width:600px){.nav .bar.has-pg .brand .wm{display:block}.nav .bar .go-m .cta-vm span.l{display:inline}}';
     d.head.appendChild(st);
-    if (before) host.insertBefore(a, before); else host.appendChild(a);
+    var panel = d.getElementById('panelM'), row = null;
+    if (panel) {
+      row = d.createElement('div'); row.className = 'pm-lang'; row.setAttribute('translate', 'no');
+      row.innerHTML = '<span>' + (root.lang === 'en' ? 'Language' : 'Ngôn ngữ') + '</span>';
+      panel.insertBefore(row, panel.firstChild);
+    }
+    var mq = window.matchMedia ? matchMedia('(max-width:600px)') : null;
+    function place() {
+      if (row && mq && mq.matches) { if (a.parentNode !== row) row.appendChild(a); }
+      else if (a.parentNode !== host) { if (before) host.insertBefore(a, before); else host.appendChild(a); }
+    }
+    place();
+    if (mq) { if (mq.addEventListener) mq.addEventListener('change', place); else if (mq.addListener) mq.addListener(place); }
   }
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', addSwitch); else addSwitch();
 })();

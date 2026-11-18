@@ -1,0 +1,38 @@
+/* Học viện FarmBlock: ảnh bìa vẽ bằng code (xem hv-art.js) */
+.hva{position:relative;display:block;width:100%;aspect-ratio:16/9;container-type:inline-size;overflow:hidden;isolation:isolate;background:var(--bg,#EEF5E6);color:#0F2A17;font-family:"Archivo",system-ui,sans-serif;text-align:left}
+.hva::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-radial-gradient(circle at 73% 52%,transparent 0 5.2cqi,color-mix(in srgb,var(--acc,#3A8047) 9%,transparent) 5.2cqi calc(5.2cqi + 1px));-webkit-mask:radial-gradient(ellipse 52% 90% at 73% 52%,#000 30%,transparent 78%);mask:radial-gradient(ellipse 52% 90% at 73% 52%,#000 30%,transparent 78%)}
+.hva::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 60% 80% at 0% 100%,rgba(255,255,255,.55),transparent 60%)}
+.hva-tx{position:absolute;left:6.4cqi;top:15cqi;bottom:6cqi;width:44cqi;display:flex;flex-direction:column;justify-content:center;gap:1.4cqi}
+.hva-c{display:inline-flex;align-items:center;gap:1.2cqi;font-size:2.2cqi;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--acc,#3A8047);line-height:1.2}
+.hva-c::before{content:"";flex:none;width:1.3cqi;height:1.3cqi;border-radius:50%;background:currentColor}
+.hva-k{display:block;font-weight:600;font-stretch:110%;letter-spacing:-.035em;line-height:1.04;color:#0F2A17;text-wrap:balance}
+.hva-z1 .hva-k{font-size:11.5cqi}
+.hva-z2 .hva-k{font-size:7.6cqi}
+.hva-z3 .hva-k{font-size:6.2cqi}
+.hva-z4 .hva-k{font-size:5.1cqi}
+.hva-s{display:block;font-size:3.3cqi;font-weight:400;line-height:1.25;color:#3D5845}
+.hva-v{position:absolute;right:2.5cqi;top:50%;width:47cqi;aspect-ratio:1;transform:translateY(-50%)}
+.hva-d{position:absolute;inset:7%;border-radius:50%;background:var(--disc,#DDEBCB)}
+.hva-i{position:relative;display:block;width:100%;height:100%;overflow:visible;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.hva-mk{position:absolute;left:6.4cqi;top:5.6cqi;width:5cqi;height:5cqi}
+a:hover .hva-i,a:focus-visible .hva-i{transform:scale(1.045) rotate(-1deg)}
+@media (prefers-reduced-motion:reduce){.hva-i{transition:none}a:hover .hva-i{transform:none}}
+@container (max-width:360px){.hva-c{display:none}.hva-tx{top:6cqi}}
+
+/* ---------- thẻ bài (danh sách, bài liên quan) ---------- */
+.hvc{border-radius:24px;background:#fff}
+.hvc-img{display:block;aspect-ratio:16/9;overflow:hidden;background:none}
+.hvc-tx{gap:10px;padding:18px 22px 22px}
+.hvc-m{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:.9375rem;color:#3D5845}
+.hvc-m>span{display:inline-flex;align-items:center;gap:6px}
+.hvc-m svg{width:16px;height:16px}
+.hv-lv{display:inline-flex;align-items:center;min-height:28px;padding:0 11px;border-radius:999px;font-size:.8125rem;font-weight:600;letter-spacing:.02em;background:#EBF2ED;color:#2D6639}
+.hv-lv.adv{background:#112615;color:#B5E383}
+.hvc b{font-size:1.2rem;font-weight:600;line-height:1.28;color:#112615}
+.hvc-ex{-webkit-line-clamp:2}
+.hvc-r{padding-top:4px}
+
+/* ---------- trang bài: ảnh bìa lớn + nút về Học viện ---------- */
+.ar-cover .hva{border-radius:var(--r-lg,32px);box-shadow:0 40px 80px -40px rgba(0,0,0,.55)}
+.toc-tools .tool-back{background:#112615;color:#EEF6E6}
+.toc-tools .tool-back:hover,.toc-tools .tool-back:focus-visible{background:#234D2B;color:#B5E383}

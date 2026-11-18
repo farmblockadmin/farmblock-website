@@ -1,0 +1,264 @@
+/* Tự xem kiểu bảo tàng: màn chọn hành trình, màn tiêu đề, thẻ trưng bày, thanh điều khiển. */
+:root{--tx:181,227,131}
+.txm{position:fixed;inset:0;z-index:40;pointer-events:none;font-family:var(--font)}
+.txm>*{pointer-events:auto}
+.txm .tx-lb,.txm .tx-title:not(.tx-outro),.txm .tx-call{pointer-events:none}
+/* lớp nào chưa hiện thì không được chặn chuột: trước đây màn kết vẫn phủ cả màn hình sau khi bấm Tự khám phá */
+.txm [hidden]{display:none!important}
+.txm .tx-title:not(.on),.txm .tx-card:not(.on),.txm .tx-bar:not(.on),.txm .tx-pick:not(.on){pointer-events:none!important}
+.txm .tx-title:not(.on) *,.txm .tx-card:not(.on) *,.txm .tx-bar:not(.on) *{pointer-events:none!important}
+
+/* khi đang xem: giấu bớt giao diện thường, chỉ còn cảnh + thẻ + thanh điều khiển */
+.tx-on .top,.tx-on .mini,.tx-on .dock,.tx-on .caption,.tx-on .hud,.tx-on .ctrl{opacity:0;pointer-events:none;transition:opacity .5s}
+.tx-on .nav,.tx-picking .nav{transform:translateY(-140%);transition:transform .6s var(--ease)}
+/* chỉ giữ thiết bị đang được kể, các khu không viền, không nhãn */
+.tx-on .pin:not(.sel):not(.txf):not(.off){opacity:0;pointer-events:none;transition:opacity .5s}
+.tx-on .pin.txf{transition:opacity .5s}
+.tx-on .pin.sel{z-index:6!important}
+.tx-on .zl:not(.on){opacity:0;pointer-events:none}
+.top,.mini,.dock,.ctrl,.hud{transition:opacity .5s}
+
+/* dải đen trên dưới như màn chiếu */
+.tx-lb{position:fixed;left:0;right:0;height:clamp(18px,4.2vh,44px);background:#050c07;transform:scaleY(0);transition:transform .9s var(--ease)}
+.tx-lb-t{top:0;transform-origin:top}
+.tx-lb-b{bottom:0;transform-origin:bottom}
+.tx-on .tx-lb{transform:none}
+
+.tx-eyebrow{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgb(var(--tx))}
+.tx-eyebrow i{width:22px;height:1.5px;background:currentColor;box-shadow:0 0 10px currentColor}
+
+/* ---------- chọn hành trình ---------- */
+.tx-pick{position:fixed;inset:0;display:grid;place-items:center;padding:24px 16px;background:rgba(4,11,6,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;transition:opacity .35s;overflow-y:auto}
+.tx-pick.on{opacity:1}
+.tx-pick-in{position:relative;width:min(980px,100%);--tx:181,227,131}
+.tx-pick h2{margin-top:12px;font-size:clamp(26px,3.4vw,44px);font-weight:600;letter-spacing:-.02em;line-height:1.08;font-stretch:110%;max-width:18ch;text-wrap:balance}
+.tx-pick-sub{margin-top:12px;max-width:58ch;color:rgba(255,255,255,.78);font-size:15px;text-wrap:pretty}
+.tx-close{position:absolute;right:0;top:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.tx-close svg{width:20px;height:20px}
+.tx-close:hover{background:rgba(255,255,255,.16)}
+.tx-cards{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tx-tc{--tc:181,227,131;position:relative;display:flex;flex-direction:column;text-align:left;border-radius:22px;overflow:hidden;background:#0b1a0f;box-shadow:inset 0 0 0 1px rgba(var(--tc),.28),0 30px 60px -30px rgba(0,0,0,.8);transform:translateY(16px);opacity:0;transition:transform .7s var(--ease),opacity .6s,box-shadow .3s}
+.tx-pick.on .tx-tc{transform:none;opacity:1}
+.tx-pick.on .tx-tc:nth-child(2){transition-delay:.08s}
+.tx-tc:hover,.tx-tc:focus-visible{box-shadow:inset 0 0 0 1.5px rgba(var(--tc),.9),0 30px 70px -26px rgba(var(--tc),.45)}
+.tx-tc-img{position:relative;display:block;aspect-ratio:16/8;overflow:hidden}
+.tx-tc-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.tx-tc:hover .tx-tc-img img{transform:scale(1.06)}
+.tx-tc-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,26,15,0) 35%,#0b1a0f)}
+.tx-tc-t{display:flex;flex-direction:column;gap:8px;padding:0 24px 24px;margin-top:-34px;position:relative}
+.tx-tc-t small{font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgb(var(--tc))}
+.tx-tc-t b{font-size:clamp(21px,2vw,27px);font-weight:600;letter-spacing:-.01em;line-height:1.15;font-stretch:106%}
+.tx-tc-t>span{color:rgba(255,255,255,.74);font-size:14.5px;text-wrap:pretty}
+.tx-tc-t em{margin-top:8px;display:flex;align-items:center;justify-content:space-between;font-style:normal;font-size:13px;font-weight:500;color:rgba(255,255,255,.9);padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-variant-numeric:tabular-nums}
+.tx-tc-t em i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgb(var(--tc));color:#0c1f10;transition:transform .3s var(--ease)}
+.tx-tc-t em i svg{width:18px;height:18px}
+.tx-tc:hover em i{transform:translateX(4px)}
+
+/* ---------- màn tiêu đề, màn kết ---------- */
+.tx-title{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(4,11,6,.72),rgba(4,11,6,.35) 70%);opacity:0;transition:opacity .9s}
+.tx-title.on{opacity:1}
+.tx-title .tx-eyebrow{justify-content:center}
+.tx-title h2{margin-top:14px;font-size:clamp(32px,5.4vw,72px);font-weight:600;letter-spacing:-.025em;line-height:1.02;font-stretch:112%;max-width:16ch;text-wrap:balance;text-shadow:0 4px 40px rgba(0,0,0,.5);
+  transform:translateY(14px);opacity:0;transition:transform 1.2s var(--ease) .15s,opacity 1s .15s}
+.tx-title p:not(.tx-eyebrow){margin-top:16px;max-width:52ch;font-size:clamp(15px,1.3vw,18px);color:rgba(255,255,255,.82);text-wrap:pretty;opacity:0;transition:opacity 1s .45s}
+.tx-title.on h2{transform:none;opacity:1}
+.tx-title.on p{opacity:1}
+.tx-tl{margin-top:28px;width:120px;height:2px;background:rgba(255,255,255,.18);border-radius:2px;overflow:hidden}
+.tx-tl i{display:block;height:100%;width:100%;background:rgb(var(--tx));transform:scaleX(0);transform-origin:left}
+.tx-title.on .tx-tl i{transform:scaleX(1);transition:transform 3.2s linear .2s}
+.tx-outro{pointer-events:auto}
+.tx-acts{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;opacity:0;transition:opacity 1s .6s}
+.tx-outro.on .tx-acts{opacity:1}
+.tx-btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-size:15px;font-weight:500;color:#fff;text-decoration:none;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.tx-btn:hover{background:rgba(255,255,255,.18)}
+.tx-btn.pri{background:rgb(var(--tx));color:#0c1f10;box-shadow:none}
+.tx-btn svg{width:18px;height:18px}
+
+/* ---------- thẻ trưng bày ---------- */
+.tx-card{position:fixed;z-index:2;right:calc(var(--m) + env(safe-area-inset-right));top:calc(clamp(18px,4.2vh,44px) + 18px);max-height:calc(100% - 2*clamp(18px,4.2vh,44px) - 114px);
+  width:clamp(330px,32vw,460px);display:flex;flex-direction:column;border-radius:24px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(9,22,13,.86),rgba(7,17,10,.92));backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  box-shadow:inset 0 0 0 1px rgba(var(--tx),.22),0 40px 80px -30px rgba(0,0,0,.75);
+  opacity:0;transform:translateX(28px);transition:opacity .6s,transform .8s var(--ease)}
+.tx-card.on{opacity:1;transform:none}
+.tx-card.out{opacity:0;transform:translateX(-14px);transition:opacity .35s,transform .5s}
+.tx-media{position:relative;flex:none;aspect-ratio:16/10;background:#050c07;overflow:hidden}
+.tx-sl{position:absolute;inset:0;opacity:0;transition:opacity 1.1s}
+.tx-sl.on{opacity:1}
+.tx-sl img,.tx-sl video{width:100%;height:100%;object-fit:cover;display:block}
+.tx-sl.on img{animation:txkb var(--d,6s) linear both}
+.tx-sl.kb2.on img{animation-name:txkb2}
+@keyframes txkb{from{transform:scale(1.12) translate(1.5%,1%)}to{transform:scale(1.02) translate(0,0)}}
+@keyframes txkb2{from{transform:scale(1.02) translate(-1%,0)}to{transform:scale(1.12) translate(1.5%,-1.5%)}}
+.tx-sl.ph{background:radial-gradient(circle at 50% 40%,rgba(var(--tx),.25),#071109 70%)}
+.tx-sl.ph img{object-fit:contain;padding:14px 0 10px;animation:none!important;filter:drop-shadow(0 20px 30px rgba(0,0,0,.5))}
+/* ảnh màn hình Dashboard: giữ trọn khung, không cắt */
+.tx-sl.fit{background:#eef1ec}
+.tx-sl.fit img{object-fit:contain;padding:10px 10px 44px;animation:none!important}
+.tx-media:has(.tx-sl.fit.on)::after{height:30%;background:linear-gradient(rgba(5,12,7,0),rgba(5,12,7,.92))}
+/* chú thích nổi: ảnh màn hình cần to hơn ảnh thực địa để đọc được */
+.tx-call{transition:opacity .6s,width .6s var(--ease)}
+.tx-call:has(.tx-sl.fit.on){width:clamp(420px,36vw,620px)}
+.tx-il{position:absolute;left:12px;top:12px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--paper);color:var(--g800)}
+.tx-media::after{content:"";position:absolute;inset:auto 0 0;height:46%;background:linear-gradient(rgba(5,12,7,0),rgba(5,12,7,.85));pointer-events:none;z-index:1}
+.tx-cap{position:absolute;z-index:2;left:16px;right:70px;bottom:12px;font-size:12.5px;color:rgba(255,255,255,.88);line-height:1.35;text-wrap:pretty}
+.tx-cap span{display:block;animation:txin .6s var(--ease)}
+@keyframes txin{from{opacity:0;transform:translateY(6px)}}
+.tx-dots{position:absolute;z-index:2;right:14px;bottom:16px;display:flex;gap:5px}
+.tx-dots i{width:14px;height:3px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden}
+.tx-dots i.on{background:rgb(var(--tx))}
+.tx-body{flex:1;min-height:0;overflow-y:auto;padding:20px 24px 24px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;overscroll-behavior:contain}
+.tx-card.nomedia .tx-body{padding-top:28px}
+.tx-k{display:flex;align-items:center;gap:12px;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgb(var(--tx))}
+.tx-no{font-size:12px;letter-spacing:.06em;padding:3px 9px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(var(--tx),.6)}
+.tx-h{margin-top:10px;font-size:clamp(24px,2.1vw,31px);font-weight:600;letter-spacing:-.02em;line-height:1.08;font-stretch:108%;text-wrap:balance}
+.tx-lead{margin-top:8px;font-size:15.5px;color:rgb(var(--tx));font-weight:500;text-wrap:pretty}
+.tx-sts{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.1)}
+.tx-st{padding:12px 14px;background:#0b1a0f;display:flex;flex-direction:column;gap:2px}
+.tx-st b{font-size:clamp(22px,1.9vw,28px);font-weight:600;letter-spacing:-.01em;line-height:1.1;font-stretch:108%;white-space:nowrap}
+.tx-st span{font-size:12.5px;color:rgba(255,255,255,.66);line-height:1.3}
+.tx-text{margin-top:16px;font-size:15px;line-height:1.6;color:rgba(255,255,255,.84);text-wrap:pretty}
+.tx-link{margin-top:18px;display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:0 20px;border-radius:999px;background:rgb(var(--tx));color:#0c1f10;font-weight:600;font-size:15px;text-decoration:none}
+.tx-link svg{width:18px;height:18px}
+.tx-tline{margin-top:18px;list-style:none;display:grid;grid-template-columns:repeat(4,1fr) 1.25fr;position:relative}
+.tx-tline::before{content:"";position:absolute;left:7px;right:7px;top:6px;height:2px;background:rgba(255,255,255,.14)}
+.tx-tline li{position:relative;display:flex;flex-direction:column;gap:3px;padding-right:6px;animation:txin .6s var(--ease) both;animation-delay:calc(.6s + var(--k) * .35s)}
+.tx-tline li i{width:14px;height:14px;border-radius:50%;background:#0b1a0f;box-shadow:inset 0 0 0 2px rgb(var(--tx));margin-bottom:6px;position:relative;z-index:1}
+.tx-tline li:last-child i{background:rgb(255,140,90);box-shadow:0 0 0 4px rgba(255,140,90,.25),0 0 16px rgba(255,140,90,.8)}
+.tx-tline b{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.tx-tline span{font-size:11.5px;color:rgba(255,255,255,.66);line-height:1.3}
+.tx-card.on .tx-c>*{animation:txup .8s var(--ease) both}
+.tx-card.on .tx-c1>:nth-child(2){animation-delay:.08s}.tx-card.on .tx-c1>:nth-child(n+3){animation-delay:.16s}
+.tx-card.on .tx-c2>*{animation-delay:.22s}.tx-card.on .tx-c2>:nth-child(n+2){animation-delay:.3s}
+@keyframes txup{from{opacity:0;transform:translateY(12px)}}
+
+/* ---------- thanh điều khiển ---------- */
+.tx-bar{position:fixed;z-index:3;left:50%;bottom:calc(clamp(18px,4.2vh,44px) + 14px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;
+  width:min(760px,calc(100vw - 2*var(--m)));display:flex;align-items:center;gap:6px;padding:8px;border-radius:20px;
+  background:rgba(7,17,10,.8);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);transition:opacity .5s,transform .7s var(--ease)}
+.tx-bar.on{opacity:1;transform:translate(-50%,0)}
+.tx-b{flex:none;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff}
+.tx-b:hover{background:rgba(255,255,255,.1)}
+.tx-b svg{width:20px;height:20px}
+.tx-pp{background:rgb(var(--tx));color:#0c1f10}
+.tx-pp:hover{background:rgb(var(--tx));filter:brightness(1.08)}
+.tx-exit{width:auto;padding:0 14px;display:flex;gap:6px;font-size:14px;font-weight:500}
+.tx-exit svg{width:16px;height:16px}
+.tx-prog{flex:1;min-width:0;padding:0 8px}
+.tx-now{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(255,255,255,.92);font-variant-numeric:tabular-nums}
+.tx-now b{color:rgb(var(--tx));font-weight:600}
+.tx-now span{color:rgba(255,255,255,.5);margin-right:6px}
+.tx-segs{margin-top:7px;display:flex;gap:4px}
+.tx-seg{flex:1;height:14px;display:flex;align-items:center;--p:0}
+.tx-seg i{display:block;width:100%;height:3px;border-radius:2px;background:linear-gradient(90deg,rgb(var(--tx)) calc(var(--p) * 100%),rgba(255,255,255,.2) 0)}
+.tx-seg:hover i{height:5px}
+.tx-paused .tx-now::after{content:" · Đã tạm dừng";color:rgba(255,255,255,.6)}
+.tx-ended .tx-now::after{content:" · Hết hành trình"}
+
+/* ---------- lựa chọn: cách trình bày, chạy lặp ---------- */
+.tx-opts{margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 28px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1)}
+.tx-seg2{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.tx-seg2>span{font-size:13px;color:rgba(255,255,255,.66);margin-right:8px}
+.tx-seg2 button{min-height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;color:rgba(255,255,255,.82);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.tx-seg2 button:hover{background:rgba(255,255,255,.08)}
+.tx-seg2 button[aria-checked="true"]{background:rgb(181,227,131);color:#0c1f10;box-shadow:none}
+.tx-sw{display:flex;align-items:center;gap:12px;cursor:pointer;max-width:420px}
+.tx-sw input{position:absolute;opacity:0;width:1px;height:1px}
+.tx-sw i{flex:none;width:44px;height:26px;border-radius:999px;background:rgba(255,255,255,.18);position:relative;transition:background .25s}
+.tx-sw i::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .3s var(--ease)}
+.tx-sw input:checked+i{background:rgb(181,227,131)}
+.tx-sw input:checked+i::after{transform:translateX(18px)}
+.tx-sw input:focus-visible+i{outline:2px solid #fff;outline-offset:2px}
+.tx-sw span{display:flex;flex-direction:column;font-size:14px;font-weight:500;line-height:1.3}
+.tx-sw small{font-size:12.5px;font-weight:400;color:rgba(255,255,255,.6)}
+
+/* ---------- chú thích nổi: ảnh bám cạnh điểm đang kể, chữ ở giữa phía dưới ---------- */
+.tx-call{position:fixed;left:0;top:0;z-index:1;width:clamp(300px,25vw,420px);border-radius:18px;overflow:hidden;opacity:0;
+  box-shadow:inset 0 0 0 1px rgba(var(--tx),.35),0 30px 60px -24px rgba(0,0,0,.8);transition:opacity .6s;will-change:transform}
+.tx-call.on{opacity:1}
+.tx-call .tx-media{border-radius:inherit}
+.tx-noi .tx-card{left:50%;right:auto;top:auto;bottom:calc(clamp(18px,4.2vh,44px) + 90px + env(safe-area-inset-bottom));width:min(1000px,calc(100vw - 2*var(--m)));max-height:min(40vh,360px);
+  transform:translate(-50%,24px);border-radius:22px;background:linear-gradient(180deg,rgba(9,22,13,.84),rgba(7,17,10,.92))}
+.tx-noi .tx-card.on{transform:translate(-50%,0)}
+.tx-noi .tx-card.out{transform:translate(-50%,10px)}
+/* hai cột: tên điểm bên trái, lời kể bên phải, có vạch ngăn, căn giữa theo chiều dọc */
+.tx-noi .tx-body{display:grid;grid-template-columns:minmax(260px,36%) minmax(0,1fr);align-items:center;padding:24px 30px}
+.tx-noi .tx-c1{padding-right:30px}
+.tx-noi .tx-c2{display:flex;flex-direction:column;padding-left:30px;border-left:1px solid rgba(255,255,255,.12);min-height:100%;justify-content:center}
+.tx-noi .tx-h{font-size:clamp(24px,2vw,30px);margin-top:12px}
+.tx-noi .tx-lead{margin-top:8px;font-size:15px}
+.tx-noi .tx-link{margin-top:16px;min-height:40px;padding:0 16px;font-size:14px}
+.tx-noi .tx-link svg{width:16px;height:16px}
+.tx-noi .tx-text{order:1;margin-top:0;font-size:15.5px;line-height:1.6}
+/* số liệu: một hàng gọn dưới lời kể, không hộp nền */
+.tx-noi .tx-sts{order:2;margin-top:16px;display:flex;flex-wrap:wrap;gap:10px 0;background:none;border-radius:0;overflow:visible}
+.tx-noi .tx-st{background:none;padding:0 22px 0 0;margin-right:22px;border-right:1px solid rgba(255,255,255,.12);flex-direction:row;align-items:baseline;gap:8px}
+.tx-noi .tx-st:last-child{border-right:0;margin-right:0;padding-right:0}
+.tx-noi .tx-st b{font-size:clamp(22px,1.8vw,27px)}
+.tx-noi .tx-st span{font-size:13px}
+.tx-noi .tx-tline{order:3;margin-top:16px}
+
+/* TV: không ai động vào thì ẩn chuột và thanh điều khiển */
+.tx-idle,.tx-idle *{cursor:none!important}
+.tx-idle .tx-bar.on{opacity:0;transform:translate(-50%,20px)}
+.tx-idle.tx-noi .tx-card{bottom:calc(clamp(18px,4.2vh,44px) + 20px)}
+
+/* ---------- điện thoại dọc: thẻ thành tấm trượt ở nửa dưới ---------- */
+@media (max-width:760px) and (min-height:521px){
+  .tx-lb{height:0}
+  .tx-cards{grid-template-columns:1fr;gap:12px;margin-top:20px}
+  .tx-tc-img{aspect-ratio:16/7}
+  .tx-tc-t{padding:0 18px 18px;margin-top:-26px}
+  .tx-tc-t>span{font-size:13.5px}
+  .tx-pick{align-items:start;padding-top:calc(20px + env(safe-area-inset-top))}
+  .tx-pick h2{padding-right:52px}
+  .tx-card{left:10px;right:10px;width:auto;top:auto;bottom:calc(84px + env(safe-area-inset-bottom));height:min(52vh,470px);border-radius:22px;transform:translateY(30px)}
+  .tx-card.out{transform:translateY(12px)}
+  .tx-media{aspect-ratio:16/7.4}
+  .tx-body{padding:14px 18px 18px}
+  .tx-h{font-size:22px;margin-top:8px}
+  .tx-lead{font-size:14.5px;margin-top:6px}
+  .tx-sts{margin-top:12px}
+  .tx-st{padding:9px 12px}.tx-st b{font-size:20px}
+  .tx-text{font-size:14px;margin-top:12px;line-height:1.55}
+  .tx-tline b{font-size:12px}.tx-tline span{font-size:10.5px}
+  .tx-bar{left:10px;right:10px;width:auto;transform:translateY(20px);bottom:calc(10px + env(safe-area-inset-bottom));padding:6px;gap:2px;border-radius:18px}
+  .tx-bar.on{transform:none}
+  .tx-b{width:40px;height:40px;border-radius:12px}
+  .tx-exit span{display:none}
+  .tx-exit{width:40px;padding:0}
+  .tx-prog{padding:0 6px}
+  .tx-title h2{font-size:34px}
+  .tx-opts{margin-top:16px;padding-top:14px}
+  .tx-seg2 button{min-height:38px;padding:0 13px;font-size:13.5px}
+  .tx-idle .tx-bar.on{transform:translateY(20px)}
+}
+/* điện thoại xoay ngang: thẻ hẹp bên phải, chữ gọn */
+@media (max-height:520px){
+  .tx-lb{height:0}
+  .tx-pick{align-items:start}
+  .tx-pick h2{font-size:24px}.tx-pick-sub{display:none}
+  .tx-cards{margin-top:14px;gap:12px}
+  .tx-tc-img{aspect-ratio:16/5}
+  .tx-tc-t{padding:0 16px 14px;margin-top:-20px;gap:4px}.tx-tc-t>span{display:none}
+  .tx-card{top:10px;bottom:10px;max-height:none;width:min(46vw,380px);right:calc(10px + env(safe-area-inset-right));border-radius:18px}
+  .tx-card .tx-media{aspect-ratio:16/6}
+  .tx-bar{left:calc(10px + env(safe-area-inset-left));transform:translateY(20px);width:calc(100vw - min(46vw,380px) - 40px)}
+  .tx-bar.on{transform:none}
+  .tx-body{padding:12px 16px 16px}
+  .tx-h{font-size:20px;margin-top:6px}
+  .tx-lead{font-size:13.5px}
+  .tx-st b{font-size:18px}.tx-st{padding:8px 10px}
+  .tx-text{font-size:13.5px;margin-top:10px}
+  .tx-bar{bottom:calc(8px + env(safe-area-inset-bottom));padding:4px}
+  .tx-b{width:38px;height:38px}
+  .tx-exit span{display:none}.tx-exit{width:38px;padding:0}
+  .tx-title h2{font-size:30px}
+  .tx-opts{margin-top:12px;padding-top:10px}.tx-sw small{display:none}
+  .tx-idle .tx-bar.on{transform:translateY(20px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .tx-sl.on img{animation:none}
+  .tx-card,.tx-title h2,.tx-bar{transition-duration:.01s}
+}

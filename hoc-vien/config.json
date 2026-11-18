@@ -1,0 +1,16 @@
+{
+ "site": "https://farmblockadmin.github.io/farmblock-website/",
+ "repo": "farmblockadmin/farmblock-website",
+ "branch": "main",
+ "pages": [
+  "",
+  "ve-chung-toi.html",
+  "mo-hinh.html",
+  "cong-nghe.html",
+  "bang-gia.html",
+  "bang-tin.html",
+  "bai-viet-so-tay-dai-ly.html",
+  "hoc-vien.html",
+  "chinh-sach-bao-mat.html"
+ ]
+}

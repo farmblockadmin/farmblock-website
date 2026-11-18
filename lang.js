@@ -123,7 +123,9 @@
       + '@media (max-width:600px){.nav .bar .nav-pg{display:none}.pm-lang{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 14px;border-radius:18px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.75);font:600 14px/1.2 Archivo,system-ui,sans-serif}'
       + '.pm-lang .fb-lang{height:44px;margin:0;padding:0 4px;font-size:14px}.pm-lang .fb-lang span{min-width:44px;height:36px}}'
       /* chỗ trống còn lại: hiện chữ FARMBLOCK cạnh logo và chữ "Truy cập" */
-      + '@media (min-width:375px) and (max-width:600px){.nav .bar.has-pg .brand .wm{display:block}.nav .bar .go-m .cta-vm span.l{display:inline}}';
+      + '@media (min-width:375px) and (max-width:600px){.nav .bar.has-pg .brand .wm{display:block}.nav .bar .go-m .cta-vm span.l{display:inline}.nav .bar:has(.nav-back) .brand .wm{display:none}}'
+      /* điện thoại: cụm chữ giữ liền (.nw) được xuống dòng, tránh tiêu đề tràn ngang làm cả trang trượt sang bên */
+      + '@media (max-width:600px){h1 .nw,h2 .nw,h3 .nw{white-space:normal}}';
     d.head.appendChild(st);
     var panel = d.getElementById('panelM'), row = null;
     if (panel) {

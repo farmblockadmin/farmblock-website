@@ -1465,15 +1465,15 @@ var mm=gsap.matchMedia();
 })();
 
 mm.add('(prefers-reduced-motion: no-preference)',function(){
-  if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',once:true}})}})});ScrollTrigger.refresh()})}
-  gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}})});
-  gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img,video');gsap.timeline({scrollTrigger:{trigger:f,start:'top 88%',once:true}}).fromTo(f,{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath'}).fromTo(img,{scale:1.15},{scale:1,duration:1.6,ease:'power3.out',clearProps:'transform'},0)});
-  gsap.fromTo('.rv-stage',{clipPath:'inset(8% 5% 8% 5% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath',scrollTrigger:{trigger:'.rv-stage',start:'top 85%',once:true}});
-  gsap.from('.sq-panel',{y:40,opacity:0,duration:1,ease:'power3.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.sq',start:'top 92%',once:true}});
-  gsap.from('.cr:not(.hd)',{x:-24,opacity:0,duration:.6,stagger:.05,ease:'power3.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.ctab',start:'top 80%',once:true}});
-  gsap.from('.acc',{x:-30,opacity:0,duration:.7,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.fl',start:'top 82%',once:true}});
+  if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',toggleActions:'play none none none'}})}})});ScrollTrigger.refresh()})}
+  gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}})});
+  gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img,video');gsap.timeline({scrollTrigger:{trigger:f,start:'top 88%',toggleActions:'play none none none'}}).fromTo(f,{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath'}).fromTo(img,{scale:1.15},{scale:1,duration:1.6,ease:'power3.out',clearProps:'transform'},0)});
+  gsap.fromTo('.rv-stage',{clipPath:'inset(8% 5% 8% 5% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath',scrollTrigger:{trigger:'.rv-stage',start:'top 85%',toggleActions:'play none none none'}});
+  gsap.from('.sq-panel',{y:40,opacity:0,duration:1,ease:'power3.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.sq',start:'top 92%',toggleActions:'play none none none'}});
+  gsap.from('.cr:not(.hd)',{x:-24,opacity:0,duration:.6,stagger:.05,ease:'power3.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.ctab',start:'top 80%',toggleActions:'play none none none'}});
+  gsap.from('.acc',{x:-30,opacity:0,duration:.7,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'.fl',start:'top 82%',toggleActions:'play none none none'}});
   if(!isMobile)gsap.fromTo('.cta-box>video',{yPercent:-12},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.cta-box',start:'top bottom',end:'bottom top',scrub:true}});
-  gsap.from('.tagline span',{y:30,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.foot',start:'top 85%',once:true}});
+  gsap.from('.tagline span',{y:30,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.foot',start:'top 85%',toggleActions:'play none none none'}});
 });
 /* bốn bước: kéo cuộn để vẽ con đường, biểu tượng FarmBlock chạy qua từng mốc */
 (function(){

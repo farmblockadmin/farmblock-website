@@ -942,40 +942,40 @@ mm.add('(prefers-reduced-motion: no-preference)',function(){
   tl.to({},{duration:.5});
 
   /* tiêu đề tách dòng */
-  if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',once:true}})}})});ScrollTrigger.refresh()})}
-  gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}})});
+  if(window.SplitText){document.fonts.ready.then(function(){gsap.utils.toArray('h2.split').forEach(function(h){SplitText.create(h,{type:'lines',linesClass:'ln',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:60,opacity:0,rotateX:-30,transformOrigin:'50% 100%',duration:1,stagger:.1,ease:'power4.out',scrollTrigger:{trigger:h,start:'top 86%',toggleActions:'play none none none'}})}})});ScrollTrigger.refresh()})}
+  gsap.utils.toArray('.rv').forEach(function(el){gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}})});
 
   /* CHƯƠNG 01: gọn một màn hình, ảnh tự đổi */
   var imgs=gsap.utils.toArray('.ch1-img'),dots=gsap.utils.toArray('.ch1-dots i');
   var c1=0,c1on=false;new IntersectionObserver(function(e){c1on=e[0].isIntersecting}).observe(document.querySelector('.ch1'));
   setInterval(function(){if(!c1on||document.hidden)return;c1=(c1+1)%imgs.length;imgs.forEach(function(f,k){f.classList.toggle('on',k===c1)});dots.forEach(function(d,k){d.classList.toggle('on',k===c1)})},4200);
-  gsap.from('.say',{y:24,opacity:0,duration:.8,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.ch1-copy',start:'top 80%',once:true}});
+  gsap.from('.say',{y:24,opacity:0,duration:.8,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.ch1-copy',start:'top 80%',toggleActions:'play none none none'}});
 
   /* CHƯƠNG 02 */
-  gsap.from('.lead1',{x:-60,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.duo2',start:'top 80%',once:true}});
-  gsap.from('.no1',{scale:.6,opacity:0,duration:1.2,ease:'back.out(1.6)',scrollTrigger:{trigger:'.duo2',start:'top 80%',once:true},delay:.15});
-  gsap.from('.but',{scale:0,opacity:0,duration:.7,ease:'back.out(2)',scrollTrigger:{trigger:'.duo2',start:'top 75%',once:true},delay:.5});
-  gsap.from('.press li',{x:70,opacity:0,duration:.9,stagger:.14,ease:'power3.out',scrollTrigger:{trigger:'.press',start:'top 82%',once:true},delay:.6});
+  gsap.from('.lead1',{x:-60,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.duo2',start:'top 80%',toggleActions:'play none none none'}});
+  gsap.from('.no1',{scale:.6,opacity:0,duration:1.2,ease:'back.out(1.6)',scrollTrigger:{trigger:'.duo2',start:'top 80%',toggleActions:'play none none none'},delay:.15});
+  gsap.from('.but',{scale:0,opacity:0,duration:.7,ease:'back.out(2)',scrollTrigger:{trigger:'.duo2',start:'top 75%',toggleActions:'play none none none'},delay:.5});
+  gsap.from('.press li',{x:70,opacity:0,duration:.9,stagger:.14,ease:'power3.out',scrollTrigger:{trigger:'.press',start:'top 82%',toggleActions:'play none none none'},delay:.6});
 
   /* CHƯƠNG 03: dải đồi trôi chậm, thẻ xếp chồng */
   gsap.fromTo('.ch3-band img',{yPercent:-12},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.ch3-band',start:'top bottom',end:'bottom top',scrub:true}});
   if(!isMobile){var cards=gsap.utils.toArray('.pl2');cards.forEach(function(c,i){if(i===cards.length-1)return;gsap.to(c,{scale:.94,opacity:.55,ease:'none',scrollTrigger:{trigger:cards[i+1],start:'top 90%',end:'top 40%',scrub:true}})})}
-  gsap.from('.pl2',{y:80,opacity:0,duration:1,stagger:.15,ease:'power3.out',scrollTrigger:{trigger:'.pillars2',start:'top 85%',once:true}});
+  gsap.from('.pl2',{y:80,opacity:0,duration:1,stagger:.15,ease:'power3.out',scrollTrigger:{trigger:'.pillars2',start:'top 85%',toggleActions:'play none none none'}});
 
 
   /* CHƯƠNG 05 (hành trình): đường mốc chạy theo cuộn */
   (function(){var ms=document.getElementById('ms'),items=gsap.utils.toArray('.mi');
     ScrollTrigger.create({trigger:ms,start:'top 70%',end:'bottom 60%',scrub:.5,onUpdate:function(s){ms.style.setProperty('--p',s.progress.toFixed(3));items.forEach(function(el,i){el.classList.toggle('lit',s.progress>=i/(items.length-1)-.03)})}});
-    gsap.from(items,{y:50,opacity:0,duration:.9,stagger:.15,ease:'power3.out',scrollTrigger:{trigger:ms,start:'top 82%',once:true}})})();
+    gsap.from(items,{y:50,opacity:0,duration:.9,stagger:.15,ease:'power3.out',scrollTrigger:{trigger:ms,start:'top 82%',toggleActions:'play none none none'}})})();
 
   /* hoạ tiết: hai hàng trôi ngược chiều */
   gsap.utils.toArray('.pat-row').forEach(function(r){var d=+r.dataset.dir;gsap.fromTo(r,{x:d>0?-220:0},{x:d>0?0:-220,ease:'none',scrollTrigger:{trigger:'.pat',start:'top bottom',end:'bottom top',scrub:.5}})});
 
-  gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img');gsap.timeline({scrollTrigger:{trigger:f,start:'top 88%',once:true}}).fromTo(f,{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath'}).fromTo(img,{scale:1.15},{scale:1,duration:1.6,ease:'power3.out',clearProps:'transform'},0)});
-  gsap.from('.nc,.news-side',{y:50,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.news-g',start:'top 85%',once:true}});
+  gsap.utils.toArray('.rv-img').forEach(function(f){var img=f.querySelector('img');gsap.timeline({scrollTrigger:{trigger:f,start:'top 88%',toggleActions:'play none none none'}}).fromTo(f,{clipPath:'inset(10% 6% 10% 6% round 32px)'},{clipPath:'inset(0% 0% 0% 0% round 32px)',duration:1.2,ease:'power3.out',clearProps:'clipPath'}).fromTo(img,{scale:1.15},{scale:1,duration:1.6,ease:'power3.out',clearProps:'transform'},0)});
+  gsap.from('.nc,.news-side',{y:50,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.news-g',start:'top 85%',toggleActions:'play none none none'}});
   if(!isMobile)gsap.fromTo('.final .bg',{yPercent:-14},{yPercent:0,ease:'none',scrollTrigger:{trigger:'.final',start:'top bottom',end:'bottom bottom',scrub:true}});
-  gsap.from('.final h2',{y:50,opacity:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'.final',start:'top 70%',once:true}});
-  gsap.from('.tagline span',{y:30,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.foot',start:'top 85%',once:true}});
+  gsap.from('.final h2',{y:50,opacity:0,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:'.final',start:'top 70%',toggleActions:'play none none none'}});
+  gsap.from('.tagline span',{y:30,opacity:0,duration:.9,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'.foot',start:'top 85%',toggleActions:'play none none none'}});
 });
 
 /* CHƯƠNG 04: trượt ngang khi cuộn (máy tính, tablet ngang) */
@@ -987,7 +987,7 @@ mm.add('(min-width: 981px) and (prefers-reduced-motion: no-preference)',function
   return function(){gsap.set(tr,{clearProps:'transform'})};
 });
 mm.add('(max-width: 980px) and (prefers-reduced-motion: no-preference)',function(){
-  gsap.utils.toArray('.pp').forEach(function(p){gsap.from(p,{y:60,opacity:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:p,start:'top 88%',once:true}})});
+  gsap.utils.toArray('.pp').forEach(function(p){gsap.from(p,{y:60,opacity:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:p,start:'top 88%',toggleActions:'play none none none'}})});
 });
 addEventListener('load',function(){ScrollTrigger.refresh()});
 

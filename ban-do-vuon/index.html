@@ -83,7 +83,7 @@ button:focus-visible,.plot:focus-visible,.zone:focus-visible,tr:focus-visible,.r
 .kl text{fill:var(--ink);text-anchor:middle;dominant-baseline:central;font-weight:500;letter-spacing:.06em}
 .pl{fill:rgba(230,239,230,.6);text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .hl{fill:var(--water);text-anchor:middle;dominant-baseline:central;pointer-events:none;letter-spacing:.06em}
-.dimL{font-weight:500;fill:#F5E4A1;text-anchor:middle;dominant-baseline:central;pointer-events:none;paint-order:stroke;stroke:#08130D;stroke-linejoin:round;font-variant-numeric:tabular-nums}
+.dimL{font-weight:500;fill:#FFFFFF;text-anchor:middle;dominant-baseline:central;pointer-events:none;paint-order:stroke;stroke:rgba(8,19,13,.85);stroke-linejoin:round;font-variant-numeric:tabular-nums}
 .rul{fill:rgba(12,26,18,.94)}
 .rt{stroke:rgba(190,220,200,.4);stroke-width:1}
 .rtx{font-size:10px;fill:var(--ink3)}
@@ -639,7 +639,7 @@ const gDim=el('g',{});const EDGES=[];
    if(ang>90)ang-=180;if(ang<-90)ang+=180;
    const t=el('text',{class:'dimL',x:m[0],y:m[1],transform:`rotate(${ang.toFixed(1)} ${m[0].toFixed(2)} ${m[1].toFixed(2)})`},gDim);t.textContent=fmt1(L);EDGES.push({t,L,m})})})}
 function fmt1(v){return v.toFixed(1).replace('.',',')}
-function drawDims(){const on=S>1.2;gDim.style.display=on?'':'none';if(!on)return;const f=11/S,sw=3.2/S;
+function drawDims(){const on=S>fitS*1.35;gDim.style.display=on?'':'none';if(!on)return;const f=11/S,sw=2.6/S;
   const x0=vb.x,y0=vb.y,x1=vb.x+vb.w,y1=vb.y+vb.h;
   EDGES.forEach(e=>{const w=(e.t.textContent.length*6.6+14);const vis=e.L*S>=w&&e.m[0]>x0&&e.m[0]<x1&&e.m[1]>y0&&e.m[1]<y1;e.t.style.display=vis?'':'none';if(vis){e.t.style.fontSize=f+'px';e.t.style.strokeWidth=sw+'px'}})}
 
@@ -686,7 +686,8 @@ function animateTo(t,ms=520){cancelAnimationFrame(anim);
   const s={...vb},t0=performance.now();
   const step=n=>{let k=Math.min(1,(n-t0)/ms);k=1-Math.pow(1-k,3);setVB({x:s.x+(t.x-s.x)*k,y:s.y+(t.y-s.y)*k,w:s.w+(t.w-s.w)*k,h:s.h+(t.h-s.h)*k});if(k<1)anim=requestAnimationFrame(step)};
   anim=requestAnimationFrame(step)}
-function fitWithRulers(b){const W=svg.clientWidth,H=svg.clientHeight;const s=Math.min((W-34)/b.w,(H-20)/b.h);
+let fitS=1;
+function fitWithRulers(b){const W=svg.clientWidth,H=svg.clientHeight;const s=Math.min((W-34)/b.w,(H-20)/b.h);if(b.w>=D.w-20)fitS=s;
   return {x:b.x-34/s-((W-34)/s-b.w)/2,y:b.y-20/s-((H-20)/s-b.h)/2,w:W/s,h:H/s}}
 function bboxOf(els,pad){let x1=1e9,y1=1e9,x2=-1e9,y2=-1e9;els.forEach(e=>{const b=e.getBBox();x1=Math.min(x1,b.x);y1=Math.min(y1,b.y);x2=Math.max(x2,b.x+b.width);y2=Math.max(y2,b.y+b.height)});
   return {x:x1-pad,y:y1-pad,w:x2-x1+2*pad,h:y2-y1+2*pad}}

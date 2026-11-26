@@ -40,6 +40,18 @@ window.FB360_TUXEM = {
     { id: 'ong-noi', kieu: 'ong', ten: 'Đường ống nối', qua: ['trai-chan-nuoi', 'ho-phan', 'ho', 'ho-moi'] }
   ],
 
+  // Âm thanh nền: nhạc lặp suốt tour (tự hạ khi có giọng đọc) và vài tiếng nhỏ. Thiếu file thì tour vẫn chạy, chỉ im.
+  // to: âm lượng 0..1 · nhacKhiDoc: âm lượng nhạc lúc giọng đang đọc · nguồn và giấy phép âm thanh ghi trong kho nội bộ (vuon-360/am)
+  amThanh: {
+    v: '20261126',
+    nhac: { src: 'tu-xem/am/nen.mp3', to: 0.5, nhacKhiDoc: 0.24 },
+    tieng: {
+      chuyen: { src: 'tu-xem/am/chuyen.mp3', to: 0.32 },  // máy quay bay sang điểm mới
+      the: { src: 'tu-xem/am/the.mp3', to: 0.3 },         // thẻ thông tin hiện ra
+      chuong: { src: 'tu-xem/am/chuong.mp3', to: 0.38 }   // mở chương, mở đầu và kết hành trình
+    }
+  },
+
   tours: {
     nong: {
       kicker: 'Hành trình 1 · Nông nghiệp và hạ tầng',
@@ -57,16 +69,16 @@ window.FB360_TUXEM = {
       tint: '124,195,217',
       outro: { title: 'Hết hành trình công nghệ', text: 'Toàn bộ số đo, nhật ký và camera của vườn được theo dõi trên Dashboard vận hành.', cta: ['Mở Dashboard', 'https://dashboard.farmblock.vn/'] }
     },
-    'sap-toi': {
-      nho: true,
-      kicker: 'Quy hoạch',
-      title: 'Sắp tới ở vườn Ia Ko',
-      sub: 'Chỉ những hạng mục dự kiến: hồ phân, hồ nước mới, công nghệ cho nước và cho phân.',
-      tint: '226,232,240',
-      outro: { title: 'Đây là quy hoạch dự kiến', text: 'Vị trí và quy mô có thể còn thay đổi. Mỗi hạng mục làm xong sẽ chuyển sang "Đã có" trong hai hành trình chính.', cta: ['Xem vườn hôm nay', '#tu-xem-nong'] }
+    // xem xuyên suốt: gom các hành trình theo thứ tự, mỗi hành trình mở bằng một màn chương; lap: tự chạy lại từ đầu (TV triển lãm)
+    'ket-hop': {
+      gom: ['nong', 'tech'], lap: true,
+      kicker: 'Xem xuyên suốt · Cho TV triển lãm',
+      title: 'Cả hai hành trình, chạy liên tục',
+      sub: 'Nông nghiệp rồi công nghệ, hết một vòng tự chạy lại từ đầu. Hợp để chiếu trên TV ở hội chợ, triển lãm.',
+      tint: '181,227,131',
+      outro: { title: 'Hết một vòng vườn Ia Ko', text: 'Cảm ơn bạn đã ghé vườn. Tour sẽ tự chạy lại từ đầu.', cta: ['Xem lại từ đầu', '#tu-xem-ket-hop'] }
     },
     // để chỗ sẵn, chưa làm
-    'ket-hop': { sapCo: true, kicker: 'Sắp có', title: 'Một tour, cả hai hành trình', sub: 'Nông nghiệp và công nghệ đan vào nhau theo từng điểm trên vườn.' },
     timelapse: { sapCo: true, kicker: 'Sắp có', title: 'Timelapse toàn trang trại', sub: 'Cả vườn lớn lên theo tháng, ghép với timelapse của từng khung camera.' }
   },
 
@@ -176,7 +188,7 @@ window.FB360_TUXEM = {
       sub: 'Những gì sắp kể chưa có trên vườn. Trên ảnh, chúng được vẽ bằng nét đứt.',
       fx: [{ t: 'quyHoach' }] },
 
-    { id: 'ho-phan', trangThai: 'du-kien', hanhTrinh: { nong: 120, 'sap-toi': 10 },
+    { id: 'ho-phan', trangThai: 'du-kien', hanhTrinh: { nong: 120 },
       loi: 'Hạng mục dự kiến đầu tiên là một hồ phân. Ở góc tây bắc của vườn, chỗ những mái nhà màu xanh, là một trang trại chăn nuôi. Theo quy hoạch, phân từ trang trại sẽ được kéo về hồ, và nước phân dùng để tưới cho cây. Vì sao lại làm như vậy? Cà phê con trên đất mới khai hoang cần thêm chất hữu cơ, để đất tơi, giữ ẩm và nuôi rễ. Phân có sẵn ngay cạnh vườn. Đưa về hồ để tưới thì vừa cải tạo đất, vừa không để phân thành chất thải của cả vùng.',
       at: 'ho-phan', fov: 84, kicker: 'Quy hoạch · Nước phân', title: 'Một hồ phân',
       lead: 'Phân chuồng thành nước tưới, nuôi đất.',
@@ -185,7 +197,7 @@ window.FB360_TUXEM = {
       media: [{ src: 'tu-xem/m/quy-hoach.svg', cap: 'Sơ đồ dự kiến: trang trại chăn nuôi, hồ phân, hai hồ nước', so: true }],
       fx: [{ t: 'quyHoach', noiBat: 'ho-phan' }] },
 
-    { id: 'ho-moi', trangThai: 'du-kien', hanhTrinh: { nong: 130, 'sap-toi': 20 },
+    { id: 'ho-moi', trangThai: 'du-kien', hanhTrinh: { nong: 130 },
       loi: 'Tiếp theo là một hồ nước mới, cỡ như hồ hiện tại, đặt ở phía bên kia vườn, để tưới cho phân khu đó. 3 giếng đang có đã phục vụ cho hồ cũ, nên hồ mới sẽ cần khoan thêm giếng. Vì sao cần thêm hồ? Một hồ chỉ đủ dùng vài tuần mùa khô, lại nằm ở một phía vườn. Có thêm hồ thì mỗi hồ lo cho phần vườn gần nó, và cả vườn trữ được gấp đôi lượng nước, trước khi khô hạn kéo tới.',
       at: 'ho-moi', fov: 86, kicker: 'Quy hoạch · Nước', title: 'Thêm một hồ nước, thêm giếng',
       lead: 'Hồ thứ hai cho phân khu bên kia.',
@@ -195,7 +207,7 @@ window.FB360_TUXEM = {
       media: [{ src: 'tu-xem/m/quy-hoach.svg', cap: 'Sơ đồ dự kiến: hồ nước mới ở phía đông', so: true }, { src: 'tu-xem/m/ho-1.mp4', cap: 'Hồ hiện tại, hồ mới cỡ tương tự · 18/06/2026' }],
       fx: [{ t: 'quyHoach', noiBat: 'ho-moi' }] },
 
-    { id: 'ba-ho', trangThai: 'du-kien', hanhTrinh: { nong: 140, 'sap-toi': 30 },
+    { id: 'ba-ho', trangThai: 'du-kien', hanhTrinh: { nong: 140 },
       loi: 'Khi làm xong, hồ phân và hai hồ nước sẽ nối thông với nhau, nối tiếp với trang trại chăn nuôi. Khu nào thiếu nước có thể lấy từ hồ bên cạnh. Nước phân được pha vào nước tưới, theo lượng chuyên gia đặt cho từng giai đoạn của cây. Vườn cũng sẽ mở rộng thêm khoảng 6 hàng. Cả vườn thành một hệ thống chung, không phải mỗi khu tự lo. Mỗi hạng mục làm xong sẽ chuyển từ dự kiến sang đã có, ngay trong hành trình này.',
       at: 'ho', fov: 112, nhin: [14, -14], kicker: 'Quy hoạch · Cả vườn', title: 'Ba hồ thông nhau',
       lead: 'Nước và phân đi chung một mạng.',
@@ -302,7 +314,7 @@ window.FB360_TUXEM = {
       sub: 'Hạng mục nào làm xong sẽ chuyển thành một điểm dừng "Đã có" trong hành trình này.',
       fx: [{ t: 'quyHoach' }] },
 
-    { id: 'cn-nuoc', trangThai: 'du-kien', hanhTrinh: { tech: 110, 'sap-toi': 40 },
+    { id: 'cn-nuoc', trangThai: 'du-kien', hanhTrinh: { tech: 110 },
       loi: 'Khi vườn có ba hồ thông nhau, vườn sẽ cần thêm công nghệ cho nước. Đo mực nước từng hồ, đếm nước từng giếng bơm lên, và lượng nước chuyển giữa các hồ. Vì sao điều này quan trọng ở Ia Ko? Các giếng trong một vùng cùng hút chung một tầng nước ngầm. Khoan thêm giếng không tạo ra nước mới. Đo được từng mét khối, là cách để vườn đi hết mùa khô, mà không hút cạn phần nước của các vườn xung quanh.',
       at: 'ho-moi', fov: 100, kicker: 'Lớp 2 · Nước, mở rộng', title: 'Công nghệ cho ba hồ nước',
       lead: 'Biết từng giếng bơm bao nhiêu, từng hồ còn bao nhiêu.',
@@ -311,7 +323,7 @@ window.FB360_TUXEM = {
       media: [{ src: 'tu-xem/m/quy-hoach.svg', cap: 'Sơ đồ dự kiến: ba hồ thông nhau', so: true }],
       fx: [{ t: 'quyHoach', noiBat: 'ong-noi' }] },
 
-    { id: 'cn-phan', trangThai: 'du-kien', hanhTrinh: { tech: 120, 'sap-toi': 50 },
+    { id: 'cn-phan', trangThai: 'du-kien', hanhTrinh: { tech: 120 },
       loi: 'Cùng với hồ phân là công nghệ xử lý phân. Phân từ trang trại chăn nuôi sẽ được xử lý ở hồ, trước khi pha vào nước tưới. Nước phân cũng được đo trước khi ra đường ống. Vì sao phải kỹ như vậy? Ống nhỏ giọt và béc tưới rất dễ tắc, còn rễ cà phê non lại dễ tổn thương. Xử lý và đo trước, thì vừa tận dụng được nguồn phân ngay cạnh vườn, vừa không hại cây, không hại đường ống.',
       at: 'ho-phan', fov: 90, kicker: 'Lớp 1 · Đất, mở rộng', title: 'Công nghệ xử lý phân',
       lead: 'Phân chuồng phải qua xử lý mới vào ống tưới.',

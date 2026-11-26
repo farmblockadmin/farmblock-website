@@ -2,22 +2,32 @@
    hiệu ứng vẽ thẳng trên ảnh 360 (sóng nước, dòng nước, dữ liệu, góc camera, công trình dự kiến...),
    rồi chú thích nổi hiện ra với ảnh/video tự chiếu, số liệu tự đếm, lớp "vì sao" và giọng đọc.
    Toàn bộ nội dung là dữ liệu trong tu-xem-noi-dung.js (hành trình tự gom từ danh sách hạng mục);
-   giọng đọc ở tu-xem/vo/<id>.mp3, thời lượng trong tu-xem/vo/vo.js. Cần app.js đưa ra C.api. */
+   giọng đọc ở tu-xem/vo/<id>.mp3, thời lượng và mốc từng câu (phụ đề) trong tu-xem/vo/vo.js;
+   nhạc nền và tiếng nhỏ ở tu-xem/am/ (khai trong amThanh). Cần app.js đưa ra C.api. */
 (() => {
   'use strict';
   const C = window.FB360, T = window.FB360_TUXEM;
   if (!C || !T) return;
-  const VO = (window.FB360_VO && window.FB360_VO.d) || {}, VOV = (window.FB360_VO && window.FB360_VO.v) || '';
+  const VO = (window.FB360_VO && window.FB360_VO.d) || {}, VOV = (window.FB360_VO && window.FB360_VO.v) || '', VOS = (window.FB360_VO && window.FB360_VO.s) || {};
   const ST = T.trangThai || {}, QH = T.quyHoach || [];
   // gom hành trình từ danh sách hạng mục: mục nào ghi tên hành trình trong hanhTrinh thì vào, xếp theo số thứ tự
   Object.entries(T.tours).forEach(([id, t]) => {
-    if (t.sapCo) { t.stops = []; return; }
+    if (t.sapCo || t.gom) { t.stops = []; return; }
     t.stops = (T.hangMuc || []).filter(m => m.hanhTrinh && m.hanhTrinh[id] != null).map(m => {
       const v = m.hanhTrinh[id];
       return typeof v === 'object' ? Object.assign({}, m, v, { _o: v.thuTu || 0 }) : Object.assign({}, m, { _o: v });
     }).sort((a, b) => a._o - b._o);
   });
-  const MAIN = Object.keys(T.tours).filter(k => !T.tours[k].sapCo && !T.tours[k].nho && T.tours[k].stops.length);
+  // tour xuyên suốt: nối các hành trình, mỗi hành trình mở bằng một màn chương mang tên và màu của nó
+  Object.values(T.tours).forEach(t => {
+    if (!t.gom) return;
+    t.gom.forEach(g => {
+      const src = T.tours[g]; if (!src || !src.stops) return;
+      t.stops.push({ id: '_mo-' + g, kieu: 'chuong', at: 'vuon', kicker: src.kicker, title: src.title, sub: src.sub, _tint: src.tint });
+      src.stops.forEach(q => t.stops.push(Object.assign({}, q, { _tint: src.tint })));
+    });
+  });
+  const MAIN = Object.keys(T.tours).filter(k => !T.tours[k].sapCo && !T.tours[k].gom && T.tours[k].stops.length);
   const $ = (s, r = document) => r.querySelector(s);
   const h = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -29,6 +39,9 @@
     x: '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
     snd: '<svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.7 7.7 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
     mute: '<svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="m16 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    rep: '<svg viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 0 1 12.8-5.3L19.5 9M19.5 4.5V9H15M19.5 12a7.5 7.5 0 0 1-12.8 5.3L4.5 15M4.5 19.5V15H9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    cc: '<svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 10.2a2.3 2.3 0 1 0 0 3.6M16.5 10.2a2.3 2.3 0 1 0 0 3.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    tv: '<svg viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="12.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20.5h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 8.2v5.1l4.4-2.55z" fill="currentColor"/></svg>',
     arrow: '<svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
   // chữ thẻ: thoát HTML, rồi biến [cần xác nhận: ...] thành nhãn vàng cho người duyệt
@@ -49,12 +62,12 @@
         <div class="tx-more" id="tx-more"></div>
         <div class="tx-opts">
           <p class="tx-legend">${Object.entries(ST).map(([k, v]) => `<span class="tx-tt tx-tt-${k}" style="--st:${v.rgb}">${esc(v.ten)}</span>`).join('')}<small>Nét đứt trên ảnh là công trình dự kiến, chưa có thật.</small></p>
-          <label class="tx-sw"><input type="checkbox" id="tx-loop"><i></i><span>Chạy lặp liên tục<small>Cho TV: hết hành trình này tự sang hành trình kia</small></span></label>
         </div>
       </div>
     </section>
     <div class="tx-title" id="tx-title" aria-live="polite" hidden></div>
     <div class="tx-call" id="tx-call" aria-hidden="true"></div>
+    <div class="tx-sub" id="tx-sub" aria-hidden="true"><span></span></div>
     <aside class="tx-card" id="tx-card" aria-live="polite" hidden>
       <div class="tx-media" id="tx-media"><div class="tx-cap" id="tx-cap"></div><div class="tx-dots" id="tx-dots"></div></div>
       <div class="tx-body" id="tx-body"></div>
@@ -64,28 +77,38 @@
       <button type="button" class="tx-b tx-pp" id="tx-pp" aria-label="Tạm dừng">${ICON.pause}</button>
       <button type="button" class="tx-b" id="tx-next" aria-label="Điểm tiếp">${ICON.next}</button>
       <div class="tx-prog"><p class="tx-now" id="tx-now"></p><div class="tx-segs" id="tx-segs"></div></div>
-      <button type="button" class="tx-b tx-snd" id="tx-snd" aria-label="Tắt giọng đọc">${ICON.snd}</button>
+      <button type="button" class="tx-b tx-rep" id="tx-rep" aria-label="Tự chạy lại từ đầu: đang bật" aria-pressed="true" hidden>${ICON.rep}</button>
+      <button type="button" class="tx-b tx-cc" id="tx-cc" aria-label="Tắt phụ đề" aria-pressed="true">${ICON.cc}</button>
+      <button type="button" class="tx-b tx-snd" id="tx-snd" aria-label="Tắt âm thanh">${ICON.snd}</button>
       <button type="button" class="tx-b tx-exit" id="tx-exit" aria-label="Thoát Tự xem">${ICON.x}<span>Thoát</span></button>
     </div>`;
   document.body.appendChild(root);
   const pick = $('#tx-pick'), cards = $('#tx-cards'), titleEl = $('#tx-title'), card = $('#tx-card'), mediaEl = $('#tx-media'), capEl = $('#tx-cap'), dotsEl = $('#tx-dots'),
-    body = $('#tx-body'), bar = $('#tx-bar'), segsEl = $('#tx-segs'), nowEl = $('#tx-now'), ppBtn = $('#tx-pp'), call = $('#tx-call'), loopEl = $('#tx-loop'), more = $('#tx-more'), sndBtn = $('#tx-snd');
+    body = $('#tx-body'), bar = $('#tx-bar'), segsEl = $('#tx-segs'), nowEl = $('#tx-now'), ppBtn = $('#tx-pp'), call = $('#tx-call'), more = $('#tx-more'), sndBtn = $('#tx-snd'),
+    subEl = $('#tx-sub'), subTx = $('#tx-sub span'), ccBtn = $('#tx-cc'), repBtn = $('#tx-rep');
 
   const mins = t => Math.max(1, Math.round((t.stops.reduce((n, s) => n + dwellOf(s) + 2.1, 0) + 3.4) / 60));
+  const nStops = t => t.stops.filter(s => s.kieu !== 'chuong').length;
   Object.entries(T.tours).forEach(([id, t]) => {
-    if (t.sapCo || t.nho) {
-      // hàng nhỏ: tour phụ chạy được, và chỗ để sẵn cho tour sắp có
-      const b = h('button', 'tx-mc' + (t.sapCo ? ' soon' : '')); b.type = 'button'; b.dataset.id = id;
-      if (t.sapCo) { b.disabled = true; b.setAttribute('aria-disabled', 'true'); }
-      b.innerHTML = `<small>${esc(t.kicker)}</small><b>${esc(t.title)}</b><span>${esc(t.sub)}</span>
-        <em>${t.sapCo ? 'Sắp có' : `${t.stops.filter(s => s.kieu !== 'chuong').length} hạng mục · khoảng ${mins(t)} phút <i>${ICON.arrow}</i>`}</em>`;
-      if (!t.sapCo) b.addEventListener('click', () => start(id));
+    if (t.gom) {
+      // xem xuyên suốt cho TV: một nút rộng ở hàng dưới
+      if (!t.stops.length) return;
+      const b = h('button', 'tx-tv'); b.type = 'button'; b.dataset.id = id;
+      b.innerHTML = `<span class="tx-tv-i">${ICON.tv}</span><span class="tx-tv-t"><small>${esc(t.kicker)}</small><b>${esc(t.title)}</b><span>${esc(t.sub)}</span></span>
+        <em>${nStops(t)} điểm dừng · khoảng ${mins(t)} phút${t.lap ? ' · tự lặp lại' : ''}<i>${ICON.arrow}</i></em>`;
+      b.addEventListener('click', () => start(id));
+      more.insertBefore(b, more.firstChild); return;
+    }
+    if (t.sapCo) {
+      // chỗ để sẵn cho tour sắp có
+      const b = h('button', 'tx-mc soon'); b.type = 'button'; b.dataset.id = id; b.disabled = true; b.setAttribute('aria-disabled', 'true');
+      b.innerHTML = `<small>Sắp có</small><b>${esc(t.title)}</b><span>${esc(t.sub)}</span>`;
       more.appendChild(b); return;
     }
     const b = h('button', 'tx-tc'); b.type = 'button'; b.dataset.id = id; b.style.setProperty('--tc', t.tint);
     b.innerHTML = `<span class="tx-tc-img"><img src="${t.cover}" alt="" loading="lazy" decoding="async"></span>
       <span class="tx-tc-t"><small>${esc(t.kicker)}</small><b>${esc(t.title)}</b><span>${esc(t.sub)}</span>
-      <em>${t.stops.filter(s => s.kieu !== 'chuong').length} điểm dừng · khoảng ${mins(t)} phút <i>${ICON.arrow}</i></em></span>`;
+      <em>${nStops(t)} điểm dừng · khoảng ${mins(t)} phút <i>${ICON.arrow}</i></em></span>`;
     b.addEventListener('click', () => start(id));
     cards.appendChild(b);
   });
@@ -97,16 +120,24 @@
   }
 
   // ---------- trạng thái ----------
-  const X = { layout: 'noi', sound: true, loop: false, cx: 0, cy: 0, active: false, playing: false, tour: null, tid: '', i: -1, clock: 0, last: 0, stopAt: 0, cardAt: 0, dwell: 0, fly: 0, fxAt: 0, slides: [], cur: -1, scene: '0713', busy: false, ended: false };
+  const X = { layout: 'noi', sound: true, cc: true, loop: false, tint: '', cx: 0, cy: 0, active: false, playing: false, tour: null, tid: '', i: -1, clock: 0, last: 0, stopAt: 0, cardAt: 0, dwell: 0, fly: 0, fxAt: 0, slides: [], cur: -1, scene: '0713', busy: false, ended: false };
   const api = () => C.api;
   let lastFocus = null;
   // lựa chọn của người xem: nhớ trên máy này (không có cũng chạy bình thường)
   const store = { get(k) { try { return localStorage.getItem('fb360-' + k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem('fb360-' + k, v); } catch (e) { /* bỏ qua */ } } };
   // Zyk chốt 26/11: chỉ dùng chú thích nổi (điện thoại, màn thấp vẫn tự chuyển sang tấm thẻ)
-  X.loop = store.get('lap') === '1';
   X.sound = store.get('tieng') !== '0';
-  loopEl.checked = X.loop;
-  loopEl.addEventListener('change', () => { X.loop = loopEl.checked; store.set('lap', X.loop ? '1' : '0'); });
+  X.cc = store.get('phude') !== '0';
+  // tự chạy lại: chỉ có ở tour xuyên suốt (nút vòng tròn trên thanh điều khiển), mặc định bật
+  const showRep = () => { repBtn.classList.toggle('off', !X.loop); repBtn.setAttribute('aria-pressed', X.loop ? 'true' : 'false'); repBtn.setAttribute('aria-label', X.loop ? 'Tự chạy lại từ đầu: đang bật' : 'Tự chạy lại từ đầu: đang tắt'); };
+  repBtn.addEventListener('click', () => {
+    X.loop = !X.loop; store.set('lap', X.loop ? '1' : '0'); showRep(); wake();
+    if (X.loop && X.ended) loopLater();
+    if (!X.loop) clearTimeout(X.loopT);
+  });
+  const showCC = () => { ccBtn.classList.toggle('off', !X.cc); ccBtn.setAttribute('aria-pressed', X.cc ? 'true' : 'false'); ccBtn.setAttribute('aria-label', X.cc ? 'Tắt phụ đề' : 'Bật phụ đề'); };
+  showCC();
+  ccBtn.addEventListener('click', () => { X.cc = !X.cc; store.set('phude', X.cc ? '1' : '0'); showCC(); });
   // chú thích nổi chỉ dùng khi màn đủ rộng; điện thoại dọc và xoay ngang giữ tấm thẻ
   const noi = () => X.layout === 'noi' && !api().portrait() && innerHeight >= 521 && innerWidth >= 900;
   function applyLayout() {
@@ -124,15 +155,16 @@
   // ---------- giọng đọc ----------
   const vo = new Audio(); vo.preload = 'auto';
   let voFor = '';
-  const showSnd = () => { sndBtn.innerHTML = X.sound ? ICON.snd : ICON.mute; sndBtn.setAttribute('aria-label', X.sound ? 'Tắt giọng đọc' : 'Bật giọng đọc'); sndBtn.classList.toggle('off', !X.sound); };
+  const showSnd = () => { sndBtn.innerHTML = X.sound ? ICON.snd : ICON.mute; sndBtn.setAttribute('aria-label', X.sound ? 'Tắt âm thanh' : 'Bật âm thanh'); sndBtn.classList.toggle('off', !X.sound); };
   showSnd();
   sndBtn.addEventListener('click', () => {
     X.sound = !X.sound; store.set('tieng', X.sound ? '1' : '0'); showSnd();
-    if (!X.sound) vo.pause(); else if (voFor && X.playing) { const p = vo.play(); if (p) p.catch(() => {}); }
+    if (!X.sound) vo.pause(); else if (voFor && X.playing && !vo.ended) { const p = vo.play(); if (p) p.catch(() => {}); }
+    AM.sync();
   });
   const voSrc = id => `tu-xem/vo/${id}.mp3${VOV ? '?v=' + VOV : ''}`;
   function playVo(s) {
-    vo.pause(); voFor = '';
+    vo.pause(); voFor = ''; X.voAt = X.clock; capNow = -2;
     if (!VO[s.id]) return;
     voFor = s.id; vo.src = voSrc(s.id); vo.currentTime = 0;
     if (X.sound && X.playing) { const p = vo.play(); if (p) p.catch(() => {}); }
@@ -140,6 +172,108 @@
   const stopVo = () => { vo.pause(); voFor = ''; };
   // tải trước giọng của điểm kế tiếp cho khỏi trễ
   const voNext = new Audio(); voNext.preload = 'auto';
+
+  // ---------- nhạc nền + tiếng nhỏ ----------
+  // Web Audio để chỉnh được âm lượng cả trên iPhone (thẻ audio ở đó luôn to hết cỡ). Nhạc lặp bằng hai bản chồng nhau
+  // (file đã có fade đầu, fade cuối); khi giọng đọc, nhạc tự hạ xuống. Thiếu file hay trình duyệt chặn thì im, tour vẫn chạy.
+  const AM = (() => {
+    const cfg = T.amThanh || {}, v = cfg.v ? '?v=' + cfg.v : '', nh = cfg.nhac || {}, CF = 3.2;
+    let ac = null, master = null, mg = null, buf = {}, els = [], cur = 0, want = false, ok = !!nh.src;
+    function init() {
+      if (ac) return ac.state === 'suspended' ? ac.resume().catch(() => {}) : null;
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      try { ac = new AC(); } catch (e) { return; }
+      master = ac.createGain(); master.gain.value = X.sound ? 1 : 0; master.connect(ac.destination);
+      mg = ac.createGain(); mg.gain.value = 0; mg.connect(master);
+      if (ok) els = [0, 1].map(() => {
+        const a = new Audio(); a.preload = 'auto'; a.src = nh.src + v;
+        a.addEventListener('error', () => { ok = false; });
+        try { ac.createMediaElementSource(a).connect(mg); } catch (e) { ok = false; }
+        a.addEventListener('timeupdate', () => {
+          // gần hết bản này thì cho bản kia vào, hai bản chồng lên nhau qua đoạn fade
+          if (!want || a !== els[cur] || !a.duration || a.duration - a.currentTime > CF || a._handed) return;
+          a._handed = true; cur = 1 - cur; const b = els[cur]; b._handed = false; b.currentTime = 0; const p = b.play(); if (p) p.catch(() => {});
+        });
+        return a;
+      });
+      Object.entries(cfg.tieng || {}).forEach(([k, t]) => {
+        fetch(t.src + v).then(r => r.ok ? r.arrayBuffer() : Promise.reject()).then(d => new Promise((res, rej) => ac.decodeAudioData(d, res, rej))).then(b => { buf[k] = b; }).catch(() => {});
+      });
+    }
+    // người xem bấm vào trang là mở khoá âm thanh (trình duyệt chỉ cho phát sau một lần chạm)
+    ['pointerdown', 'keydown', 'touchend'].forEach(ev => addEventListener(ev, () => { if (X.active) { init(); sync(); } }, { passive: true }));
+    function ramp(g, to, sec) { if (!g) return; const t = ac.currentTime; g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(to, t + sec); }
+    // âm lượng nhạc: tắt tiếng / tạm dừng / đang đọc / không đọc
+    function level() { return !want || !X.playing ? 0 : (voFor && !vo.paused && !vo.ended) ? (nh.nhacKhiDoc ?? 0.24) : (nh.to ?? 0.5); }
+    function sync() {
+      if (!ac) return;
+      ramp(master, X.sound ? 1 : 0, 0.4);
+      const L = level(); ramp(mg, L, L < mg.gain.value ? 0.6 : 1.4);
+      if (want && X.playing && ok && els[cur] && els[cur].paused) { const p = els[cur].play(); if (p) p.catch(() => {}); }
+    }
+    return {
+      start() { init(); want = true; sync(); },
+      stop() { want = false; if (!ac) return; ramp(mg, 0, 1.4); setTimeout(() => { if (!want) els.forEach(a => a.pause()); }, 1500); },
+      pause() { if (!ac) return; ramp(mg, 0, 0.6); setTimeout(() => { if (!X.playing) els.forEach(a => a.pause()); }, 650); },
+      sync,
+      fx(k) {
+        const b = buf[k], t = (cfg.tieng || {})[k]; if (!ac || !b || !X.sound || !X.playing) return;
+        const src = ac.createBufferSource(), g = ac.createGain(); src.buffer = b; g.gain.value = t.to ?? 0.3;
+        src.connect(g); g.connect(master); src.start();
+      }
+    };
+  })();
+  vo.addEventListener('play', () => AM.sync()); vo.addEventListener('pause', () => AM.sync()); vo.addEventListener('ended', () => AM.sync());
+
+  // ---------- phụ đề: câu đang đọc, chia cụm ngắn, đặt ngay trên thẻ thông tin ----------
+  const sentences = t => t.replace(/\s+/g, ' ').trim().split(/(?<=[.?!])\s+(?=[A-ZÀ-Ỹ0-9Đ])/u).map(q => q.trim()).filter(Boolean);
+  const CAP_MAX = 78;
+  // câu dài thì tách ở dấu phẩy gần giữa; thời gian mỗi cụm chia theo số chữ
+  function chunks(t) {
+    if (t.length <= CAP_MAX) return [t];
+    const cuts = []; t.replace(/[,;:] /g, (m, i) => { cuts.push(i + 1); return m; });
+    let best = -1, d = 1e9; cuts.forEach(i => { const e = Math.abs(i - t.length / 2); if (e < d) { d = e; best = i; } });
+    if (best < 0 || best < 18 || t.length - best < 18) {
+      const sp = t.indexOf(' ', Math.floor(t.length / 2)); if (sp < 0) return [t]; best = sp;
+    }
+    return [...chunks(t.slice(0, best).trim()), ...chunks(t.slice(best).trim())];
+  }
+  // lời đọc viết đơn vị như đọc; phụ đề hiện lại dạng viết (41,5 kW, 4.000 m³, 1,5 m...)
+  const disp = t => t.replace(/(\d) mét rưỡi/g, '$1,5 m').replace(/(\d) mét khối/g, '$1 m³').replace(/(\d) mi li mét/g, '$1 mm')
+    .replace(/(\d) ki lô oát/g, '$1 kW').replace(/(\d) héc ta/g, '$1 ha').replace(/(\d) phần trăm/g, '$1%').replace(/(\d) mét(?![\wÀ-ỹ])/g, '$1 m');
+  const capCache = {};
+  function capsOf(s) {
+    if (capCache[s.id]) return capCache[s.id];
+    const st = VOS[s.id], dur = VO[s.id], ss = s.loi ? sentences(s.loi) : [];
+    if (!st || !dur || st.length !== ss.length) return (capCache[s.id] = []);
+    const out = [];
+    ss.forEach((q, i) => {
+      const a = st[i], b = i + 1 < st.length ? st[i + 1] - 0.32 : dur, cs = chunks(q), tot = cs.reduce((n, c) => n + c.length, 0);
+      let t = a; cs.forEach(c => { out.push([t, disp(c)]); t += (b - a) * c.length / tot; });
+    });
+    return (capCache[s.id] = out);
+  }
+  let capNow = -1;
+  function placeSub(s) {
+    const on = X.cc && X.active && s && X.cardShown && !X.ended, caps = on ? capsOf(s) : [];
+    if (!caps.length) { if (capNow !== -1) { subEl.classList.remove('on'); capNow = -1; } return; }
+    // giờ theo giọng đang phát; tắt tiếng thì theo đồng hồ tour
+    const t = (voFor === s.id && !vo.paused && X.sound) ? vo.currentTime : X.clock - X.voAt;
+    let k = -1; for (let j = 0; j < caps.length; j++) if (t >= caps[j][0] - 0.05) k = j;
+    const endT = VO[s.id] + 0.3;
+    if (t > endT) k = -1;
+    if (k !== capNow) {
+      capNow = k;
+      if (k < 0) subEl.classList.remove('on');
+      else { subTx.textContent = caps[k][1]; subEl.classList.remove('on'); void subEl.offsetWidth; subEl.classList.add('on'); }
+    }
+    // vị trí: ngay trên thẻ (hoặc trên thanh điều khiển ở màn chương)
+    const r = !card.hidden && card.classList.contains('on') ? card.getBoundingClientRect() : null, br = bar.getBoundingClientRect();
+    let bottom, cx, w;
+    if (r && r.height) { bottom = innerHeight - r.top + 10; cx = r.left + r.width / 2; w = r.width; }
+    else { bottom = innerHeight - (bar.classList.contains('on') && !document.documentElement.classList.contains('tx-idle') ? br.top : innerHeight - 40) + 14; cx = innerWidth / 2; w = Math.min(760, innerWidth - 20); }
+    subEl.style.cssText = `bottom:${bottom.toFixed(0)}px;left:${cx.toFixed(0)}px;max-width:${Math.max(240, w - 20).toFixed(0)}px`;
+  }
 
   function open() {
     if (!api()) return;
@@ -160,8 +294,11 @@
     closePick();
     const A = api(); A.closePop(); A.used();
     stopVo();
+    clearTimeout(X.loopT);
     X.tour = T.tours[id]; X.tid = id; X.active = true; X.playing = true; X.ended = false; X.i = -1; X.clock = 0; X.last = performance.now();
-    document.documentElement.classList.add('tx-on'); document.documentElement.style.setProperty('--tx', X.tour.tint);
+    X.loop = !!X.tour.lap && store.get('lap') !== '0'; repBtn.hidden = !X.tour.lap; showRep();
+    setTint(X.tour.tint);
+    document.documentElement.classList.add('tx-on');
     if (outroEl) { outroEl.classList.remove('on'); outroEl.hidden = true; }
     applyLayout(); wake();
     bar.hidden = false; requestAnimationFrame(() => bar.classList.add('on'));
@@ -173,6 +310,7 @@
     titleEl.innerHTML = `<p class="tx-eyebrow"><i></i>${esc(X.tour.kicker)}</p><h2>${esc(X.tour.title)}</h2><p>${esc(X.tour.sub)}</p><span class="tx-tl"><i></i></span>`;
     titleEl.hidden = false; requestAnimationFrame(() => titleEl.classList.add('on'));
     X.titleUntil = X.clock + (A.reduce ? 1.6 : 3.4);
+    AM.start(); setTimeout(() => AM.fx('chuong'), 350);
     const first = X.tour.stops.find(s => s.scene);
     X.scene = first && first === X.tour.stops[0] ? first.scene : '0713';
     titleEl.classList.remove('chuong');
@@ -181,7 +319,7 @@
   }
   function stop(silent) {
     if (!X.active) return;
-    X.active = false; X.playing = false; X.tour = null; stopVo();
+    X.active = false; X.playing = false; X.tour = null; stopVo(); AM.stop(); subEl.classList.remove('on'); capNow = -1;
     document.documentElement.classList.remove('tx-on', 'tx-paused', 'tx-ended');
     hideCard(); titleEl.classList.remove('on'); bar.classList.remove('on'); clearTimeout(X.loopT); clearTimeout(idleT);
     if (outroEl) outroEl.classList.remove('on');
@@ -205,7 +343,8 @@
     if (i < 0) i = 0;
     X.busy = true; X.ended = false; X.i = i; titleEl.classList.remove('on'); document.documentElement.classList.remove('tx-ended');
     const s = X.tour.stops[i];
-    hideCard(); stopVo(); outroEl && outroEl.classList.remove('on');
+    hideCard(); stopVo(); outroEl && outroEl.classList.remove('on'); clearTimeout(X.loopT);
+    setTint(s._tint || X.tour.tint);
     const sc = s.scene || (X.scene === '0408' ? '0713' : X.scene);
     const switching = sc !== (A.S.sc && A.S.sc.id);
     X.scene = sc;
@@ -218,6 +357,7 @@
     const zid = s.at && s.at.startsWith('khu-') ? s.at.slice(4) : null; A.S.selZone = zid; A.markMini(zid);
     X.fly = A.reduce ? 0.2 : switching ? 2.6 : 2.9;
     aimStop(s, X.fly * 1000);
+    if (s.kieu !== 'chuong') AM.fx('chuyen');
     X.stopAt = X.clock; X.fxAt = X.clock + X.fly * 0.55; X.cardAt = X.clock + X.fly * 0.72; X.dwell = dwellOf(s); X.cardShown = false;
     if (s.kieu !== 'chuong') buildCard(s, i);
     preload(X.tour.stops[i + 1]);
@@ -290,9 +430,9 @@
       // mở chương: màn tiêu đề giữa cảnh, không thẻ
       titleEl.innerHTML = `<p class="tx-eyebrow"><i></i>${esc(s.kicker)}</p><h2>${esc(s.title)}</h2><p>${rich(s.sub || '')}</p>`;
       titleEl.classList.add('chuong'); titleEl.hidden = false; requestAnimationFrame(() => titleEl.classList.add('on'));
-      X.cardShown = true; return;
+      AM.fx('chuong'); X.cardShown = true; return;
     }
-    card.hidden = false; card.classList.remove('out');
+    card.hidden = false; card.classList.remove('out'); AM.fx('the');
     X.cx = X.cy = null; X.callPick = null;
     requestAnimationFrame(() => { card.classList.add('on'); call.classList.toggle('on', noi() && X.slides.some(s => !s.bad)); });
     X.cardShown = true; X.slideAt = X.clock; X.cur = -1; nextSlide();
@@ -323,19 +463,28 @@
 
   // ---------- kết thúc ----------
   let outroEl = null;
+  function setTint(t) { if (t && t !== X.tint) { X.tint = t; document.documentElement.style.setProperty('--tx', t); } }
+  // tour xuyên suốt: nghỉ ở màn kết rồi tự chạy lại từ đầu
+  const LOOP_S = 9;
+  function loopLater() {
+    clearTimeout(X.loopT); clearInterval(X.loopC);
+    const el = outroEl && outroEl.querySelector('.tx-cd'); let n = LOOP_S;
+    if (el) { el.hidden = false; el.textContent = `Tự chạy lại sau ${n} giây`; X.loopC = setInterval(() => { n--; if (n > 0 && X.loop && X.ended) el.textContent = `Tự chạy lại sau ${n} giây`; else { clearInterval(X.loopC); if (!X.loop) el.hidden = true; } }, 1000); }
+    X.loopT = setTimeout(() => { if (X.active && X.ended && X.loop) start(X.tid); }, LOOP_S * 1000);
+  }
   function outro() {
-    const A = api(), o = X.tour.outro, other = MAIN.find(k => k !== X.tid);
-    hideCard(); stopVo(); X.ended = true; X.playing = false; setPP(false); document.documentElement.classList.add('tx-ended');
+    const A = api(), o = X.tour.outro, other = X.tour.gom ? null : MAIN.find(k => k !== X.tid);
+    hideCard(); stopVo(); X.ended = true; setPP(false); document.documentElement.classList.add('tx-ended');
     segsEl.querySelectorAll('.tx-seg').forEach(b => { b.classList.add('done'); b.style.setProperty('--p', 1); });
     if (!outroEl) { outroEl = h('div', 'tx-title tx-outro'); root.appendChild(outroEl); }
     const goTo = /^#tu-xem-([\w-]+)/.exec(o.cta[1]);
     outroEl.innerHTML = `<p class="tx-eyebrow"><i></i>Hết hành trình</p><h2>${esc(o.title)}</h2><p>${esc(o.text)}</p>
       <div class="tx-acts">${goTo ? `<button type="button" class="tx-btn pri" data-go="${goTo[1]}">${esc(o.cta[0])}${ICON.arrow}</button>` : `<a class="tx-btn pri" href="${o.cta[1]}" target="_blank" rel="noopener">${esc(o.cta[0])}${ICON.arrow}</a>`}
       ${other && !(goTo && goTo[1] === other) ? `<button type="button" class="tx-btn" data-go="${other}">Xem: ${esc(T.tours[other].title)}</button>` : ''}
-      <button type="button" class="tx-btn" data-free>Tự khám phá</button></div>`;
+      <button type="button" class="tx-btn" data-free>Tự khám phá</button></div>${X.tour.lap ? '<p class="tx-cd" hidden></p>' : ''}`;
     outroEl.hidden = false; requestAnimationFrame(() => outroEl.classList.add('on'));
-    // chạy lặp: nghỉ một lúc ở màn kết rồi sang hành trình kia
-    if (X.loop) X.loopT = setTimeout(() => { if (X.active && X.ended) start(other || X.tid); }, 9000);
+    AM.fx('chuong');
+    if (X.loop) loopLater();
     outroEl.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', e => { outroEl.classList.remove('on'); start(e.currentTarget.dataset.go); }));
     outroEl.querySelector('[data-free]').addEventListener('click', () => stop());
     const g = A.gc(); A.aim(g[0], g[1], 3600, A.portrait() ? 118 : 112, 0, 4);
@@ -345,18 +494,19 @@
   // ---------- điều khiển ----------
   function setPP(play) { ppBtn.innerHTML = play ? ICON.pause : ICON.play; ppBtn.setAttribute('aria-label', play ? 'Tạm dừng' : 'Xem tiếp'); document.documentElement.classList.toggle('tx-paused', !play); }
   function pause() {
-    if (!X.active || !X.playing) return;
-    X.playing = false; setPP(false); X.slides.forEach(s => s.v && s.v.pause()); vo.pause();
+    if (!X.active || !X.playing || X.ended) return;
+    X.playing = false; setPP(false); X.slides.forEach(s => s.v && s.v.pause()); vo.pause(); AM.pause();
   }
   function resume() {
     if (!X.active) return;
-    if (X.ended) { outroEl && outroEl.classList.remove('on'); X.playing = true; setPP(true); go(0); return; }
+    if (X.ended) { clearTimeout(X.loopT); outroEl && outroEl.classList.remove('on'); X.playing = true; setPP(true); go(0); return; }
     X.playing = true; setPP(true); X.last = performance.now();
     const s = X.tour.stops[X.i]; if (s) aimStop(s, 1200);
     const sl = X.slides[X.cur]; if (sl && sl.v) { const p = sl.v.play(); if (p) p.catch(() => {}); }
     if (voFor && X.sound && !vo.ended) { const p = vo.play(); if (p) p.catch(() => {}); }
+    AM.sync();
   }
-  ppBtn.addEventListener('click', () => X.playing ? pause() : resume());
+  ppBtn.addEventListener('click', () => X.playing && !X.ended ? pause() : resume());
   $('#tx-prev').addEventListener('click', () => { X.playing = true; setPP(true); go(Math.max(0, X.i - 1)); });
   $('#tx-next').addEventListener('click', () => { X.playing = true; setPP(true); go(X.i + 1); });
   $('#tx-exit').addEventListener('click', () => stop());
@@ -364,7 +514,7 @@
     if (!pick.hidden && e.key === 'Escape') { closePick(); return; }
     if (!X.active || (e.target && /INPUT|TEXTAREA/.test(e.target.tagName))) return;
     const popOpen = !$('#pop').hidden; if (popOpen) return;
-    if (e.key === ' ' && !(e.target && e.target.closest && e.target.closest('button,a'))) { e.preventDefault(); X.playing ? pause() : resume(); }
+    if (e.key === ' ' && !(e.target && e.target.closest && e.target.closest('button,a'))) { e.preventDefault(); X.playing && !X.ended ? pause() : resume(); }
     else if (e.key === 'ArrowRight' && e.shiftKey) { e.preventDefault(); e.stopPropagation(); go(X.i + 1); }
     else if (e.key === 'ArrowLeft' && e.shiftKey) { e.preventDefault(); e.stopPropagation(); go(X.i - 1); }
     else if (e.key === 'Escape') stop();
@@ -391,6 +541,7 @@
       }
     }
     if (s && X.cardShown && call.classList.contains('on')) placeCall(ctx, A, s);
+    placeSub(s);
     if (!s || X.clock < X.fxAt) return;
     const t = X.clock - X.fxAt;
     (s.fx || []).forEach(f => { const fn = FX[f.t]; if (fn) { ctx.save(); try { fn(ctx, f, t, A, now / 1000); } catch (e) { /* bỏ qua khung lỗi */ } ctx.restore(); } });
@@ -426,10 +577,10 @@
     const ax = Math.max(X.cx, Math.min(X.cx + cw, p[0])), ay = p[1] < X.cy ? X.cy : X.cy + ch;
     const k = Math.min(1, (X.clock - X.cardAt) / 0.8);
     ctx.save(); ctx.globalCompositeOperation = 'lighter';
-    ctx.strokeStyle = `rgba(${X.tour.tint},${0.85 * k})`; ctx.lineWidth = 1.2;
+    ctx.strokeStyle = `rgba(${X.tint},${0.85 * k})`; ctx.lineWidth = 1.2;
     ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(p[0] + (ax - p[0]) * k, p[1] + (ay - p[1]) * k); ctx.stroke();
     ctx.beginPath(); ctx.arc(p[0], p[1], 5, 0, 7); ctx.stroke();
-    ctx.fillStyle = `rgba(${X.tour.tint},${k})`; ctx.beginPath(); ctx.arc(p[0], p[1], 2.4, 0, 7); ctx.fill();
+    ctx.fillStyle = `rgba(${X.tint},${k})`; ctx.beginPath(); ctx.arc(p[0], p[1], 2.4, 0, 7); ctx.fill();
     ctx.restore();
   }
   const LIME = '181,227,131';
@@ -676,11 +827,12 @@
   function D2m(A, d, lat, axis) { const loc = window.FB360_DATA && window.FB360_DATA.local; return loc ? d : axis === 'x' ? d * 111320 * Math.cos(lat * Math.PI / 180) : d * 110574; }
 
   C.tuXem = { open, start, stop, pause, resume, get active() { return X.active; } };
-  // mở thẳng một hành trình bằng link: #tu-xem-nong, #tu-xem-tech, #tu-xem-sap-toi
+  // mở thẳng một hành trình bằng link: #tu-xem-nong, #tu-xem-tech, #tu-xem-ket-hop (xuyên suốt, tự lặp; #tu-xem-lap cũng vào đây)
   C.onReady = () => {
     const m = location.hash.match(/^#tu-xem-([\w-]+)/); if (!m) return;
-    if (m[1] === 'lap') { X.loop = true; loopEl.checked = true; setTimeout(() => start('nong'), 1200); return; }
-    if (T.tours[m[1]] && T.tours[m[1]].stops.length) setTimeout(() => start(m[1]), 1200);
+    // link cũ cho TV (#tu-xem-lap) mở tour xuyên suốt
+    const id = m[1] === 'lap' ? Object.keys(T.tours).find(k => T.tours[k].gom) : m[1];
+    if (id && T.tours[id] && T.tours[id].stops.length) { if (T.tours[id].lap) store.set('lap', '1'); setTimeout(() => start(id), 1200); }
   };
   if (C.api) C.onReady();
 })();

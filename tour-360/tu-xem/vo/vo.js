@@ -1,2 +1,2 @@
 // Thời lượng giọng đọc Tự xem (giây), sinh tự động khi đọc giọng. Trống = chưa có giọng, tour chạy theo độ dài chữ.
-window.FB360_VO = { v: "", d: {} };
+window.FB360_VO = { v: "202611260541", d: {"dat-dau":22.95,"gieng":20.22,"ho-tru":22.26,"nha-dien":23.34,"tuoi-goc":25.18,"giong":22.36,"bai-hoc-gio":22.11,"rom":20.36,"mot-ngay":22.22,"bao-gio":24.74,"chuong-sap-toi":7.9,"ho-phan":24.1,"ho-moi":20.14,"ba-ho":21.19,"ban-do":24.36,"do-dat":24.64,"do-nuoc":23.41,"tram":24.6,"dong-ho":21.91,"camera":25.39,"dien":20.85,"du-lieu":24.19,"ho-so":23.3,"chuong-sap-lap":5.57,"cn-nuoc":20.25,"cn-phan":20.06,"noi-that":20.53} };

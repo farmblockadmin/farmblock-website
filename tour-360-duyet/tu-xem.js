@@ -240,7 +240,7 @@
   }
   // lời đọc viết đơn vị như đọc; phụ đề hiện lại dạng viết (41,5 kW, 4.000 m³, 1,5 m...)
   const disp = t => t.replace(/(\d) mét rưỡi/g, '$1,5 m').replace(/(\d) mét khối/g, '$1 m³').replace(/(\d) mi li mét/g, '$1 mm')
-    .replace(/(\d) ki lô oát/g, '$1 kW').replace(/(\d) héc ta/g, '$1 ha').replace(/(\d) phần trăm/g, '$1%').replace(/(\d) mét(?![\wÀ-ỹ])/g, '$1 m');
+    .replace(/(\d) ki lô oát/g, '$1 kW').replace(/(\d) héc ta/g, '$1 ha').replace(/mỗi héc ta/g, 'mỗi ha').replace(/(\d) phần trăm/g, '$1%').replace(/(\d) mét(?![\wÀ-ỹ])/g, '$1 m');
   const capCache = {};
   function capsOf(s) {
     if (capCache[s.id]) return capCache[s.id];

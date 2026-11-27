@@ -135,11 +135,11 @@ window.FB360_TUXEM = {
       fx: [{ t: 'flow', from: 'ho', to: 'zones', rgb: '124,195,217' }] },
 
     { id: 'giong', trangThai: 'da-co', hanhTrinh: { nong: 60 },
-      loi: 'Tháng 7, những cây cà phê con đầu tiên xuống đất. Đất được lên luống trước, rồi mới xuống giống, thẳng hàng như kẻ chỉ. Giống là Robusta ghép, dòng Thiện Trường. Cà phê vối là cây quen thuộc của đất bazan Gia Lai, và cây ghép từ dòng tốt cho vườn đồng đều hơn cây trồng từ hạt. Hàng cách hàng 3 mét, cây cách cây 1 mét rưỡi, khoảng 2.200 cây trên mỗi héc ta. Hàng rộng 3 mét chừa lối đi cho người và xe chăm sóc.',
+      loi: 'Tháng 7, những cây cà phê con đầu tiên xuống đất, thẳng hàng như kẻ chỉ. Giống là Robusta ghép, dòng Thiện Trường, dòng cà phê vối hạt to và năng suất cao. Cây ghép giữ đúng đặc tính của cây mẹ, nên cả vườn mọc đều nhau, dễ đo và dễ so giữa các khu. Gốc ghép khoẻ, rễ ăn sâu, chịu hạn tốt hơn cây trồng từ hạt. Vườn trồng dày gấp đôi kiểu cũ: hàng cách hàng 3 mét, cây cách cây 1 mét rưỡi, khoảng 2.200 cây trên mỗi héc ta. Trồng dày thì tán lá khép nhanh, che kín mặt đất, đỡ gió và nắng làm khô đất. Một đường ống tưới chạy dọc hàng nuôi được gấp đôi số gốc, rất quý khi nước chỉ đến từ giếng. Hàng rộng 3 mét vẫn đủ lối cho người, cho xe chăm sóc, và cho hàng cau trồng xen.',
       at: 'khu-A', fov: 74, kicker: 'Từ 07/07/2026', title: 'Giống cây và khoảng cách trồng',
       lead: 'Robusta ghép, trồng thẳng hàng như kẻ chỉ.',
       text: 'Giống Robusta ghép Thiện Trường. Hàng cách hàng 3 m, cây cách cây 1,5 m, khoảng 2.200 cây mỗi ha.',
-      viSao: 'Cà phê vối (Robusta) là cây quen của đất bazan Gia Lai. Cây ghép từ dòng tốt cho vườn đồng đều hơn trồng từ hạt [cần xác nhận: lý do chọn dòng Thiện Trường]. Hàng rộng 3 m chừa lối cho người và xe chăm sóc, cây dày 1,5 m [cần xác nhận: lý do chọn mật độ 2.200 cây/ha].',
+      viSao: 'Thiện Trường là dòng cà phê vối hạt to, năng suất cao. Cây ghép giữ đúng đặc tính cây mẹ nên cả vườn đều nhau, dễ đo và dễ so giữa các khu; gốc ghép rễ sâu, chịu hạn tốt hơn cây trồng từ hạt. Trồng 3 × 1,5 m, dày gấp đôi kiểu 3 × 3 m: tán khép nhanh che đất khỏi gió và nắng, mấy năm đầu mỗi ha cho nhiều hơn, và một đường ống tưới nuôi gấp đôi số gốc. Hàng 3 m vẫn đủ lối cho người, xe và hàng cau.',
       stats: [['2.200', 'cây / ha'], ['3 × 1,5', 'm khoảng cách']],
       media: [{ src: 'tu-xem/m/giong-1.mp4', cap: 'Các luống chạy về phía núi · 01/07/2026' }, { src: 'tu-xem/m/giong-2.mp4', cap: 'Cây vừa trồng ở khu C3, C4 · 23/07/2026' }, { src: 'tu-xem/m/nay-a.webp', cap: 'Cây cà phê sau gần bốn tháng · 31/10/2026' }],
       fx: [{ t: 'spot', at: 'khu-A' }, { t: 'zones', ids: ['A'], label: true }] },
